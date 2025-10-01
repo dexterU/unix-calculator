@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export const metadata = {
   title: 'Unix Calculator - Professional Command Line Math Toolkit',
   description: 'Advanced Unix calculator with BC command support',
@@ -6,13 +8,11 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
