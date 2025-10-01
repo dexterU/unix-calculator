@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+// Remove framer-motion temporarily to fix build issues
 import { Calculator, Code, TrendingUp, Clock, Terminal, BookOpen, Target, Users } from 'lucide-react'
 import { Header } from './components/Header'
 import { AgeCalculator } from './components/AgeCalculator'
@@ -39,7 +39,7 @@ const calculators = [
     difficulty: 'medium',
     category: 'programming',
     icon: Code,
-    component: null, // Coming soon
+    component: null,
     color: 'purple'
   },
   {
@@ -50,7 +50,7 @@ const calculators = [
     difficulty: 'medium',
     category: 'utility',
     icon: Clock,
-    component: null, // Coming soon
+    component: null,
     color: 'orange'
   }
 ]
@@ -108,7 +108,7 @@ export default function HomePage() {
           <div className="bg-white border-b p-4">
             <div className="container flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <calc.icon className="w-6 h-6 text-primary" />
+                <calc.icon className="w-6 h-6 text-primary-600" />
                 <h1 className="text-2xl font-bold text-gray-900">{calc.title}</h1>
                 <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
                   Unix Powered
@@ -145,11 +145,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="hero-gradient text-white py-16">
         <div className="container text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="fade-in">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               Unix Calculator
             </h1>
@@ -158,27 +154,23 @@ export default function HomePage() {
               and comprehensive examples for developers and system administrators.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <motion.button 
+              <button 
                 onClick={() => window.location.hash = 'calculators'}
                 className="btn btn-accent btn-lg"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 <Calculator className="w-5 h-5" />
                 Start Calculating
-              </motion.button>
-              <motion.button 
+              </button>
+              <button 
                 onClick={() => setActiveSection('tutorials')}
                 className="btn btn-outline btn-lg"
                 style={{ borderColor: 'white', color: 'white' }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 <BookOpen className="w-5 h-5" />
                 View Tutorials
-              </motion.button>
+              </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -195,11 +187,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid-auto">
-            <motion.div 
-              className="card text-center"
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div className="card text-center transition-all hover:transform">
               <div className="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calculator className="w-8 h-8" />
               </div>
@@ -207,13 +195,9 @@ export default function HomePage() {
               <p className="text-gray-600">
                 25+ professional calculators with real-time Unix command generation
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              className="card text-center"
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div className="card text-center transition-all hover:transform">
               <div className="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Terminal className="w-8 h-8" />
               </div>
@@ -221,13 +205,9 @@ export default function HomePage() {
               <p className="text-gray-600">
                 Every calculation shows the equivalent BC, AWK, or bash command
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              className="card text-center"
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div className="card text-center transition-all hover:transform">
               <div className="bg-purple-100 text-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <BookOpen className="w-8 h-8" />
               </div>
@@ -235,7 +215,7 @@ export default function HomePage() {
               <p className="text-gray-600">
                 Learn Unix math from basic arithmetic to advanced scientific functions
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -254,52 +234,47 @@ export default function HomePage() {
           </div>
 
           <div className="grid-auto">
-            <AnimatePresence>
-              {calculators.map((calc, index) => (
-                <motion.div
-                  key={calc.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`card card-interactive ${!calc.component ? 'opacity-60' : ''}`}
-                  onClick={() => calc.component && setActiveCalculator(calc.id)}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-3 rounded-lg ${getIconColor(calc.color)}`}>
-                        <calc.icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
-                          {calc.title}
-                        </h3>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(calc.difficulty)}`}>
-                            {calc.difficulty}
-                          </span>
-                          <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
-                            Unix
-                          </span>
-                        </div>
+            {calculators.map((calc, index) => (
+              <div
+                key={calc.id}
+                className={`card card-interactive ${!calc.component ? 'opacity-60' : ''}`}
+                onClick={() => calc.component && setActiveCalculator(calc.id)}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`p-3 rounded-lg ${getIconColor(calc.color)}`}>
+                      <calc.icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {calc.title}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(calc.difficulty)}`}>
+                          {calc.difficulty}
+                        </span>
+                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
+                          Unix
+                        </span>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <p className="text-gray-600 mb-4">
-                    {calc.description}
-                  </p>
+                <p className="text-gray-600 mb-4">
+                  {calc.description}
+                </p>
 
-                  <div className="flex items-center justify-between">
-                    <div className="text-xs text-gray-500">
-                      {formatSearchVolume(calc.searchVolume)} monthly searches
-                    </div>
-                    <div className={`text-sm font-medium ${calc.component ? 'text-primary-600' : 'text-gray-400'}`}>
-                      {calc.component ? 'Open Calculator →' : 'Coming Soon'}
-                    </div>
+                <div className="flex items-center justify-between">
+                  <div className="text-xs text-gray-500">
+                    {formatSearchVolume(calc.searchVolume)} monthly searches
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  <div className={`text-sm font-medium ${calc.component ? 'text-primary-600' : 'text-gray-400'}`}>
+                    {calc.component ? 'Open Calculator →' : 'Coming Soon'}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -307,11 +282,7 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="py-16 bg-gradient-to-r from-primary-50 to-blue-50">
         <div className="container text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
+          <div>
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
               Why Choose Unix-Powered Calculators?
             </h3>
@@ -329,18 +300,14 @@ export default function HomePage() {
                 <div className="text-gray-600 font-medium">Interactive Tutorials</div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div>
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
               Ready to Master Unix Mathematics?
             </h3>
@@ -363,10 +330,11 @@ export default function HomePage() {
                 Try Calculators
               </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
   )
 }
+
 
