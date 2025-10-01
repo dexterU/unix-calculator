@@ -1,263 +1,372 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Calculator, Code, TrendingUp, Clock, Terminal, BookOpen, Target, Users } from 'lucide-react'
 import { Header } from './components/Header'
 import { AgeCalculator } from './components/AgeCalculator'
+import { PercentageCalculator } from './components/PercentageCalculator'
+import { TutorialsSection } from './components/TutorialsSection'
+
+const calculators = [
+  {
+    id: 'age',
+    title: 'Age Calculator',
+    description: 'Calculate exact age with Unix date commands',
+    searchVolume: 1100000,
+    difficulty: 'easy',
+    category: 'essential',
+    icon: Calculator,
+    component: AgeCalculator,
+    color: 'blue'
+  },
+  {
+    id: 'percentage',
+    title: 'Percentage Calculator',
+    description: 'BC-powered percentage calculations with precision',
+    searchVolume: 448000,
+    difficulty: 'easy',
+    category: 'essential',
+    icon: TrendingUp,
+    component: PercentageCalculator,
+    color: 'green'
+  },
+  {
+    id: 'binary',
+    title: 'Binary Converter',
+    description: 'Convert bases using BC obase/ibase commands',
+    searchVolume: 62200,
+    difficulty: 'medium',
+    category: 'programming',
+    icon: Code,
+    component: null, // Coming soon
+    color: 'purple'
+  },
+  {
+    id: 'time',
+    title: 'Time Calculator',
+    description: 'Time calculations with Unix date commands',
+    searchVolume: 327000,
+    difficulty: 'medium',
+    category: 'utility',
+    icon: Clock,
+    component: null, // Coming soon
+    color: 'orange'
+  }
+]
+
+const getDifficultyColor = (difficulty) => {
+  switch (difficulty) {
+    case 'easy': return 'bg-green-100 text-green-800'
+    case 'medium': return 'bg-yellow-100 text-yellow-800'
+    case 'hard': return 'bg-red-100 text-red-800'
+    default: return 'bg-gray-100 text-gray-800'
+  }
+}
+
+const getIconColor = (color) => {
+  const colors = {
+    blue: 'bg-blue-100 text-blue-600',
+    green: 'bg-green-100 text-green-600',
+    purple: 'bg-purple-100 text-purple-600',
+    orange: 'bg-orange-100 text-orange-600'
+  }
+  return colors[color] || colors.blue
+}
+
+const formatSearchVolume = (volume) => {
+  if (volume >= 1000000) return `${(volume / 1000000).toFixed(1)}M`
+  if (volume >= 1000) return `${(volume / 1000).toFixed(0)}K`
+  return volume.toString()
+}
 
 export default function HomePage() {
   const [activeCalculator, setActiveCalculator] = useState(null)
+  const [activeSection, setActiveSection] = useState('home')
 
-  if (activeCalculator === 'age') {
-    return (
-      <div style={{ minHeight: '100vh' }}>
-        <Header />
-        <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '1rem 0' }}>
-          <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>Age Calculator</h1>
-            <button
-              onClick={() => setActiveCalculator(null)}
-              className="btn btn-secondary"
-            >
-              ← Back to All Calculators
-            </button>
+  // Handle section navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (hash) setActiveSection(hash)
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    handleHashChange()
+
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  // Render individual calculator
+  if (activeCalculator) {
+    const calc = calculators.find(c => c.id === activeCalculator)
+    if (calc && calc.component) {
+      const CalculatorComponent = calc.component
+      return (
+        <div className="min-h-screen">
+          <Header />
+          <div className="bg-white border-b p-4">
+            <div className="container flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <calc.icon className="w-6 h-6 text-primary" />
+                <h1 className="text-2xl font-bold text-gray-900">{calc.title}</h1>
+                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
+                  Unix Powered
+                </span>
+              </div>
+              <button
+                onClick={() => setActiveCalculator(null)}
+                className="btn btn-secondary"
+              >
+                ← Back to All Calculators
+              </button>
+            </div>
           </div>
+          <CalculatorComponent />
         </div>
-        <AgeCalculator />
+      )
+    }
+  }
+
+  // Render tutorials section
+  if (activeSection === 'tutorials') {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <TutorialsSection onNavigate={setActiveSection} />
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div className="min-h-screen">
       <Header />
       
       {/* Hero Section */}
-      <section style={{ 
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
-        color: 'white', 
-        padding: '5rem 0' 
-      }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: '4xl', margin: '0 auto' }}>
-          <h1 style={{ 
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)', 
-            fontWeight: 'bold', 
-            marginBottom: '1.5rem',
-            lineHeight: '1.1'
-          }}>
-            Unix Calculator
-          </h1>
-          <p style={{ 
-            fontSize: 'clamp(1.125rem, 2.5vw, 1.5rem)', 
-            marginBottom: '2rem', 
-            opacity: 0.9,
-            lineHeight: '1.6'
-          }}>
-            Professional command-line calculator with BC syntax, interactive tutorials, 
-            and comprehensive examples for developers and system administrators.
-          </p>
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            gap: '1rem', 
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <button 
-              onClick={() => setActiveCalculator('age')}
-              className="btn btn-accent" 
-              style={{ fontSize: '1.125rem', padding: '1rem 2rem' }}
+      <section className="hero-gradient text-white py-16">
+        <div className="container text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+              Unix Calculator
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-4xl mx-auto leading-relaxed">
+              Professional command-line calculator with BC syntax, interactive tutorials, 
+              and comprehensive examples for developers and system administrators.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <motion.button 
+                onClick={() => window.location.hash = 'calculators'}
+                className="btn btn-accent btn-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Calculator className="w-5 h-5" />
+                Start Calculating
+              </motion.button>
+              <motion.button 
+                onClick={() => setActiveSection('tutorials')}
+                className="btn btn-outline btn-lg"
+                style={{ borderColor: 'white', color: 'white' }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <BookOpen className="w-5 h-5" />
+                View Tutorials
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-16 bg-white">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Everything You Need for Unix Calculations
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Professional tools, educational content, and real-world examples all in one place.
+            </p>
+          </div>
+
+          <div className="grid-auto">
+            <motion.div 
+              className="card text-center"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
             >
-              Start Calculating
-            </button>
-            <button 
-              className="btn" 
-              style={{ 
-                border: '2px solid white', 
-                color: 'white', 
-                background: 'transparent',
-                fontSize: '1.125rem', 
-                padding: '1rem 2rem' 
-              }}
+              <div className="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calculator className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Interactive Calculators</h3>
+              <p className="text-gray-600">
+                25+ professional calculators with real-time Unix command generation
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="card text-center"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
             >
-              View Tutorials
-            </button>
+              <div className="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Terminal className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Command Integration</h3>
+              <p className="text-gray-600">
+                Every calculation shows the equivalent BC, AWK, or bash command
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="card text-center"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="bg-purple-100 text-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Step-by-Step Tutorials</h3>
+              <p className="text-gray-600">
+                Learn Unix math from basic arithmetic to advanced scientific functions
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Calculators Grid */}
-      <section id="calculators" style={{ padding: '4rem 0' }}>
+      <section id="calculators" className="py-16 bg-gray-50">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1rem' }}>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Professional Unix-Powered Calculators
             </h2>
-            <p style={{ fontSize: '1.25rem', color: '#6b7280', maxWidth: '3xl', margin: '0 auto' }}>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Comprehensive collection of calculators with Unix command integration. 
               Learn the command-line equivalent for every calculation.
             </p>
           </div>
 
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-            gap: '1.5rem' 
-          }}>
-            {/* Age Calculator Card */}
-            <div 
-              className="card" 
-              style={{ cursor: 'pointer', transition: 'transform 0.2s' }}
-              onClick={() => setActiveCalculator('age')}
-              onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-              onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div style={{ 
-                  background: 'rgba(59, 130, 246, 0.1)', 
-                  color: '#3b82f6', 
-                  padding: '0.75rem', 
-                  borderRadius: '0.5rem' 
-                }}>
-                  📅
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937' }}>Age Calculator</h3>
-                  <span style={{ 
-                    background: '#dcfce7', 
-                    color: '#166534', 
-                    padding: '0.125rem 0.5rem', 
-                    borderRadius: '9999px', 
-                    fontSize: '0.75rem', 
-                    fontWeight: '500' 
-                  }}>
-                    Easy
-                  </span>
-                </div>
-              </div>
-              
-              <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                Calculate exact age with Unix date commands
-              </p>
-              
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
-                  1.1M monthly searches
-                </div>
-                <div style={{ color: '#3b82f6', fontSize: '0.875rem', fontWeight: '500' }}>
-                  Open Calculator →
-                </div>
-              </div>
-            </div>
+          <div className="grid-auto">
+            <AnimatePresence>
+              {calculators.map((calc, index) => (
+                <motion.div
+                  key={calc.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`card card-interactive ${!calc.component ? 'opacity-60' : ''}`}
+                  onClick={() => calc.component && setActiveCalculator(calc.id)}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-3 rounded-lg ${getIconColor(calc.color)}`}>
+                        <calc.icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                          {calc.title}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(calc.difficulty)}`}>
+                            {calc.difficulty}
+                          </span>
+                          <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
+                            Unix
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            {/* Placeholder for more calculators */}
-            <div className="card" style={{ opacity: 0.6 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div style={{ 
-                  background: 'rgba(34, 197, 94, 0.1)', 
-                  color: '#22c55e', 
-                  padding: '0.75rem', 
-                  borderRadius: '0.5rem' 
-                }}>
-                  📊
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937' }}>Percentage Calculator</h3>
-                  <span style={{ 
-                    background: '#dcfce7', 
-                    color: '#166534', 
-                    padding: '0.125rem 0.5rem', 
-                    borderRadius: '9999px', 
-                    fontSize: '0.75rem', 
-                    fontWeight: '500' 
-                  }}>
-                    Easy
-                  </span>
-                </div>
-              </div>
-              
-              <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                BC-powered percentage calculations with precision
-              </p>
-              
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
-                  448K monthly searches
-                </div>
-                <div style={{ color: '#9ca3af', fontSize: '0.875rem', fontWeight: '500' }}>
-                  Coming Soon
-                </div>
-              </div>
-            </div>
+                  <p className="text-gray-600 mb-4">
+                    {calc.description}
+                  </p>
 
-            <div className="card" style={{ opacity: 0.6 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div style={{ 
-                  background: 'rgba(168, 85, 247, 0.1)', 
-                  color: '#a855f7', 
-                  padding: '0.75rem', 
-                  borderRadius: '0.5rem' 
-                }}>
-                  🔢
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937' }}>Binary Converter</h3>
-                  <span style={{ 
-                    background: '#fef3c7', 
-                    color: '#92400e', 
-                    padding: '0.125rem 0.5rem', 
-                    borderRadius: '9999px', 
-                    fontSize: '0.75rem', 
-                    fontWeight: '500' 
-                  }}>
-                    Medium
-                  </span>
-                </div>
-              </div>
-              
-              <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                Convert bases using BC obase/ibase
-              </p>
-              
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
-                  62K monthly searches
-                </div>
-                <div style={{ color: '#9ca3af', fontSize: '0.875rem', fontWeight: '500' }}>
-                  Coming Soon
-                </div>
-              </div>
-            </div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-gray-500">
+                      {formatSearchVolume(calc.searchVolume)} monthly searches
+                    </div>
+                    <div className={`text-sm font-medium ${calc.component ? 'text-primary-600' : 'text-gray-400'}`}>
+                      {calc.component ? 'Open Calculator →' : 'Coming Soon'}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section style={{ background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(147, 51, 234, 0.05))', padding: '4rem 0' }}>
-        <div className="container" style={{ textAlign: 'center' }}>
-          <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1rem' }}>
-            Why Choose Unix-Powered Calculators?
-          </h3>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-            gap: '2rem', 
-            marginTop: '2rem' 
-          }}>
-            <div>
-              <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#3b82f6', marginBottom: '0.5rem' }}>25+</div>
-              <div style={{ color: '#6b7280' }}>Professional Calculators</div>
+      <section className="py-16 bg-gradient-to-r from-primary-50 to-blue-50">
+        <div className="container text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+              Why Choose Unix-Powered Calculators?
+            </h3>
+            <div className="grid md:grid-cols-3 gap-8 mt-12">
+              <div>
+                <div className="text-4xl font-bold text-primary-600 mb-2">25+</div>
+                <div className="text-gray-600 font-medium">Professional Calculators</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-primary-600 mb-2">100%</div>
+                <div className="text-gray-600 font-medium">Unix Integration</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-primary-600 mb-2">50+</div>
+                <div className="text-gray-600 font-medium">Interactive Tutorials</div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#3b82f6', marginBottom: '0.5rem' }}>100%</div>
-              <div style={{ color: '#6b7280' }}>Unix Integration</div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-white">
+        <div className="container text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+              Ready to Master Unix Mathematics?
+            </h3>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Join thousands of developers and system administrators who use our calculators daily.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                onClick={() => setActiveSection('tutorials')}
+                className="btn btn-primary btn-lg"
+              >
+                <BookOpen className="w-5 h-5" />
+                Start Learning
+              </button>
+              <button 
+                onClick={() => window.location.hash = 'calculators'}
+                className="btn btn-outline btn-lg"
+              >
+                <Calculator className="w-5 h-5" />
+                Try Calculators
+              </button>
             </div>
-            <div>
-              <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#3b82f6', marginBottom: '0.5rem' }}>50+</div>
-              <div style={{ color: '#6b7280' }}>Interactive Tutorials</div>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>
   )
 }
+
