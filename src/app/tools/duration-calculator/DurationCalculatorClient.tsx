@@ -4,6 +4,51 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  TerminalReferenceSection,
+  TerminalRefCodeBlock,
+  TerminalRefH2,
+  TerminalRefHowItWorks,
+  TerminalRefIntro,
+  TerminalRefLangTabs,
+  TerminalRefSubH3,
+} from '@/components/tools/TerminalReference'
+
+const DUR_SHELL = `# Calculate duration between two timestamps
+echo $((1733569200 - 1700000000)) seconds
+
+# Convert to days
+echo "scale=2; (1733569200 - 1700000000) / 86400" | bc
+
+# Time since a specific date
+echo "Days since 2024-01-01:"
+echo $(( ($(date +%s) - $(date -d "2024-01-01" +%s)) / 86400 ))
+
+# Human-readable duration using GNU date
+start=1700000000
+end=1733569200
+diff=$((end - start))
+echo "$((diff/86400)) days, $((diff%86400/3600)) hours, \\
+$((diff%3600/60)) minutes"`
+
+const DUR_PY = `# Python
+from datetime import datetime, timezone
+
+start = datetime.fromtimestamp(1700000000, tz=timezone.utc)
+end = datetime.fromtimestamp(1733569200, tz=timezone.utc)
+delta = end - start
+print(f"{delta.days} days, "
+      f"{delta.seconds // 3600} hours, "
+      f"{(delta.seconds % 3600) // 60} minutes")`
+
+const DUR_JS = `// JavaScript
+const start = 1700000000;
+const end = 1733569200;
+const diff = end - start;
+const days = Math.floor(diff / 86400);
+const hours = Math.floor((diff % 86400) / 3600);
+const minutes = Math.floor((diff % 3600) / 60);
+console.log(\`\${days} days, \${hours} hours, \${minutes} minutes\`);`
 
 function formatDuration(ms: number) {
   const sign = ms < 0 ? '−' : ''
@@ -37,7 +82,7 @@ export default function DurationCalculatorClient() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="container py-12 max-w-xl space-y-6">
+      <main className="container max-w-4xl space-y-6 py-12">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Duration calculator
@@ -81,6 +126,31 @@ export default function DurationCalculatorClient() {
             <span className="text-gray-500">Invalid range.</span>
           )}
         </div>
+
+        <TerminalReferenceSection>
+          <TerminalRefH2 />
+          <TerminalRefIntro>
+            Compute elapsed time between two epoch values using shell arithmetic and GNU date.
+          </TerminalRefIntro>
+          <TerminalRefCodeBlock label="bash" code={DUR_SHELL} />
+          <TerminalRefSubH3>Language Quick Reference</TerminalRefSubH3>
+          <TerminalRefLangTabs
+            tabs={[
+              { id: 'python', label: 'Python', codeLabel: 'python', code: DUR_PY },
+              { id: 'js', label: 'JavaScript', codeLabel: 'javascript', code: DUR_JS },
+            ]}
+          />
+          <TerminalRefSubH3>How It Works</TerminalRefSubH3>
+          <TerminalRefHowItWorks>
+            <p>
+              Duration calculation subtracts two Unix timestamps to get a difference in seconds. Since
+              timestamps are always in UTC, timezone differences don&apos;t affect the calculation —
+              86,400 seconds always equals one day regardless of DST. Watch out for leap seconds: UTC
+              occasionally inserts a 61st second in a minute, making some days 86,401 seconds long. Most
+              applications ignore this.
+            </p>
+          </TerminalRefHowItWorks>
+        </TerminalReferenceSection>
       </main>
     </div>
   )

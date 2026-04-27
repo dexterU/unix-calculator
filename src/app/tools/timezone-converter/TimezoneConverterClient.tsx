@@ -4,6 +4,52 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  TerminalReferenceSection,
+  TerminalRefCodeBlock,
+  TerminalRefH2,
+  TerminalRefHowItWorks,
+  TerminalRefIntro,
+  TerminalRefLangTabs,
+  TerminalRefSubH3,
+} from '@/components/tools/TerminalReference'
+
+const TZ_SHELL = `# Convert time between timezones in bash
+TZ='America/New_York' date
+TZ='Asia/Tokyo' date
+
+# Convert a specific timestamp to a timezone
+TZ='Europe/London' date -d @1733569200
+
+# List all available timezones
+timedatectl list-timezones
+
+# Check current system timezone
+timedatectl status`
+
+const TZ_PY = `# Python
+from datetime import datetime
+import pytz
+
+utc_time = datetime.fromtimestamp(1733569200, tz=pytz.utc)
+eastern = utc_time.astimezone(pytz.timezone('America/New_York'))
+print(eastern.strftime('%Y-%m-%d %H:%M:%S %Z'))`
+
+const TZ_JS = `// JavaScript (Intl API — no libraries needed)
+const ts = 1733569200;
+const date = new Date(ts * 1000);
+const formatted = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/New_York',
+  dateStyle: 'full',
+  timeStyle: 'long'
+}).format(date);
+console.log(formatted);`
+
+const TZ_GO = `// Go
+import "time"
+loc, _ := time.LoadLocation("America/New_York")
+t := time.Unix(1733569200, 0).In(loc)
+fmt.Println(t.Format("2006-01-02 15:04:05 MST"))`
 
 const OFFSETS = [
   { id: 'utc', label: 'UTC', minutes: 0 },
@@ -31,7 +77,7 @@ export default function TimezoneConverterClient() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="container py-12 max-w-xl space-y-6">
+      <main className="container max-w-4xl space-y-6 py-12">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Timezone converter
@@ -89,6 +135,33 @@ export default function TimezoneConverterClient() {
             <span className="text-gray-500">Enter a valid date and time.</span>
           )}
         </div>
+
+        <TerminalReferenceSection>
+          <TerminalRefH2 />
+          <TerminalRefIntro>
+            Convert and inspect wall-clock time across IANA timezones using the same data your server
+            uses — no web UI required.
+          </TerminalRefIntro>
+          <TerminalRefCodeBlock label="bash" code={TZ_SHELL} />
+          <TerminalRefSubH3>Language Quick Reference</TerminalRefSubH3>
+          <TerminalRefLangTabs
+            tabs={[
+              { id: 'python', label: 'Python', codeLabel: 'python', code: TZ_PY },
+              { id: 'js', label: 'JavaScript', codeLabel: 'javascript', code: TZ_JS },
+              { id: 'go', label: 'Go', codeLabel: 'go', code: TZ_GO },
+            ]}
+          />
+          <TerminalRefSubH3>How It Works</TerminalRefSubH3>
+          <TerminalRefHowItWorks>
+            <p>
+              Timezone conversion works by storing all times as UTC internally, then applying an offset
+              for display. Offsets are not always whole hours — India (IST) is UTC+5:30, Nepal is
+              UTC+5:45. Daylight Saving Time (DST) adds complexity: the same timezone can have two
+              different offsets depending on the date. The IANA timezone database (used by all modern
+              systems) handles this automatically using historical DST rules.
+            </p>
+          </TerminalRefHowItWorks>
+        </TerminalReferenceSection>
       </main>
     </div>
   )

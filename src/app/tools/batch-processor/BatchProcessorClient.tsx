@@ -3,6 +3,30 @@
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Textarea } from '@/components/ui/textarea'
+import {
+  TerminalReferenceSection,
+  TerminalRefCodeBlock,
+  TerminalRefH2,
+  TerminalRefHowItWorks,
+  TerminalRefIntro,
+  TerminalRefSubH3,
+} from '@/components/tools/TerminalReference'
+
+const BATCH_SHELL = `# Convert a list of timestamps from a file
+while IFS= read -r ts; do
+  echo "$ts -> $(date -d @$ts '+%Y-%m-%d %H:%M:%S UTC')"
+done < timestamps.txt
+
+# Process CSV: convert timestamp column
+awk -F',' 'NR>1 {
+  cmd = "date -d @" $2 " +\\"%Y-%m-%d\\""
+  cmd | getline date
+  close(cmd)
+  print $1 "," date "," $3
+}' data.csv
+
+# Batch convert and output to new file
+cat timestamps.txt | xargs -I{} date -d @{} > dates.txt`
 
 function parseLine(line: string): { ok: boolean; label: string } {
   const t = line.trim()
@@ -71,6 +95,24 @@ export default function BatchProcessorClient() {
             </tbody>
           </table>
         </div>
+
+        <TerminalReferenceSection>
+          <TerminalRefH2 />
+          <TerminalRefIntro>
+            Pipe files of epoch values through while-read loops, awk, and xargs for bulk conversion.
+          </TerminalRefIntro>
+          <TerminalRefCodeBlock label="bash" code={BATCH_SHELL} />
+          <TerminalRefSubH3>How It Works</TerminalRefSubH3>
+          <TerminalRefHowItWorks>
+            <p>
+              Batch processing timestamps is common in data migrations, analytics pipelines, and log
+              analysis. The key is identifying the input format (seconds vs milliseconds), handling
+              invalid values gracefully, and choosing an output format that downstream systems can
+              consume. For large datasets (millions of rows), process in streaming fashion rather than
+              loading all into memory.
+            </p>
+          </TerminalRefHowItWorks>
+        </TerminalReferenceSection>
       </main>
     </div>
   )

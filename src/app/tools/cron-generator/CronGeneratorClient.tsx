@@ -4,6 +4,41 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  TerminalReferenceSection,
+  TerminalRefCodeBlock,
+  TerminalRefH2,
+  TerminalRefHowItWorks,
+  TerminalRefIntro,
+  TerminalRefSubH3,
+} from '@/components/tools/TerminalReference'
+
+const CRON_SHELL = `# View current crontab
+crontab -l
+
+# Edit crontab
+crontab -e
+
+# Run a command every day at 9am
+# 0 9 * * * /path/to/command
+
+# Every Monday at midnight
+# 0 0 * * MON /path/to/command
+
+# Every 15 minutes
+# */15 * * * * /path/to/command
+
+# Test when a cron will next run (using GNU date)
+# Install: sudo apt install ncal
+# Check next 5 occurrences:
+echo "Next 5 runs of '0 9 * * *':"
+for i in 1 2 3 4 5; do
+  date -d "$(date -d 'tomorrow' +%Y-%m-%d) + $((i-1)) days" \\
+  "+%Y-%m-%d 09:00:00"
+done
+
+# View cron logs
+grep CRON /var/log/syslog | tail -20`
 
 export default function CronGeneratorClient() {
   const [minute, setMinute] = useState('0')
@@ -20,7 +55,7 @@ export default function CronGeneratorClient() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="container py-12 max-w-xl space-y-6">
+      <main className="container max-w-4xl space-y-6 py-12">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Cron expression builder
@@ -83,6 +118,25 @@ export default function CronGeneratorClient() {
           </p>
           <code className="text-lg font-mono">{expr}</code>
         </div>
+
+        <TerminalReferenceSection>
+          <TerminalRefH2 />
+          <TerminalRefIntro>
+            Manage user crontabs and validate schedules with the same tools your Linux server uses.
+          </TerminalRefIntro>
+          <TerminalRefCodeBlock label="bash" code={CRON_SHELL} />
+          <TerminalRefSubH3>How It Works</TerminalRefSubH3>
+          <TerminalRefHowItWorks>
+            <p>
+              A cron expression has 5 fields: minute (0-59), hour (0-23), day of month (1-31), month
+              (1-12), day of week (0-7, where both 0 and 7 = Sunday). Asterisk (*) means
+              &apos;every&apos;. Slash (/) means &apos;every N&apos; — */15 means every 15 units.
+              Comma separates values: MON,WED,FRI means those three days. Systems like AWS EventBridge
+              and Kubernetes use 6-field cron with seconds. Quartz scheduler uses 7 fields including
+              year.
+            </p>
+          </TerminalRefHowItWorks>
+        </TerminalReferenceSection>
       </main>
     </div>
   )
