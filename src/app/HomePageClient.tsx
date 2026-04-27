@@ -1,25 +1,49 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-// Remove framer-motion temporarily to fix build issues
-import { Calculator, Code, TrendingUp, Clock, Terminal, BookOpen, Target, Users } from 'lucide-react'
-import { Header } from '@/components/Header'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Calculator, Terminal, Book, Target, Users, FileText, Clock, Code, TrendingUp } from 'lucide-react'
 import { Hero } from '@/components/Hero'
+import { Header } from '@/components/Header'
+import { UnixTimestampConverter } from '@/components/UnixTimestampConverter'
+import { EnhancedCalculatorSection } from '@/components/EnhancedCalculatorSection'
+import { TutorialsSection } from '@/components/TutorialsSection'
+import { ExamplesSection } from '@/components/ExamplesSection'
+import { ReferenceSection } from '@/components/ReferenceSection'
+import { ChallengesSection } from '@/components/ChallengesSection'
+import { CommunitySection } from '@/components/CommunitySection'
+import { CalculatorsGrid, type CalculatorsGridItem } from '@/components/CalculatorsGrid'
+import { ProgressTracker } from '@/components/ProgressTracker'
 import { AgeCalculator } from '@/components/AgeCalculator'
 import { PercentageCalculator } from '@/components/PercentageCalculator'
-import { TutorialsSection } from '@/components/TutorialsSection'
+import { useUnixCalculator } from '@/hooks/useUnixCalculator'
+import { useScrollTracking } from '@/hooks/useScrollTracking'
+import { Toaster } from 'react-hot-toast'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Link from 'next/link'
 
-const calculators = [
+/** Marker component so grid cells can be “enabled” without embedding the full calculator. */
+function CalculatorGridEnabled() {
+  return null
+}
+
+const CALCULATOR_ROUTES: Record<string, string> = {
+  age: '/age-calculator',
+  percentage: '/percentage-calculator',
+  binary: '/binary-converter',
+  time: '/time-calculator',
+}
+
+const gridCalculators: CalculatorsGridItem[] = [
   {
     id: 'age',
     title: 'Age Calculator',
     description: 'Calculate exact age with Unix date commands',
     searchVolume: 1100000,
     difficulty: 'easy',
-    category: 'essential',
     icon: Calculator,
     component: AgeCalculator,
-    color: 'blue'
+    color: 'blue',
   },
   {
     id: 'percentage',
@@ -27,10 +51,9 @@ const calculators = [
     description: 'BC-powered percentage calculations with precision',
     searchVolume: 448000,
     difficulty: 'easy',
-    category: 'essential',
     icon: TrendingUp,
     component: PercentageCalculator,
-    color: 'green'
+    color: 'green',
   },
   {
     id: 'binary',
@@ -38,10 +61,9 @@ const calculators = [
     description: 'Convert bases using BC obase/ibase commands',
     searchVolume: 62200,
     difficulty: 'medium',
-    category: 'programming',
     icon: Code,
-    component: null,
-    color: 'purple'
+    component: CalculatorGridEnabled,
+    color: 'purple',
   },
   {
     id: 'time',
@@ -49,28 +71,31 @@ const calculators = [
     description: 'Time calculations with Unix date commands',
     searchVolume: 327000,
     difficulty: 'medium',
-    category: 'utility',
     icon: Clock,
-    component: null,
-    color: 'orange'
-  }
+    component: CalculatorGridEnabled,
+    color: 'orange',
+  },
 ]
 
 const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
-    case 'easy': return 'bg-green-100 text-green-800'
-    case 'medium': return 'bg-yellow-100 text-yellow-800'
-    case 'hard': return 'bg-red-100 text-red-800'
-    default: return 'bg-gray-100 text-gray-800'
+    case 'easy':
+      return 'bg-emerald-500/20 text-emerald-200'
+    case 'medium':
+      return 'bg-amber-500/20 text-amber-100'
+    case 'hard':
+      return 'bg-red-500/20 text-red-100'
+    default:
+      return 'bg-muted text-muted-foreground'
   }
 }
 
 const getIconColor = (color: string) => {
   const colors: Record<string, string> = {
-    blue: 'bg-blue-100 text-blue-600',
-    green: 'bg-green-100 text-green-600',
-    purple: 'bg-purple-100 text-purple-600',
-    orange: 'bg-orange-100 text-orange-600',
+    blue: 'bg-sky-500/20 text-sky-200',
+    green: 'bg-emerald-500/20 text-emerald-200',
+    purple: 'bg-violet-500/20 text-violet-200',
+    orange: 'bg-orange-500/20 text-orange-200',
   }
   return colors[color] || colors.blue
 }
@@ -81,247 +106,165 @@ const formatSearchVolume = (volume: number) => {
   return volume.toString()
 }
 
-export default function HomePageClient() {
-  const [activeCalculator, setActiveCalculator] = useState<string | null>(null)
-  const [activeSection, setActiveSection] = useState('home')
+const HomePageClient = () => {
+  const router = useRouter()
+  const [activeSection, setActiveSection] = useState('calculator')
+  const [calcTab, setCalcTab] = useState('timestamp')
+  const {
+    expression,
+    setExpression,
+    result,
+    error,
+    isCalculating,
+    calculate,
+    history,
+    clearHistory,
+  } = useUnixCalculator()
 
-  // Handle section navigation
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '')
-      if (hash) setActiveSection(hash)
-    }
+  const { scrollProgress } = useScrollTracking()
 
-    window.addEventListener('hashchange', handleHashChange)
-    handleHashChange()
-
-    return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [])
-
-  // Render individual calculator
-  if (activeCalculator) {
-    const calc = calculators.find(c => c.id === activeCalculator)
-    if (calc && calc.component) {
-      const CalculatorComponent = calc.component
-      return (
-        <div className="min-h-screen">
-          <Header
-            activeSection={activeSection}
-            onNavigate={setActiveSection}
-          />
-          <div className="bg-white border-b p-4">
-            <div className="container flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <calc.icon className="w-6 h-6 text-primary-600" />
-                <h1 className="text-2xl font-bold text-gray-900">{calc.title}</h1>
-                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
-                  Unix Powered
-                </span>
-              </div>
-              <button
-                onClick={() => setActiveCalculator(null)}
-                className="btn btn-secondary"
-              >
-                ← Back to All Calculators
-              </button>
-            </div>
-          </div>
-          <CalculatorComponent />
-        </div>
-      )
+  const navigateToSection = (section: string) => {
+    setActiveSection(section)
+    const element = document.getElementById(section)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
-  // Render tutorials section
-  if (activeSection === 'tutorials') {
-    return (
-      <div className="min-h-screen">
-        <Header
-          activeSection={activeSection}
-          onNavigate={setActiveSection}
-        />
-        <TutorialsSection onNavigate={setActiveSection} />
-      </div>
-    )
-  }
+  const sections = [
+    { id: 'calculator', title: 'Calculator', icon: Calculator },
+    { id: 'tutorials', title: 'Tutorials', icon: Book },
+    { id: 'examples', title: 'Examples', icon: FileText },
+    { id: 'reference', title: 'Reference', icon: Terminal },
+    { id: 'challenges', title: 'Challenges', icon: Target },
+    { id: 'community', title: 'Community', icon: Users },
+  ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-terminal">
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: 'hsl(var(--terminal-surface))',
+            color: 'hsl(var(--terminal-text))',
+            border: '1px solid hsl(var(--terminal-border))',
+          },
+        }}
+      />
+
       <Header
         activeSection={activeSection}
-        onNavigate={setActiveSection}
+        onNavigate={navigateToSection}
+        sections={sections}
       />
 
-      <Hero
-        onNavigateToCalculator={() => {
-          window.location.hash = 'calculators'
-        }}
-        onNavigateToTutorials={() => {
-          setActiveSection('tutorials')
-        }}
-      />
+      <main className="relative pt-16">
+        <Hero
+          onNavigateToCalculator={() => navigateToSection('calculator')}
+          onNavigateToTutorials={() => navigateToSection('tutorials')}
+        />
 
-      {/* Features Grid */}
-      <section className="py-16 bg-white">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Everything You Need for Unix Calculations
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Professional tools, educational content, and real-world examples all in one place.
-            </p>
-          </div>
+        <ProgressTracker progress={scrollProgress} />
 
-          <div className="grid-auto">
-            <div className="card text-center transition-all hover:transform">
-              <div className="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calculator className="w-8 h-8" />
+        <div className="container mx-auto px-4 space-y-24 py-16">
+          <section id="calculator">
+            <Tabs value={calcTab} onValueChange={setCalcTab} className="w-full">
+              <div className="flex justify-center mb-8">
+                <TabsList className="grid w-full max-w-md grid-cols-2">
+                  <TabsTrigger value="timestamp" className="gap-2">
+                    <Clock className="w-4 h-4" />
+                    Timestamp Converter
+                  </TabsTrigger>
+                  <TabsTrigger value="bc" className="gap-2">
+                    <Terminal className="w-4 h-4" />
+                    BC Calculator
+                  </TabsTrigger>
+                </TabsList>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Interactive Calculators</h3>
-              <p className="text-gray-600">
-                25+ professional calculators with real-time Unix command generation
-              </p>
-            </div>
+              <TabsContent value="timestamp">
+                <UnixTimestampConverter />
+              </TabsContent>
+              <TabsContent value="bc">
+                <EnhancedCalculatorSection
+                  expression={expression}
+                  setExpression={setExpression}
+                  result={result}
+                  error={error}
+                  isCalculating={isCalculating}
+                  onCalculate={calculate}
+                  history={history}
+                  onClearHistory={clearHistory}
+                  onNavigate={navigateToSection}
+                />
+              </TabsContent>
+            </Tabs>
+          </section>
 
-            <div className="card text-center transition-all hover:transform">
-              <div className="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Terminal className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Command Integration</h3>
-              <p className="text-gray-600">
-                Every calculation shows the equivalent BC, AWK, or bash command
-              </p>
-            </div>
+          <section id="tutorials">
+            <TutorialsSection onNavigate={navigateToSection} />
+          </section>
 
-            <div className="card text-center transition-all hover:transform">
-              <div className="bg-purple-100 text-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Step-by-Step Tutorials</h3>
-              <p className="text-gray-600">
-                Learn Unix math from basic arithmetic to advanced scientific functions
-              </p>
-            </div>
-          </div>
+          <section id="examples">
+            <ExamplesSection
+              onUseExample={(expr) => {
+                setExpression(expr)
+                setCalcTab('bc')
+                navigateToSection('calculator')
+              }}
+            />
+          </section>
+
+          <section id="reference">
+            <ReferenceSection />
+          </section>
+
+          <section id="challenges">
+            <ChallengesSection onNavigate={navigateToSection} />
+          </section>
+
+          <section id="community">
+            <CommunitySection />
+          </section>
         </div>
-      </section>
 
-      {/* Calculators Grid */}
-      <section id="calculators" className="py-16 bg-gray-50">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Professional Unix-Powered Calculators
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive collection of calculators with Unix command integration. 
-              Learn the command-line equivalent for every calculation.
-            </p>
-          </div>
+        <section className="container mx-auto px-4 pb-24" id="more-calculators">
+          <h2 className="text-2xl font-bold text-foreground text-center mb-10">
+            More calculators
+          </h2>
+          <CalculatorsGrid
+            calculators={gridCalculators}
+            getDifficultyColor={getDifficultyColor}
+            getIconColor={getIconColor}
+            formatSearchVolume={formatSearchVolume}
+            onOpenCalculator={(id) => {
+              const path = CALCULATOR_ROUTES[id]
+              if (path) router.push(path)
+            }}
+          />
+        </section>
 
-          <div className="grid-auto">
-            {calculators.map((calc, index) => (
-              <div
-                key={calc.id}
-                className={`card card-interactive ${!calc.component ? 'opacity-60' : ''}`}
-                onClick={() => calc.component && setActiveCalculator(calc.id)}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className={`p-3 rounded-lg ${getIconColor(calc.color)}`}>
-                      <calc.icon className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {calc.title}
-                      </h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(calc.difficulty)}`}>
-                          {calc.difficulty}
-                        </span>
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
-                          Unix
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <p className="text-gray-600 mb-4">
-                  {calc.description}
-                </p>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-xs text-gray-500">
-                    {formatSearchVolume(calc.searchVolume)} monthly searches
-                  </div>
-                  <div className={`text-sm font-medium ${calc.component ? 'text-primary-600' : 'text-gray-400'}`}>
-                    {calc.component ? 'Open Calculator →' : 'Coming Soon'}
-                  </div>
-                </div>
+        <footer className="py-8 px-4 border-t border-terminal-border mt-16">
+          <div className="container mx-auto max-w-6xl">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="text-sm text-muted-foreground">
+                © 2025 Unix Calculator. All rights reserved.
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-primary-50 to-blue-50">
-        <div className="container text-center">
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Choose Unix-Powered Calculators?
-            </h3>
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
-              <div>
-                <div className="text-4xl font-bold text-primary-600 mb-2">25+</div>
-                <div className="text-gray-600 font-medium">Professional Calculators</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary-600 mb-2">100%</div>
-                <div className="text-gray-600 font-medium">Unix Integration</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary-600 mb-2">50+</div>
-                <div className="text-gray-600 font-medium">Interactive Tutorials</div>
+              <div className="flex gap-6 flex-wrap justify-center">
+                <Link href="/all-calculators" className="text-sm text-muted-foreground hover:text-terminal-green transition-colors">All Calculators</Link>
+                <Link href="/sitemap" className="text-sm text-muted-foreground hover:text-terminal-green transition-colors">Site Map</Link>
+                <Link href="/privacy-policy" className="text-sm text-muted-foreground hover:text-terminal-green transition-colors">Privacy Policy</Link>
+                <Link href="/terms-of-service" className="text-sm text-muted-foreground hover:text-terminal-green transition-colors">Terms of Service</Link>
+                <Link href="/about" className="text-sm text-muted-foreground hover:text-terminal-green transition-colors">About Us</Link>
+                <Link href="/blog" className="text-sm text-muted-foreground hover:text-terminal-green transition-colors">Blog</Link>
+                <Link href="/knowledge" className="text-sm text-muted-foreground hover:text-terminal-green transition-colors">Knowledge Base</Link>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-white">
-        <div className="container text-center">
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Ready to Master Unix Mathematics?
-            </h3>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join thousands of developers and system administrators who use our calculators daily.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => setActiveSection('tutorials')}
-                className="btn btn-primary btn-lg"
-              >
-                <BookOpen className="w-5 h-5" />
-                Start Learning
-              </button>
-              <button 
-                onClick={() => window.location.hash = 'calculators'}
-                className="btn btn-outline btn-lg"
-              >
-                <Calculator className="w-5 h-5" />
-                Try Calculators
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+        </footer>
+      </main>
     </div>
   )
 }
 
-
+export default HomePageClient

@@ -67,21 +67,26 @@ module.exports = {
   				ring: 'hsl(var(--sidebar-ring))'
   			},
   			terminal: {
-  				green: 'hsl(var(--terminal-green))',
-  				cyan: 'hsl(var(--terminal-cyan))',
-  				amber: 'hsl(var(--terminal-amber))',
   				bg: 'hsl(var(--terminal-bg))',
-  				text: 'hsl(var(--terminal-text))'
+  				surface: 'hsl(var(--terminal-surface))',
+  				border: 'hsl(var(--terminal-border))',
+  				text: 'hsl(var(--terminal-text))',
+  				green: 'hsl(var(--terminal-green))',
+  				amber: 'hsl(var(--terminal-amber))',
+  				cyan: 'hsl(var(--terminal-cyan))',
+  				purple: 'hsl(var(--terminal-purple))',
+  				blue: 'hsl(var(--terminal-blue))'
   			}
   		},
   		backgroundImage: {
-  			'gradient-terminal':
-  				'linear-gradient(to bottom right, hsl(222 47% 10%), hsl(222 50% 5%))',
-  			'gradient-accent':
-  				'linear-gradient(to right, hsl(var(--terminal-green)), hsl(var(--terminal-cyan)))'
+  			'gradient-terminal': 'var(--gradient-terminal)',
+  			'gradient-card': 'var(--gradient-card)',
+  			'gradient-accent': 'var(--gradient-accent)'
   		},
   		boxShadow: {
-  			glow: '0 0 24px hsl(var(--terminal-green) / 0.35)'
+  			terminal: 'var(--shadow-terminal)',
+  			card: 'var(--shadow-card)',
+  			glow: 'var(--shadow-glow)'
   		},
   		fontFamily: {
   			mono: [
