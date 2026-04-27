@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Header } from '@/components/Header'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 
 async function sha256Hex(text: string): Promise<string> {
   const enc = new TextEncoder().encode(text)
@@ -50,6 +52,7 @@ export default function HashCalculatorClient() {
         {hash && (
           <div className="calc-result font-mono text-xs break-all">{hash}</div>
         )}
+        <RelatedGuides guides={getRelatedGuides('hash-calculator')} />
       </main>
     </div>
   )

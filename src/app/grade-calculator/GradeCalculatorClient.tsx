@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 function parseWeightedRows(text: string) {
   const rows: { score: number; weight: number }[] = []
@@ -64,6 +66,7 @@ export default function GradeCalculatorClient() {
             <span className="text-gray-500">Add at least one valid row.</span>
           )}
         </div>
+        <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
     </div>
   )

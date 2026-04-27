@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 /** f(x) = ax² + bx + c — numerical derivative at x0 using central difference */
 function derivQuad(a: number, b: number, _c: number, x0: number, h: number) {
@@ -76,6 +78,7 @@ export default function DerivativeCalculatorClient() {
             <span className="text-gray-500">Enter valid coefficients.</span>
           )}
         </div>
+        <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
     </div>
   )

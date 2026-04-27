@@ -5,6 +5,8 @@ import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 
 export default function RegexTesterClient() {
   const [pattern, setPattern] = useState('\\d+')
@@ -79,6 +81,7 @@ export default function RegexTesterClient() {
             </ul>
           </div>
         )}
+        <RelatedGuides guides={getRelatedGuides('regex-tester')} />
       </main>
     </div>
   )

@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 import {
   TerminalReferenceSection,
   TerminalRefCodeBlock,
@@ -136,6 +138,7 @@ export default function TimezoneConverterClient() {
           )}
         </div>
 
+        <RelatedGuides guides={getRelatedGuides('timezone-converter')} />
         <TerminalReferenceSection>
           <TerminalRefH2 />
           <TerminalRefIntro>

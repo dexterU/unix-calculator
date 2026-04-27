@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 import {
   TerminalReferenceSection,
   TerminalRefCodeBlock,
@@ -127,6 +129,7 @@ export default function DurationCalculatorClient() {
           )}
         </div>
 
+        <RelatedGuides guides={getRelatedGuides('duration-calculator')} />
         <TerminalReferenceSection>
           <TerminalRefH2 />
           <TerminalRefIntro>

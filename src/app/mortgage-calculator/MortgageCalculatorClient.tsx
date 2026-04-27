@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 function monthlyPayment(principal: number, annualPct: number, years: number) {
   const n = Math.round(years * 12)
@@ -76,6 +78,7 @@ export default function MortgageCalculatorClient() {
             <span className="text-gray-500">Enter valid loan parameters.</span>
           )}
         </div>
+        <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
     </div>
   )

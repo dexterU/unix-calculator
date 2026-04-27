@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 export default function BMICalculatorClient() {
   const [kg, setKg] = useState('70')
@@ -63,6 +65,7 @@ export default function BMICalculatorClient() {
             <span className="text-gray-500">Enter valid numbers.</span>
           )}
         </div>
+        <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
     </div>
   )

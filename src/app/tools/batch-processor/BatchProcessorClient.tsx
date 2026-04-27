@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Textarea } from '@/components/ui/textarea'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 import {
   TerminalReferenceSection,
   TerminalRefCodeBlock,
@@ -96,6 +98,7 @@ export default function BatchProcessorClient() {
           </table>
         </div>
 
+        <RelatedGuides guides={getRelatedGuides('batch-processor')} />
         <TerminalReferenceSection>
           <TerminalRefH2 />
           <TerminalRefIntro>

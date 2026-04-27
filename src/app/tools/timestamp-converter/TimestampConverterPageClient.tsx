@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 import {
   TerminalReferenceSection,
   TerminalRefCodeBlock,
@@ -108,6 +110,7 @@ export default function TimestampConverterPageClient() {
           )}
         </div>
 
+        <RelatedGuides guides={getRelatedGuides('timestamp-converter')} />
         <TerminalReferenceSection>
           <TerminalRefH2 />
           <TerminalRefIntro>

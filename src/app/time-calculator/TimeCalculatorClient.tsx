@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 
 export default function TimeCalculatorClient() {
   const [start, setStart] = useState(() =>
@@ -56,6 +58,7 @@ export default function TimeCalculatorClient() {
             <span className="text-gray-500">Check inputs.</span>
           )}
         </div>
+        <RelatedGuides guides={getRelatedGuides('time-calculator')} />
       </main>
     </div>
   )

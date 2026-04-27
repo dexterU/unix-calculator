@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 function trapz(f: (x: number) => number, a: number, b: number, n: number) {
   const h = (b - a) / n
@@ -85,6 +87,7 @@ export default function IntegralCalculatorClient() {
             <span className="text-gray-500">Valid range and coefficients required.</span>
           )}
         </div>
+        <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
     </div>
   )

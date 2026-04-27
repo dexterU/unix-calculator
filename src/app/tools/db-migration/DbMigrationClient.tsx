@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 import {
   TerminalReferenceSection,
   TerminalRefCodeBlock,
@@ -115,6 +117,7 @@ export default function DbMigrationClient() {
           />
         </div>
 
+        <RelatedGuides guides={getRelatedGuides('db-migration')} />
         <TerminalReferenceSection>
           <TerminalRefH2 />
           <TerminalRefIntro>

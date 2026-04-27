@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { getRelatedGuides } from '@/lib/related-guides'
 
 export default function BinaryConverterClient() {
   const [dec, setDec] = useState('42')
@@ -53,6 +55,7 @@ export default function BinaryConverterClient() {
             <span className="text-gray-500">Enter a whole number.</span>
           )}
         </div>
+        <RelatedGuides guides={getRelatedGuides('binary-converter')} />
       </main>
     </div>
   )

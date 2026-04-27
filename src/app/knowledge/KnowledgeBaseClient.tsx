@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { Header } from '@/components/Header'
+import { RelatedGuides } from '@/components/RelatedGuides'
+import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 const ARTICLES = [
   {
@@ -53,6 +55,7 @@ export default function KnowledgeBaseClient() {
             </li>
           ))}
         </ul>
+        <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
     </div>
   )
