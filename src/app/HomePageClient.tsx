@@ -49,7 +49,13 @@ function formatSearchVolume(volume: number) {
   return volume.toString()
 }
 
-function AdSenseUnit({ slot }: { slot: string }) {
+function AdSenseUnit({
+  slot,
+  format,
+}: {
+  slot: string
+  format: 'rectangle' | 'horizontal'
+}) {
   useEffect(() => {
     try {
       const w = window as Window & { adsbygoogle?: unknown[] }
@@ -70,11 +76,10 @@ function AdSenseUnit({ slot }: { slot: string }) {
       </span>
       <ins
         className="adsbygoogle"
-        style={{ display: 'block', width: '100%', minHeight: '90px' }}
+        style={{ display: 'block' }}
         data-ad-client="ca-pub-5643430532021522"
         data-ad-slot={slot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
+        data-ad-format={format}
       />
     </div>
   )
@@ -423,7 +428,7 @@ export default function HomePageClient() {
                 </div>
 
                 <div className="mt-6">
-                  <AdSenseUnit slot="AUTO" />
+                  <AdSenseUnit slot="2151149097" format="rectangle" />
                 </div>
 
                 {converted && resultRows.length > 0 && (
@@ -535,7 +540,7 @@ export default function HomePageClient() {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
-          <AdSenseUnit slot="AUTO" />
+          <AdSenseUnit slot="3915656904" format="horizontal" />
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
@@ -711,7 +716,7 @@ export default function HomePageClient() {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-20">
-          <AdSenseUnit slot="AUTO" />
+          <AdSenseUnit slot="1750948984" format="horizontal" />
         </section>
 
         <footer className="border-t border-terminal-border bg-terminal-surface/90">
