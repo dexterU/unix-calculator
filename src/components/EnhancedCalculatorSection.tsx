@@ -3,6 +3,7 @@
 import { BookOpen, Loader2, Play, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
@@ -56,18 +57,22 @@ export function EnhancedCalculatorSection({
         </Button>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Textarea
-          value={expression}
-          onChange={(e) => setExpression(e.target.value)}
-          placeholder="e.g. sqrt(16) + 2^3"
-          className="min-h-[120px]"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-              e.preventDefault()
-              void onCalculate()
-            }
-          }}
-        />
+        <div className="space-y-2">
+          <Label htmlFor="bc-expression">Expression</Label>
+          <Textarea
+            id="bc-expression"
+            value={expression}
+            onChange={(e) => setExpression(e.target.value)}
+            placeholder="e.g. sqrt(16) + 2^3"
+            className="min-h-[120px]"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault()
+                void onCalculate()
+              }
+            }}
+          />
+        </div>
         <div className="flex flex-wrap gap-2">
           <Button type="button" onClick={() => void onCalculate()} disabled={isCalculating}>
             {isCalculating ? (
@@ -118,6 +123,7 @@ export function EnhancedCalculatorSection({
                       type="button"
                       className="w-full text-left rounded-md p-2 hover:bg-muted/50 transition-colors"
                       onClick={() => setExpression(item.expression)}
+                      aria-label={`Reuse expression from history: ${item.expression}`}
                     >
                       <div className="font-mono text-foreground break-all">{item.expression}</div>
                       <div className="font-mono text-primary break-all">= {item.result}</div>

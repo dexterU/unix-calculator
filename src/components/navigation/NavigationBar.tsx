@@ -187,14 +187,24 @@ export function NavigationBar({
             className="rounded-md p-2 hover:bg-muted/80 lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}
-            aria-label="Toggle menu"
+            aria-controls="mobile-menu"
+            aria-label="Open navigation menu"
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-5 w-5" aria-hidden />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden />
+            )}
           </button>
         </div>
 
-        {mobileOpen && (
-          <div className="border-t border-border/60 py-4 lg:hidden">
+        <div
+          id="mobile-menu"
+          role="navigation"
+          aria-label="Mobile navigation"
+          hidden={!mobileOpen}
+          className="border-t border-border/60 py-4 lg:hidden"
+        >
             <div className="flex max-h-[70vh] flex-col gap-4 overflow-y-auto text-sm">
               <div>
                 <p className="mb-2 font-semibold text-muted-foreground">Tools</p>
@@ -313,8 +323,7 @@ export function NavigationBar({
                 </Link>
               </div>
             </div>
-          </div>
-        )}
+        </div>
       </div>
     </header>
   )

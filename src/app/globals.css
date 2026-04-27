@@ -15,7 +15,7 @@
     --secondary: 220 15% 15%;
     --secondary-foreground: 120 20% 85%;
     --muted: 220 15% 12%;
-    --muted-foreground: 120 10% 65%;
+    --muted-foreground: 120 15% 72%;
     --accent: 45 100% 55%;
     --accent-foreground: 220 13% 8%;
     --destructive: 0 75% 60%;
@@ -28,7 +28,7 @@
     --terminal-bg: 220 13% 8%;
     --terminal-surface: 220 15% 10%;
     --terminal-border: 220 15% 18%;
-    --terminal-text: 120 20% 85%;
+    --terminal-text: 120 20% 88%;
     --terminal-green: 120 100% 50%;
     --terminal-amber: 45 100% 55%;
     --terminal-cyan: 180 100% 50%;
@@ -61,5 +61,48 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--terminal-green));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid hsl(var(--terminal-green));
+    outline-offset: 2px;
+  }
+}
+
+/* Skip link: visible on focus only (Tailwind 3.3 has no focus:not-sr-only) */
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace;
+    font-size: 0.875rem;
+    color: hsl(var(--terminal-green));
+    background-color: hsl(var(--terminal-surface));
+    border: 1px solid hsl(var(--terminal-green));
+    border-radius: 0.5rem;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    overflow: visible;
+    clip: auto;
+    width: auto;
+    height: auto;
+    white-space: nowrap;
   }
 }

@@ -283,7 +283,7 @@ export default function HomePageClient() {
         </div>
       </header>
 
-      <div className="border-b border-terminal-border/80 bg-terminal-surface/40 px-4 py-2">
+      <nav aria-label="Breadcrumb" className="border-b border-terminal-border/80 bg-terminal-surface/40 px-4 py-2">
         <div className="mx-auto max-w-6xl font-mono text-xs text-muted-foreground">
           <span>Home</span>
           <span className="mx-2 text-terminal-border">›</span>
@@ -293,7 +293,7 @@ export default function HomePageClient() {
           <span className="mx-2 text-terminal-border">›</span>
           <span className="text-foreground/90">Unix Timestamp Converter</span>
         </div>
-      </div>
+      </nav>
 
       <main>
         <section className="mx-auto max-w-6xl px-4 py-12 lg:py-16">
@@ -359,14 +359,18 @@ export default function HomePageClient() {
             </div>
 
             <div className="lg:sticky lg:top-[70px] lg:self-start">
-              <div
+              <section
                 id="timestamp-converter-card"
+                aria-labelledby="timestamp-converter-heading"
                 className="rounded-xl border border-terminal-border bg-terminal-surface p-5 shadow-card"
               >
                 <div className="mb-4 flex items-center justify-between gap-2 border-b border-terminal-border pb-3">
                   <div className="flex items-center gap-2">
-                    <Timer className="h-5 w-5 text-terminal-green" />
-                    <h2 className="font-mono text-lg font-semibold text-foreground">
+                    <Timer className="h-5 w-5 text-terminal-green" aria-hidden />
+                    <h2
+                      id="timestamp-converter-heading"
+                      className="font-mono text-lg font-semibold text-foreground"
+                    >
                       Timestamp Converter
                     </h2>
                   </div>
@@ -389,8 +393,11 @@ export default function HomePageClient() {
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div>
-                      <Label className="text-muted-foreground">Format</Label>
+                      <Label htmlFor="homepage-ts-format" className="text-muted-foreground">
+                        Format
+                      </Label>
                       <select
+                        id="homepage-ts-format"
                         value={formatMode}
                         onChange={(e) => setFormatMode(e.target.value as FormatMode)}
                         className="mt-1 flex h-10 w-full rounded-md border border-terminal-border bg-background px-3 font-mono text-sm text-foreground"
@@ -402,8 +409,11 @@ export default function HomePageClient() {
                       </select>
                     </div>
                     <div>
-                      <Label className="text-muted-foreground">Timezone</Label>
+                      <Label htmlFor="homepage-ts-timezone" className="text-muted-foreground">
+                        Timezone
+                      </Label>
                       <select
+                        id="homepage-ts-timezone"
                         value={tzKey}
                         onChange={(e) =>
                           setTzKey(e.target.value as (typeof TZ_OPTIONS)[number]['iana'])
@@ -453,19 +463,25 @@ export default function HomePageClient() {
                           type="button"
                           onClick={() => copyValue(row.key, row.value)}
                           className="shrink-0 rounded border border-terminal-border bg-terminal-surface p-2 text-muted-foreground hover:text-terminal-green"
-                          aria-label={`Copy ${row.label}`}
+                          aria-label={
+                            copiedKey === row.key
+                              ? `Copied ${row.label} to clipboard`
+                              : `Copy ${row.label} to clipboard`
+                          }
                         >
                           {copiedKey === row.key ? (
-                            <span className="text-terminal-green">✓</span>
+                            <span className="text-terminal-green" aria-hidden>
+                              ✓
+                            </span>
                           ) : (
-                            <Copy className="h-4 w-4" />
+                            <Copy className="h-4 w-4" aria-hidden />
                           )}
                         </button>
                       </div>
                     ))}
                   </div>
                 )}
-              </div>
+              </section>
             </div>
           </div>
         </section>
@@ -596,7 +612,16 @@ export default function HomePageClient() {
           <Accordion type="single" collapsible defaultValue="faq-0" className="rounded-xl border border-terminal-border bg-terminal-surface px-4">
             {HOMEPAGE_FAQ.map((item, i) => (
               <AccordionItem key={item.question} value={`faq-${i}`} className="border-terminal-border">
-                <AccordionTrigger className="text-left font-mono text-sm hover:no-underline sm:text-base">
+                <AccordionTrigger
+                  className="text-left font-mono text-sm hover:no-underline sm:text-base"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      e.currentTarget.click()
+                    }
+                  }}
+                >
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent className="space-y-3 text-muted-foreground">
@@ -629,7 +654,11 @@ export default function HomePageClient() {
               // filter without navigating
             </p>
           </div>
-          <div className="mb-6 flex flex-wrap justify-center gap-2">
+          <div
+            className="mb-6 flex flex-wrap justify-center gap-2"
+            role="tablist"
+            aria-label="Filter tools by category"
+          >
             {(
               [
                 ['all', 'All Tools'],
@@ -638,21 +667,27 @@ export default function HomePageClient() {
                 ['dev', 'Dev Utilities'],
                 ['finance', 'Finance'],
               ] as const
-            ).map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setBrowseTab(id)}
-                className={cn(
-                  'rounded-full border px-4 py-1.5 font-mono text-xs transition-colors',
-                  browseTab === id
-                    ? 'border-terminal-green bg-terminal-green/15 text-terminal-green'
-                    : 'border-terminal-border bg-terminal-surface text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {label}
-              </button>
-            ))}
+            ).map(([id, label]) => {
+              const isActive = browseTab === id
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => setBrowseTab(id)}
+                  className={cn(
+                    'rounded-full border px-4 py-1.5 font-mono text-xs transition-colors',
+                    isActive
+                      ? 'border-terminal-green bg-terminal-green/15 text-terminal-green'
+                      : 'border-terminal-border bg-terminal-surface text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {label}
+                </button>
+              )
+            })}
           </div>
           <div
             className="grid gap-4"

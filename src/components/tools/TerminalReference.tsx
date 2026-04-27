@@ -38,7 +38,12 @@ export function TerminalRefCodeBlock({ label, code }: { label: string; code: str
       <pre className="overflow-x-auto whitespace-pre pr-24 font-mono text-sm leading-relaxed text-cyan-400">
         {code}
       </pre>
-      <button type="button" onClick={copy} className={copyBtnClass}>
+      <button
+        type="button"
+        onClick={copy}
+        className={copyBtnClass}
+        aria-label={copied ? `Copied ${label} command` : `Copy ${label} command to clipboard`}
+      >
         {copied ? '✓' : 'Copy Command'}
       </button>
     </div>

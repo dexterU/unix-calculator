@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
+import { Label } from '@/components/ui/label'
 import { RelatedGuides } from '@/components/RelatedGuides'
 import { getRelatedGuides } from '@/lib/related-guides'
 import {
@@ -84,31 +85,34 @@ export default function TimestampConverterPageClient() {
           Enter seconds since Unix epoch (UTC). Millisecond timestamps are detected
           automatically.
         </p>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Timestamp
-        </label>
-        <input
-          className="calc-input mb-4"
-          value={raw}
-          onChange={(e) => setRaw(e.target.value)}
-          placeholder="e.g. 1700000000 or 1700000000000"
-        />
-        <div className="calc-result min-h-[4rem]">
-          {date ? (
-            <div className="flex flex-col gap-1 text-left w-full">
-              <span>
-                <strong>UTC:</strong> {date.toISOString()}
+        <section aria-label="Timestamp converter">
+          <Label htmlFor="ts-page-timestamp" className="block text-sm font-medium text-gray-700 mb-2">
+            Timestamp
+          </Label>
+          <input
+            id="ts-page-timestamp"
+            className="calc-input mb-4"
+            value={raw}
+            onChange={(e) => setRaw(e.target.value)}
+            placeholder="e.g. 1700000000 or 1700000000000"
+          />
+          <div className="calc-result min-h-[4rem]">
+            {date ? (
+              <div className="flex flex-col gap-1 text-left w-full">
+                <span>
+                  <strong>UTC:</strong> {date.toISOString()}
+                </span>
+                <span>
+                  <strong>Local:</strong> {date.toString()}
+                </span>
+              </div>
+            ) : (
+              <span className="text-gray-500">
+                Enter a numeric Unix timestamp to convert.
               </span>
-              <span>
-                <strong>Local:</strong> {date.toString()}
-              </span>
-            </div>
-          ) : (
-            <span className="text-gray-500">
-              Enter a numeric Unix timestamp to convert.
-            </span>
-          )}
-        </div>
+            )}
+          </div>
+        </section>
 
         <RelatedGuides guides={getRelatedGuides('timestamp-converter')} />
         <TerminalReferenceSection>
