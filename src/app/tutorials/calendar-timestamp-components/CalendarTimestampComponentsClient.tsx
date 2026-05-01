@@ -7,47 +7,107 @@ export default function CalendarTimestampComponentsClient() {
   return (
     <ArticlePageShell>
       <article>
+        <nav className="mb-6 font-mono text-xs text-muted-foreground" aria-label="Breadcrumb">
+          <Link href="/" className="hover:text-terminal-green">
+            Home
+          </Link>
+          <span className="mx-2 text-terminal-border">›</span>
+          <Link href="/tutorials" className="hover:text-terminal-green">
+            Tutorials
+          </Link>
+          <span className="mx-2 text-terminal-border">›</span>
+          <span className="text-foreground/90">Calendar UI components</span>
+        </nav>
+
         <p className="mb-2 font-mono text-xs uppercase tracking-wider text-terminal-green">Tutorial · UI</p>
         <h1 className="mb-6 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Calendar UI components from Unix timestamps
         </h1>
-        <p className="mb-8 text-lg text-muted-foreground">
-          Treat UTC epoch as the source of truth; project to local or IANA zones only at the edges of
-          your form pipeline.
-        </p>
 
-        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">Data model</h2>
+        <div className="mb-10 border-l-4 border-terminal-green bg-terminal-surface/80 py-4 pl-4 pr-4 text-sm leading-relaxed text-muted-foreground">
+          <strong className="text-foreground">Quick answer:</strong> Persist selected ranges as UTC milliseconds or
+          seconds, never as ambiguous <code className="font-mono text-terminal-cyan">MM/DD</code> strings. UI pickers
+          should convert using an explicit IANA zone from user settings. Validate min/max using integer compares on epoch,
+          not lexicographic string compares.
+        </div>
+
+        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">Data model pattern</h2>
         <p className="mb-4 leading-relaxed text-muted-foreground">
-          Store <code className="rounded bg-muted px-1 font-mono text-terminal-cyan">startMs</code> /{' '}
-          <code className="font-mono text-terminal-cyan">endMs</code> as integers. When the user picks a
-          day in <code className="font-mono text-terminal-cyan">&lt;input type="date"&gt;</code>, convert
-          using an explicit timezone (usually <code className="font-mono text-terminal-cyan">Intl</code> or
-          your backend) instead of relying on the browser&apos;s implicit local interpretation for storage.
+          React state often stores <code className="font-mono text-terminal-cyan">startMs</code> and{' '}
+          <code className="font-mono text-terminal-cyan">endMs</code> exclusive for half-open intervals — document which
+          convention you use to match backend SQL. For all-day events, some products store civil dates without times;
+          represent them as starting at midnight in a chosen zone and convert carefully near DST.
         </p>
 
-        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">
-          Building a day range
-        </h2>
-        <pre className="mb-6 overflow-x-auto rounded-lg border border-terminal-border bg-terminal-surface p-4 font-mono text-sm text-terminal-cyan">
-          {`// user picked local calendar day → UTC epoch start of day
-// Prefer Temporal or backend for DST edges in production
-const localMidnight = new Date(year, month - 1, day)
-const epochMs = localMidnight.getTime()`}
-        </pre>
+        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">Building a local day range</h2>
+        <pre className="mb-4 overflow-x-auto rounded-lg border border-terminal-border bg-terminal-surface p-4 font-mono text-sm text-terminal-cyan">
+          {`function startOfLocalDayMs(year, monthIndex, day) {
+  // monthIndex: JS convention 0-11
+  return new Date(year, monthIndex, day, 0, 0, 0, 0).getTime();
+}
 
-        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">Accessibility</h2>
-        <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
-          <li>Expose <code className="font-mono text-terminal-cyan">aria-label</code> on icon-only controls.</li>
-          <li>Pair visible labels with <code className="font-mono text-terminal-cyan">htmlFor</code> on inputs.</li>
-          <li>Announce validation errors with <code className="font-mono text-terminal-cyan">role=&quot;alert&quot;</code>.</li>
+function endOfLocalDayMs(year, monthIndex, day) {
+  return new Date(year, monthIndex, day, 23, 59, 59, 999).getTime();
+}`}
+        </pre>
+        <p className="mb-6 leading-relaxed text-muted-foreground">
+          For production, swap to Temporal or server-side normalization to avoid off-by-one when DST skips hours — QA
+          should include the spring-forward weekend for affected zones.
+        </p>
+
+        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">Accessibility and validation</h2>
+        <ul className="mb-6 list-disc space-y-2 pl-6 text-muted-foreground">
+          <li>Associate labels with inputs; expose keyboard navigation on custom grids.</li>
+          <li>
+            Announce range updates via live regions only when necessary — too much chatter frustrates screen reader
+            users.
+          </li>
+          <li>Block submission until start &lt; end in epoch space.</li>
         </ul>
 
-        <p className="text-sm text-muted-foreground">
-          <Link href="/tools/timestamp-converter" className="text-terminal-green underline hover:no-underline">
-            Convert sample instants
-          </Link>{' '}
-          while you wire your picker.
-        </p>
+        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">Wire format table</h2>
+        <div className="mb-8 overflow-x-auto rounded-lg border border-terminal-border">
+          <table className="w-full min-w-[400px] text-left text-sm">
+            <thead>
+              <tr className="border-b border-terminal-border bg-terminal-surface font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="px-3 py-2">Layer</th>
+                <th className="px-3 py-2">Recommended</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['React state', 'number ms UTC'],
+                ['REST JSON', 'string RFC3339 or int seconds — pick one'],
+                ['DB', 'timestamptz or bigint ms'],
+              ].map(([a, b]) => (
+                <tr key={a} className="border-b border-terminal-border/60 last:border-0">
+                  <td className="px-3 py-2 font-medium text-foreground">{a}</td>
+                  <td className="px-3 py-2 text-muted-foreground">{b}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2 className="mb-3 mt-10 font-mono text-xl font-semibold text-terminal-green">Key takeaways</h2>
+        <ul className="mb-10 list-disc space-y-2 pl-6 text-muted-foreground">
+          <li>Half-open intervals reduce double-booking bugs.</li>
+          <li>Never trust the browser&apos;s default zone for persisted data.</li>
+          <li>Use integration tests with frozen clocks for flaky date logic.</li>
+          <li>Pair with{' '}
+            <Link href="/tools/timestamp-converter" className="text-terminal-green underline">
+              timestamp converter
+            </Link>{' '}
+            during design reviews.
+          </li>
+        </ul>
+
+        <div className="rounded-lg border border-terminal-border bg-terminal-surface/60 p-5 text-sm text-muted-foreground">
+          <p>
+            <strong className="text-foreground">Written by Unix Calculator Editorial Team</strong> — Last verified May
+            2026.
+          </p>
+        </div>
       </article>
     </ArticlePageShell>
   )
