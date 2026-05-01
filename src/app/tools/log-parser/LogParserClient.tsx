@@ -57,9 +57,9 @@ export default function LogParserClient() {
   }, [text])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-terminal text-foreground">
       <Header />
-      <main className="container py-12 max-w-4xl space-y-6">
+      <main className="mx-auto max-w-4xl space-y-6 px-4 py-12">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Log parser</h1>
           <p className="text-gray-600 max-w-2xl">

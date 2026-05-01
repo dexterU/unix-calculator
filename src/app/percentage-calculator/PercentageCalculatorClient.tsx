@@ -7,12 +7,12 @@ import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 export default function PercentageCalculatorClient() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-terminal text-foreground">
       <Header />
-      <div className="container py-8">
+      <main className="mx-auto max-w-4xl px-4 py-12">
         <PercentageCalculatorUI />
         <RelatedGuides guides={DEFAULT_GUIDES} />
-      </div>
+      </main>
     </div>
   )
 }

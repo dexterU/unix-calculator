@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blog = ['complete-guide-unix-timestamp-precision-2025','session-management-timestamp-expiration','caching-strategies-time-sensitive-data','graphql-subscriptions-realtime-timestamps']
   const knowledge = ['log-timestamp-analysis','rate-limiting-timestamps','graphql-timestamps','c-cpp-unix-timestamps','golang-unix-timestamps']
   const tutorials = ['javascript-timestamps','monitoring-timestamp-strategies','calendar-timestamp-components','webhook-timestamp-security','elasticsearch-timestamp-indexing','rate-limiting-timestamp-algorithms']
-  const reference = ['leap-seconds','timestamp-precision']
+  const reference = ['leap-seconds','timestamp-precision','timestamp-formats']
 
   return [
     { url: BASE, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
@@ -18,6 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/knowledge`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE}/tutorials`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE}/reference`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/function-reference`, lastModified: now, changeFrequency: 'monthly', priority: 0.65 },
+    { url: `${BASE}/case-studies`, lastModified: now, changeFrequency: 'monthly', priority: 0.55 },
+    { url: `${BASE}/challenges`, lastModified: now, changeFrequency: 'monthly', priority: 0.55 },
     { url: `${BASE}/all-calculators`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },

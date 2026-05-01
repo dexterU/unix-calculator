@@ -25,9 +25,9 @@ export default function CompoundInterestCalculatorClient() {
   }, [principal, annualPct, years, nPerYear])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-terminal text-foreground">
       <Header />
-      <main className="container py-12 max-w-md space-y-6">
+      <main className="mx-auto max-w-4xl space-y-6 px-4 py-12">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Compound interest

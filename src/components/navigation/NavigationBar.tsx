@@ -20,13 +20,14 @@ import type { HeaderSection } from '@/components/navigation/types'
 const LEARN_LINKS = [
   { href: '/tutorials', label: 'Tutorials' },
   { href: '/knowledge', label: 'Knowledge base' },
-  { href: '/reference', label: 'Reference' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/reference', label: 'Reference hub' },
+  { href: '/case-studies', label: 'Case studies' },
+  { href: '/challenges', label: 'Challenges' },
   { href: '/function-reference', label: 'Function reference' },
 ] as const
 
 const COMMUNITY_LINKS = [
-  { href: '/challenges', label: 'Challenges' },
-  { href: '/case-studies', label: 'Case studies' },
   { href: '/contact', label: 'Contact' },
   { href: '/sitemap', label: 'Sitemap' },
 ] as const
