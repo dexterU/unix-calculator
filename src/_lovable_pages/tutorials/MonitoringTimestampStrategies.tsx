@@ -1,6 +1,3 @@
 'use client'
 
-/** Replace with your Lovable page (this file path). */
-export default function MonitoringTimestampStrategies() {
-  return null
-}
+export { default } from '@/app/tutorials/monitoring-timestamp-strategies/MonitoringTimestampStrategiesClient'

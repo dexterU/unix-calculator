@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import GraphqlTimestampsClient from './GraphqlTimestampsClient'
 
 export const metadata: Metadata = {
-  title: 'Graphql Subscriptions Realtime Timestamps | Unix Calculator',
-  description: 'Graphql Subscriptions Realtime Timestamps — Unix Calculator',
+  title: 'GraphQL subscriptions & real-time timestamps | Unix Calculator',
+  description:
+    'Scalars, ordering, and clock skew for GraphQL subscriptions and WebSocket payloads using epoch conventions.',
 }
 
 export default function Page() {

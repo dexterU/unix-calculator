@@ -1,6 +1,3 @@
 'use client'
 
-/** Replace with your Lovable page (this file path). */
-export default function CalendarTimestampComponents() {
-  return null
-}
+export { default } from '@/app/tutorials/calendar-timestamp-components/CalendarTimestampComponentsClient'

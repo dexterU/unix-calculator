@@ -1,6 +1,3 @@
 'use client'
 
-/** Replace with your Lovable page (this file path). */
-export default function SessionManagementTimestamps() {
-  return null
-}
+export { default } from '@/app/blog/session-management-timestamp-expiration/SessionManagementTimestampsClient'

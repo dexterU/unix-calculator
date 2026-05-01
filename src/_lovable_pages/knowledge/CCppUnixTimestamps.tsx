@@ -1,6 +1,3 @@
 'use client'
 
-/** Replace with your Lovable page (this file path). */
-export default function CCppUnixTimestamps() {
-  return null
-}
+export { default } from '@/app/knowledge/c-cpp-unix-timestamps/CCppUnixTimestampsClient'

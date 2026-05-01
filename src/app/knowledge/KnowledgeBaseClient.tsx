@@ -35,11 +35,11 @@ const ARTICLES = [
 
 export default function KnowledgeBaseClient() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-terminal text-foreground">
       <Header />
-      <main className="container py-12 max-w-4xl">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Knowledge base</h1>
-        <p className="text-gray-600 mb-10 max-w-2xl">
+      <main className="container max-w-4xl px-4 py-12">
+        <h1 className="mb-2 text-3xl font-bold text-foreground">Knowledge base</h1>
+        <p className="mb-10 max-w-2xl text-muted-foreground">
           Deep dives on timestamps, limits, and language-specific APIs.
         </p>
         <ul className="grid gap-4 sm:grid-cols-2">
@@ -47,10 +47,10 @@ export default function KnowledgeBaseClient() {
             <li key={a.href}>
               <Link
                 href={a.href}
-                className="block h-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                className="block h-full rounded-lg border border-terminal-border bg-terminal-surface p-6 shadow-card transition-colors hover:border-terminal-green/40"
               >
-                <h2 className="text-base font-semibold text-gray-900">{a.title}</h2>
-                <p className="mt-2 text-sm text-gray-600">{a.description}</p>
+                <h2 className="text-base font-semibold text-foreground">{a.title}</h2>
+                <p className="mt-2 text-sm text-muted-foreground">{a.description}</p>
               </Link>
             </li>
           ))}

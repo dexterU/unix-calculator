@@ -4,17 +4,8 @@
  * Matches CRA `/blog/:slug` behavior: a single component handled all dynamic slugs.
  * Specific `/blog/...` static segments in the App Router take precedence.
  */
-import TimestampPrecision2025 from '@/_lovable_pages/blog/TimestampPrecision2025'
-import { RelatedGuides } from '@/components/RelatedGuides'
-import { DEFAULT_GUIDES } from '@/lib/related-guides'
+import TimestampPrecision2025Client from '../complete-guide-unix-timestamp-precision-2025/TimestampPrecision2025Client'
 
 export default function BlogSlugFallbackClient() {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <TimestampPrecision2025 />
-      <div className="container max-w-4xl px-4 pb-12">
-        <RelatedGuides guides={DEFAULT_GUIDES} />
-      </div>
-    </div>
-  )
+  return <TimestampPrecision2025Client />
 }
