@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import Link from 'next/link'
-import { Wrench } from 'lucide-react'
+import { Search, Wrench } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { getHomeToolCards } from '@/lib/homepage-tools'
 import { cn } from '@/lib/utils'
@@ -15,7 +15,7 @@ function formatSearchVolume(volume: number) {
 
 export default function AllCalculatorsClient() {
   const cards = useMemo(() => {
-    const base = getHomeToolCards()
+    const base = getHomeToolCards().filter((c) => c.path !== '/tools/timestamp-debugger')
     const hub = {
       id: 'tools-hub',
       name: 'Tools hub',
@@ -25,7 +25,17 @@ export default function AllCalculatorsClient() {
       searchVolume: 200000,
       tab: 'dev' as const,
     }
-    return [hub, ...base]
+    const timestampDebugger = {
+      id: 'tools-timestamp-debugger',
+      name: 'Timestamp Debugger',
+      description:
+        'Paste any timestamp. Instant auto-detection of format, timezone breakdown, and production bug warnings.',
+      path: '/tools/timestamp-debugger' as const,
+      icon: Search,
+      searchVolume: 400000,
+      tab: 'time' as const,
+    }
+    return [hub, timestampDebugger, ...base]
   }, [])
 
   return (

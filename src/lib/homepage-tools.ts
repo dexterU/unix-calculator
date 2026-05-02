@@ -1,5 +1,15 @@
 import type { LucideIcon } from 'lucide-react'
-import { Clock, Database, FileJson, Globe, Layers, Terminal, Timer, Wrench } from 'lucide-react'
+import {
+  Clock,
+  Database,
+  FileJson,
+  Globe,
+  Layers,
+  Search,
+  Terminal,
+  Timer,
+  Wrench,
+} from 'lucide-react'
 import { calculators } from '@/lib/navigationData'
 import { TOOLS_ROUTE_LIST } from '@/lib/toolsRouteList'
 
@@ -16,6 +26,7 @@ export type HomeToolCard = {
 }
 
 function toolIconForPath(path: string): LucideIcon {
+  if (path.includes('timestamp-debugger')) return Search
   if (path.includes('timestamp')) return Clock
   if (path.includes('timezone')) return Globe
   if (path.includes('duration')) return Timer

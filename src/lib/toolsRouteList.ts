@@ -14,6 +14,11 @@ export const TOOLS_ROUTE_LIST: ToolsRouteDef[] = [
     description: 'Unix Calculator tools and converters.',
   },
   {
+    path: '/tools/timestamp-debugger',
+    title: 'Timestamp Debugger',
+    description: 'Auto-detect any timestamp format instantly.',
+  },
+  {
     path: '/tools/timestamp-converter',
     title: 'Timestamp Converter',
     description:

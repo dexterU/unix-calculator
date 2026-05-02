@@ -85,7 +85,14 @@ export function NavigationBar({
                 <DropdownMenuSeparator />
                 {toolsLinks.map((t) => (
                   <DropdownMenuItem key={t.path} asChild>
-                    <Link href={t.path}>{t.title}</Link>
+                    <Link href={t.path} className="flex flex-wrap items-center gap-2">
+                      <span>{t.title}</span>
+                      {t.path === '/tools/timestamp-debugger' ? (
+                        <span className="rounded bg-terminal-green px-1.5 py-0.5 font-mono text-xs text-terminal-bg">
+                          NEW
+                        </span>
+                      ) : null}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -221,10 +228,15 @@ export function NavigationBar({
                     <Link
                       key={t.path}
                       href={t.path}
-                      className="py-1 text-foreground hover:text-primary"
+                      className="flex flex-wrap items-center gap-2 py-1 text-foreground hover:text-primary"
                       onClick={() => setMobileOpen(false)}
                     >
-                      {t.title}
+                      <span>{t.title}</span>
+                      {t.path === '/tools/timestamp-debugger' ? (
+                        <span className="rounded bg-terminal-green px-1.5 py-0.5 font-mono text-xs text-terminal-bg">
+                          NEW
+                        </span>
+                      ) : null}
                     </Link>
                   ))}
                 </div>
