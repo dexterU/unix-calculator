@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function GolangUnixTimestampsClient() {
   return (
@@ -146,6 +147,8 @@ fmt.Println(utc.Unix())`}
             Converter
           </Link>
         </p>
+
+        <NewsletterCapture source="knowledge-golang" />
       </article>
     </ArticlePageShell>
   )

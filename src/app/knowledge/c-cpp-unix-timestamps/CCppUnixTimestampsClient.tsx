@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function CCppUnixTimestampsClient() {
   return (
@@ -134,6 +135,8 @@ int main(void) {
             Timestamp converter
           </Link>
         </p>
+
+        <NewsletterCapture source="knowledge-cpp" />
       </article>
     </ArticlePageShell>
   )

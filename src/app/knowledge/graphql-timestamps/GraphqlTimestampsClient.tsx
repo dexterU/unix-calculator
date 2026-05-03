@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function GraphqlTimestampsClient() {
   return (
@@ -137,6 +138,8 @@ export default function GraphqlTimestampsClient() {
             2026.
           </p>
         </div>
+
+        <NewsletterCapture source="knowledge-graphql" />
       </article>
     </ArticlePageShell>
   )

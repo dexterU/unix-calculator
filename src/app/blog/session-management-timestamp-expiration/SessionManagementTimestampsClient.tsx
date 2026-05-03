@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function SessionManagementTimestampsClient() {
   return (
@@ -195,6 +196,8 @@ function issueTokens(userId) {
             Unix timestamp converter
           </Link>
         </p>
+
+        <NewsletterCapture source="blog-session-management" />
       </article>
     </ArticlePageShell>
   )

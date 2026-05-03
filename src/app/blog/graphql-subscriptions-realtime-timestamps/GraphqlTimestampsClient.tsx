@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function GraphqlTimestampsClient() {
   return (
@@ -194,6 +195,8 @@ async function* subscribeQuotes(symbol) {
             GraphQL timestamps (knowledge base)
           </Link>
         </p>
+
+        <NewsletterCapture source="blog-graphql" />
       </article>
     </ArticlePageShell>
   )

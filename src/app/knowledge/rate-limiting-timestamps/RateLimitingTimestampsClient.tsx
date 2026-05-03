@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function RateLimitingTimestampsClient() {
   return (
@@ -127,6 +128,8 @@ const key = \`rl:\${userId}:\${bucket}\`;
             Rate limiting algorithms
           </Link>
         </p>
+
+        <NewsletterCapture source="knowledge-rate-limiting" />
       </article>
     </ArticlePageShell>
   )

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function LogTimestampAnalysisClient() {
   return (
@@ -122,6 +123,8 @@ def parse_apache_ts(chunk: str) -> int:
             Log parser tool
           </Link>
         </p>
+
+        <NewsletterCapture source="knowledge-log-analysis" />
       </article>
     </ArticlePageShell>
   )

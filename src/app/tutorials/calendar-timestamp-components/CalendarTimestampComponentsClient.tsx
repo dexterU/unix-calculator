@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function CalendarTimestampComponentsClient() {
   return (
@@ -108,6 +109,8 @@ function endOfLocalDayMs(year, monthIndex, day) {
             2026.
           </p>
         </div>
+
+        <NewsletterCapture source="tutorial-calendar" />
       </article>
     </ArticlePageShell>
   )

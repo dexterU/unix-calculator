@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function TimestampPrecision2025Client() {
   return (
@@ -184,6 +185,8 @@ print(sys.maxsize)  # 9223372036854775807 on 64-bit CPython — not the same as 
           </Link>{' '}
           before migrating columns.
         </p>
+
+        <NewsletterCapture source="blog-precision-guide" />
       </article>
     </ArticlePageShell>
   )

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function ElasticsearchTimestampIndexingClient() {
   return (
@@ -121,6 +122,8 @@ export default function ElasticsearchTimestampIndexingClient() {
             2026.
           </p>
         </div>
+
+        <NewsletterCapture source="tutorial-elasticsearch" />
       </article>
     </ArticlePageShell>
   )

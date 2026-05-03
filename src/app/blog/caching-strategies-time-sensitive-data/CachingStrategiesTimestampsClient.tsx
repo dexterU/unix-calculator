@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function CachingStrategiesTimestampsClient() {
   return (
@@ -154,6 +155,8 @@ export default function CachingStrategiesTimestampsClient() {
             Timestamp converter
           </Link>
         </p>
+
+        <NewsletterCapture source="blog-caching" />
       </article>
     </ArticlePageShell>
   )

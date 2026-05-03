@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Header } from '@/components/Header'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
@@ -671,6 +672,8 @@ export default function ChallengesClient() {
             </Button>
           </div>
         ) : null}
+
+        {allComplete ? <NewsletterCapture source="challenges" /> : null}
 
         {challenge ? (
           <div className="rounded-xl border border-terminal-border bg-terminal-surface p-6">

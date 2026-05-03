@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function JavaScriptTimestampsClient() {
   return (
@@ -129,6 +130,8 @@ console.log(fmt.format(new Date(1713794701123)));`}
             2026.
           </p>
         </div>
+
+        <NewsletterCapture source="tutorial-javascript" />
       </article>
     </ArticlePageShell>
   )

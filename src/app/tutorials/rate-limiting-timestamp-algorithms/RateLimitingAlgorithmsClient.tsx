@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function RateLimitingAlgorithmsClient() {
   return (
@@ -104,6 +105,8 @@ local cost = tonumber(ARGV[4])
             2026.
           </p>
         </div>
+
+        <NewsletterCapture source="tutorial-rate-limiting" />
       </article>
     </ArticlePageShell>
   )

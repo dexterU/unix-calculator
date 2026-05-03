@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function WebhookTimestampSecurityClient() {
   return (
@@ -94,6 +95,8 @@ function verifyWebhook(req, res, next) {
             2026.
           </p>
         </div>
+
+        <NewsletterCapture source="tutorial-webhook" />
       </article>
     </ArticlePageShell>
   )

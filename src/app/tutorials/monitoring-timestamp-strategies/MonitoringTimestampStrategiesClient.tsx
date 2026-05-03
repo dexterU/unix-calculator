@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArticlePageShell } from '@/components/ArticlePageShell'
+import { NewsletterCapture } from '@/components/NewsletterCapture'
 
 export default function MonitoringTimestampStrategiesClient() {
   return (
@@ -123,6 +124,8 @@ const slo = 1 - bad.length / totalInWindow;`}
             2026.
           </p>
         </div>
+
+        <NewsletterCapture source="tutorial-monitoring" />
       </article>
     </ArticlePageShell>
   )
