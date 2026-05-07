@@ -17,15 +17,20 @@ import {
 } from '@/components/ui/dropdown-menu'
 import type { HeaderSection } from '@/components/navigation/types'
 
-const LEARN_LINKS = [
+const LEARN_LINKS: { href: string; label: string; description?: string }[] = [
   { href: '/tutorials', label: 'Tutorials' },
   { href: '/knowledge', label: 'Knowledge base' },
   { href: '/blog', label: 'Blog' },
   { href: '/reference', label: 'Reference hub' },
+  {
+    href: '/cheatsheets',
+    label: 'Cheatsheets',
+    description: 'Free PDF cheatsheets for JS, Python, Go and more',
+  },
   { href: '/case-studies', label: 'Case studies' },
   { href: '/challenges', label: 'Challenges' },
   { href: '/function-reference', label: 'Function reference' },
-] as const
+]
 
 const COMMUNITY_LINKS = [
   { href: '/contact', label: 'Contact' },
@@ -133,10 +138,17 @@ export function NavigationBar({
 
             <DropdownMenu>
               <NavDropdownTrigger>Learn</NavDropdownTrigger>
-              <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuContent align="start" className="w-72">
                 {LEARN_LINKS.map((l) => (
                   <DropdownMenuItem key={l.href} asChild>
-                    <Link href={l.href}>{l.label}</Link>
+                    <Link href={l.href} className="flex flex-col items-start gap-0.5 py-2">
+                      <span>{l.label}</span>
+                      {l.description ? (
+                        <span className="text-xs font-normal leading-snug text-muted-foreground">
+                          {l.description}
+                        </span>
+                      ) : null}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
                 {isHome ? (
