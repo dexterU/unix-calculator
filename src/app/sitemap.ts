@@ -1,15 +1,52 @@
 import { MetadataRoute } from 'next'
+import { getAllPublishedSlugs } from '@/lib/supabase/blog'
 
 const BASE = 'https://unixcalculator.com'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
-  const tools = ['timestamp-debugger','timestamp-converter','timestamp-api','batch-processor','timezone-converter','duration-calculator','cron-generator','cron-next-runs','log-parser','api-formatter','db-migration','jwt-decoder','permissions-calculator']
-  const calculators = ['age-calculator','percentage-calculator','binary-converter','hash-calculator','regex-tester','file-size-calculator','temperature-converter','time-calculator']
-  const blog = ['complete-guide-unix-timestamp-precision-2025','session-management-timestamp-expiration','caching-strategies-time-sensitive-data','graphql-subscriptions-realtime-timestamps']
-  const knowledge = ['log-timestamp-analysis','rate-limiting-timestamps','graphql-timestamps','c-cpp-unix-timestamps','golang-unix-timestamps']
-  const tutorials = ['javascript-timestamps','monitoring-timestamp-strategies','calendar-timestamp-components','webhook-timestamp-security','elasticsearch-timestamp-indexing','rate-limiting-timestamp-algorithms']
-  const reference = ['leap-seconds','timestamp-precision','timestamp-formats']
+  const tools = [
+    'timestamp-debugger',
+    'timestamp-converter',
+    'timestamp-api',
+    'batch-processor',
+    'timezone-converter',
+    'duration-calculator',
+    'cron-generator',
+    'cron-next-runs',
+    'log-parser',
+    'api-formatter',
+    'db-migration',
+    'jwt-decoder',
+    'permissions-calculator',
+  ]
+  const calculators = [
+    'age-calculator',
+    'percentage-calculator',
+    'binary-converter',
+    'hash-calculator',
+    'regex-tester',
+    'file-size-calculator',
+    'temperature-converter',
+    'time-calculator',
+  ]
+  const blogSlugs = await getAllPublishedSlugs()
+  const knowledge = [
+    'log-timestamp-analysis',
+    'rate-limiting-timestamps',
+    'graphql-timestamps',
+    'c-cpp-unix-timestamps',
+    'golang-unix-timestamps',
+  ]
+  const tutorials = [
+    'javascript-timestamps',
+    'monitoring-timestamp-strategies',
+    'calendar-timestamp-components',
+    'webhook-timestamp-security',
+    'elasticsearch-timestamp-indexing',
+    'rate-limiting-timestamp-algorithms',
+  ]
+  const reference = ['leap-seconds', 'timestamp-precision', 'timestamp-formats']
 
   return [
     { url: BASE, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
@@ -33,11 +70,41 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/privacy-policy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/terms-of-service`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
-    ...tools.map(t => ({ url: `${BASE}/tools/${t}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.85 })),
-    ...calculators.map(c => ({ url: `${BASE}/${c}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.75 })),
-    ...blog.map(s => ({ url: `${BASE}/blog/${s}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.7 })),
-    ...knowledge.map(s => ({ url: `${BASE}/knowledge/${s}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.7 })),
-    ...tutorials.map(s => ({ url: `${BASE}/tutorials/${s}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.65 })),
-    ...reference.map(s => ({ url: `${BASE}/reference/${s}`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.6 })),
+    ...tools.map((t) => ({
+      url: `${BASE}/tools/${t}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
+    })),
+    ...calculators.map((c) => ({
+      url: `${BASE}/${c}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    })),
+    ...blogSlugs.map((s) => ({
+      url: `${BASE}/blog/${s}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    ...knowledge.map((s) => ({
+      url: `${BASE}/knowledge/${s}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    ...tutorials.map((s) => ({
+      url: `${BASE}/tutorials/${s}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.65,
+    })),
+    ...reference.map((s) => ({
+      url: `${BASE}/reference/${s}`,
+      lastModified: now,
+      changeFrequency: 'yearly' as const,
+      priority: 0.6,
+    })),
   ]
 }
