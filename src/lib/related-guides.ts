@@ -32,6 +32,30 @@ export const GUIDES: Record<string, Guide[]> = {
         'How JWT exp and iat claims use Unix timestamps and precision implications.',
     },
   ],
+  'permissions-calculator': [
+    {
+      title: 'Unix Timestamps in JavaScript',
+      href: '/tutorials/javascript-timestamps',
+      category: 'Tutorial',
+      readTime: '8 min',
+      description:
+        'File system timestamps — ctime, mtime, atime — and how they relate to Unix timestamps.',
+    },
+    {
+      title: 'Log Timestamp Analysis',
+      href: '/knowledge/log-timestamp-analysis',
+      category: 'Knowledge Base',
+      readTime: '11 min',
+      description: 'Reading and parsing file permission logs with timestamp correlation.',
+    },
+    {
+      title: 'C and C++ Unix Timestamps',
+      href: '/knowledge/c-cpp-unix-timestamps',
+      category: 'Knowledge Base',
+      readTime: '9 min',
+      description: 'Working with file permissions and timestamps in C using stat() and chmod().',
+    },
+  ],
   'timestamp-converter': [
     {
       title: 'Complete Guide to Unix Timestamp Precision in 2026',

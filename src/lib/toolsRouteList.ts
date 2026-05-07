@@ -24,6 +24,11 @@ export const TOOLS_ROUTE_LIST: ToolsRouteDef[] = [
     description: 'Decode JSON Web Tokens instantly',
   },
   {
+    path: '/tools/permissions-calculator',
+    title: 'Permissions Calculator',
+    description: 'chmod calculator with visual bit toggling',
+  },
+  {
     path: '/tools/timestamp-converter',
     title: 'Timestamp Converter',
     description:
