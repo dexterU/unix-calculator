@@ -55,6 +55,11 @@ export const TOOLS_ROUTE_LIST: ToolsRouteDef[] = [
     description: 'Build and validate cron expressions.',
   },
   {
+    path: '/tools/cron-next-runs',
+    title: 'Cron Next Runs',
+    description: 'See next 10 scheduled times for any cron expression',
+  },
+  {
     path: '/tools/log-parser',
     title: 'Log Parser',
     description: 'Parse and analyze log timestamps.',

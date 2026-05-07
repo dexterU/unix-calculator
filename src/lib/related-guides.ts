@@ -56,6 +56,30 @@ export const GUIDES: Record<string, Guide[]> = {
       description: 'Working with file permissions and timestamps in C using stat() and chmod().',
     },
   ],
+  'cron-next-runs': [
+    {
+      title: 'Rate Limiting Algorithms with Unix Timestamps',
+      href: '/tutorials/rate-limiting-timestamp-algorithms',
+      category: 'Tutorial',
+      readTime: '9 min',
+      description:
+        'Schedule rate limit windows using cron jobs and Unix timestamp boundaries.',
+    },
+    {
+      title: 'Monitoring Timestamp Strategies',
+      href: '/tutorials/monitoring-timestamp-strategies',
+      category: 'Tutorial',
+      readTime: '10 min',
+      description: 'Align monitoring schedules with cron jobs for accurate SLA tracking.',
+    },
+    {
+      title: 'Session Management with Timestamp Expiration',
+      href: '/blog/session-management-timestamp-expiration',
+      category: 'Tutorial',
+      readTime: '8 min',
+      description: 'Use cron jobs to clean expired sessions using Unix timestamp comparisons.',
+    },
+  ],
   'timestamp-converter': [
     {
       title: 'Complete Guide to Unix Timestamp Precision in 2026',

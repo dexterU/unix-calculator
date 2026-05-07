@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
@@ -58,6 +59,20 @@ export default function CronGeneratorClient() {
     <div className="min-h-screen bg-gradient-terminal text-foreground">
       <Header />
       <main className="mx-auto max-w-4xl space-y-6 px-4 py-12">
+        <div className="flex items-center justify-between gap-4 rounded-xl border border-terminal-green/30 bg-terminal-surface p-4">
+          <div>
+            <p className="font-mono text-sm font-bold text-foreground">See when your cron will actually run →</p>
+            <p className="mt-1 font-mono text-xs text-muted-foreground">
+              Use Cron Next Runs to preview the next 10 execution times
+            </p>
+          </div>
+          <Link
+            href="/tools/cron-next-runs"
+            className="whitespace-nowrap rounded-lg bg-terminal-green px-4 py-2 font-mono text-sm font-bold text-terminal-bg transition-opacity hover:opacity-90"
+          >
+            Try it →
+          </Link>
+        </div>
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Cron expression builder
