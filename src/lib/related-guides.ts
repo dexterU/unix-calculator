@@ -80,6 +80,29 @@ export const GUIDES: Record<string, Guide[]> = {
       description: 'Use cron jobs to clean expired sessions using Unix timestamp comparisons.',
     },
   ],
+  'timestamp-api': [
+    {
+      title: 'API Timestamp Validation',
+      href: '/tutorials/webhook-timestamp-security',
+      category: 'Security',
+      readTime: '8 min',
+      description: 'Validate API timestamps to prevent replay attacks.',
+    },
+    {
+      title: 'GraphQL Timestamps',
+      href: '/knowledge/graphql-timestamps',
+      category: 'Knowledge Base',
+      readTime: '6 min',
+      description: 'Consume timestamp APIs in GraphQL resolvers correctly.',
+    },
+    {
+      title: 'Caching Strategies for Time-Sensitive Data',
+      href: '/blog/caching-strategies-time-sensitive-data',
+      category: 'Guide',
+      readTime: '7 min',
+      description: 'Cache API timestamp responses correctly with TTL strategies.',
+    },
+  ],
   'timestamp-converter': [
     {
       title: 'Complete Guide to Unix Timestamp Precision in 2026',

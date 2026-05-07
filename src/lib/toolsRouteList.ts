@@ -35,6 +35,11 @@ export const TOOLS_ROUTE_LIST: ToolsRouteDef[] = [
       'Convert between Unix epoch seconds and human-readable UTC/local datetime.',
   },
   {
+    path: '/tools/timestamp-api',
+    title: 'Timestamp API',
+    description: 'Free JSON API — no key required',
+  },
+  {
     path: '/tools/batch-processor',
     title: 'Batch Processor',
     description: 'Batch timestamp and data processing.',

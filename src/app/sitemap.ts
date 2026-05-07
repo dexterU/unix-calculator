@@ -4,7 +4,7 @@ const BASE = 'https://unixcalculator.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
-  const tools = ['timestamp-debugger','timestamp-converter','batch-processor','timezone-converter','duration-calculator','cron-generator','cron-next-runs','log-parser','api-formatter','db-migration','jwt-decoder','permissions-calculator']
+  const tools = ['timestamp-debugger','timestamp-converter','timestamp-api','batch-processor','timezone-converter','duration-calculator','cron-generator','cron-next-runs','log-parser','api-formatter','db-migration','jwt-decoder','permissions-calculator']
   const calculators = ['age-calculator','percentage-calculator','binary-converter','hash-calculator','regex-tester','file-size-calculator','temperature-converter','time-calculator']
   const blog = ['complete-guide-unix-timestamp-precision-2025','session-management-timestamp-expiration','caching-strategies-time-sensitive-data','graphql-subscriptions-realtime-timestamps']
   const knowledge = ['log-timestamp-analysis','rate-limiting-timestamps','graphql-timestamps','c-cpp-unix-timestamps','golang-unix-timestamps']
