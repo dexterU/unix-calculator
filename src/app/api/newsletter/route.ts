@@ -110,15 +110,30 @@ const WELCOME_HTML = `
 `
 
 export async function POST(req: NextRequest) {
+  const requiredEnvVars = {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    ZOHO_EMAIL: process.env.ZOHO_EMAIL,
+    ZOHO_PASSWORD: process.env.ZOHO_PASSWORD,
+  }
+
+  const missing = Object.entries(requiredEnvVars)
+    .filter(([, v]) => !v)
+    .map(([k]) => k)
+
+  if (missing.length > 0) {
+    console.error('Missing env vars:', missing.join(', '))
+    return NextResponse.json(
+      { error: `Server misconfigured: missing ${missing.join(', ')}` },
+      { status: 500 }
+    )
+  }
+
   try {
     const { email, source } = await req.json()
 
     if (!email || !email.includes('@')) {
       return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
-    }
-
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
     }
 
     const supabase = getServiceSupabase()
