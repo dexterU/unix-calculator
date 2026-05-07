@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Calculate loan payments, total interest, and payoff schedule. Works for personal loans, auto loans, and student loans.',
   alternates: { canonical: 'https://unixcalculator.com/loan-calculator' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

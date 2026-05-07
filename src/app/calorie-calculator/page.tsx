@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Calculate your daily calorie needs based on age, weight, height, and activity level. Uses Mifflin-St Jeor equation for accurate BMR calculation.',
   alternates: { canonical: 'https://unixcalculator.com/calorie-calculator' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

@@ -4,6 +4,7 @@ import {
   Database,
   FileJson,
   Globe,
+  Key,
   Layers,
   Search,
   Terminal,
@@ -26,6 +27,7 @@ export type HomeToolCard = {
 }
 
 function toolIconForPath(path: string): LucideIcon {
+  if (path.includes('jwt')) return Key
   if (path.includes('timestamp-debugger')) return Search
   if (path.includes('timestamp')) return Clock
   if (path.includes('timezone')) return Globe

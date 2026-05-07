@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Perform matrix operations including addition, multiplication, transpose, and determinant. Free online matrix calculator.',
   alternates: { canonical: 'https://unixcalculator.com/matrix-calculator' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

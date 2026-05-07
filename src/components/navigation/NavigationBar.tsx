@@ -87,8 +87,8 @@ export function NavigationBar({
                   <DropdownMenuItem key={t.path} asChild>
                     <Link href={t.path} className="flex flex-wrap items-center gap-2">
                       <span>{t.title}</span>
-                      {t.path === '/tools/timestamp-debugger' ? (
-                        <span className="rounded bg-terminal-green px-1.5 py-0.5 font-mono text-xs text-terminal-bg">
+                      {t.path === '/tools/jwt-decoder' ? (
+                        <span className="ml-2 rounded bg-terminal-green px-1.5 py-0.5 font-mono text-xs text-terminal-bg">
                           NEW
                         </span>
                       ) : null}
@@ -232,8 +232,8 @@ export function NavigationBar({
                       onClick={() => setMobileOpen(false)}
                     >
                       <span>{t.title}</span>
-                      {t.path === '/tools/timestamp-debugger' ? (
-                        <span className="rounded bg-terminal-green px-1.5 py-0.5 font-mono text-xs text-terminal-bg">
+                      {t.path === '/tools/jwt-decoder' ? (
+                        <span className="ml-2 rounded bg-terminal-green px-1.5 py-0.5 font-mono text-xs text-terminal-bg">
                           NEW
                         </span>
                       ) : null}

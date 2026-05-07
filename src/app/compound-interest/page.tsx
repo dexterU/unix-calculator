@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Calculate compound interest and investment growth over time. Shows final amount, total interest earned, and year-by-year breakdown.',
   alternates: { canonical: 'https://unixcalculator.com/compound-interest' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

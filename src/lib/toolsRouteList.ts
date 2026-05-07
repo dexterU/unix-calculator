@@ -19,6 +19,11 @@ export const TOOLS_ROUTE_LIST: ToolsRouteDef[] = [
     description: 'Auto-detect any timestamp format instantly.',
   },
   {
+    path: '/tools/jwt-decoder',
+    title: 'JWT Decoder',
+    description: 'Decode JSON Web Tokens instantly',
+  },
+  {
     path: '/tools/timestamp-converter',
     title: 'Timestamp Converter',
     description:

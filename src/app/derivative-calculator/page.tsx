@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Calculate derivatives of mathematical functions. Supports polynomials, trigonometric, exponential, and logarithmic functions.',
   alternates: { canonical: 'https://unixcalculator.com/derivative-calculator' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

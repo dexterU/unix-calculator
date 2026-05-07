@@ -7,6 +7,31 @@ export interface Guide {
 }
 
 export const GUIDES: Record<string, Guide[]> = {
+  'jwt-decoder': [
+    {
+      title: 'Session Management with Timestamp Expiration',
+      href: '/blog/session-management-timestamp-expiration',
+      category: 'Tutorial',
+      readTime: '8 min',
+      description:
+        'How JWT exp claims work with Unix timestamps for secure session management.',
+    },
+    {
+      title: 'Webhook Timestamp Security',
+      href: '/tutorials/webhook-timestamp-security',
+      category: 'Security',
+      readTime: '8 min',
+      description: 'Validate JWT timestamps in webhook payloads to prevent replay attacks.',
+    },
+    {
+      title: 'Unix Timestamp Precision Guide',
+      href: '/blog/complete-guide-unix-timestamp-precision-2025',
+      category: 'Deep Dive',
+      readTime: '12 min',
+      description:
+        'How JWT exp and iat claims use Unix timestamps and precision implications.',
+    },
+  ],
   'timestamp-converter': [
     {
       title: 'Complete Guide to Unix Timestamp Precision in 2026',

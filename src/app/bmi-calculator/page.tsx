@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Calculate your Body Mass Index instantly. Enter height and weight in metric or imperial units. Includes BMI categories and healthy weight range.',
   alternates: { canonical: 'https://unixcalculator.com/bmi-calculator' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

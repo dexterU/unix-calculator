@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import Link from 'next/link'
-import { Search, Wrench } from 'lucide-react'
+import { Search, Wrench, Key } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { getHomeToolCards } from '@/lib/homepage-tools'
 import { cn } from '@/lib/utils'
@@ -35,7 +35,17 @@ export default function AllCalculatorsClient() {
       searchVolume: 400000,
       tab: 'time' as const,
     }
-    return [hub, timestampDebugger, ...base]
+    const jwtDecoder = {
+      id: 'tools-jwt-decoder',
+      name: 'JWT Decoder',
+      description:
+        'Decode JWT tokens instantly. View header, payload, expiry status, and all claims. 100% client-side.',
+      path: '/tools/jwt-decoder' as const,
+      icon: Key,
+      searchVolume: 400000,
+      tab: 'dev' as const,
+    }
+    return [hub, timestampDebugger, jwtDecoder, ...base]
   }, [])
 
   return (

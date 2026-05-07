@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Calculate monthly mortgage payments, total interest, and amortization schedule. Includes principal, interest, taxes, and insurance (PITI).',
   alternates: { canonical: 'https://unixcalculator.com/mortgage-calculator' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

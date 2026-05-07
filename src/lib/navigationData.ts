@@ -1,4 +1,4 @@
-import { Calculator, TrendingUp, Code, DollarSign, Zap, RotateCcw } from 'lucide-react'
+import { Calculator, TrendingUp, Code, RotateCcw } from 'lucide-react'
 
 export interface Calculator {
   id: string
@@ -14,7 +14,6 @@ export interface Calculator {
 }
 
 export const calculators: Calculator[] = [
-  // Essential Math (High Traffic)
   {
     id: 'age-calculator',
     title: 'Age Calculator',
@@ -24,54 +23,19 @@ export const calculators: Calculator[] = [
     category: 'essential',
     icon: Calculator,
     path: '/age-calculator',
-    unixIntegration: true
+    unixIntegration: true,
   },
   {
     id: 'percentage-calculator',
-    title: 'Percentage Calculator', 
+    title: 'Percentage Calculator',
     description: 'BC-powered percentage calculations with precision',
     searchVolume: 448000,
     difficulty: 'easy',
     category: 'essential',
     icon: TrendingUp,
     path: '/percentage-calculator',
-    unixIntegration: true
+    unixIntegration: true,
   },
-  {
-    id: 'bmi-calculator',
-    title: 'BMI Calculator',
-    description: 'Body Mass Index with AWK data processing',
-    searchVolume: 466000,
-    difficulty: 'easy', 
-    category: 'essential',
-    icon: Calculator,
-    path: '/bmi-calculator',
-    unixIntegration: true
-  },
-  {
-    id: 'grade-calculator',
-    title: 'Grade Calculator',
-    description: 'GPA calculations with AWK statistics',
-    searchVolume: 140800,
-    difficulty: 'medium',
-    category: 'utility',
-    icon: Calculator,
-    path: '/grade-calculator',
-    unixIntegration: true
-  },
-  {
-    id: 'calorie-calculator',
-    title: 'Calorie Calculator',
-    description: 'Daily caloric needs with Unix precision',
-    searchVolume: 89000,
-    difficulty: 'medium',
-    category: 'utility',
-    icon: Calculator,
-    path: '/calorie-calculator',
-    unixIntegration: true
-  },
-  
-  // Programming Tools
   {
     id: 'binary-converter',
     title: 'Binary Converter',
@@ -81,7 +45,7 @@ export const calculators: Calculator[] = [
     category: 'programming',
     icon: Code,
     path: '/binary-converter',
-    unixIntegration: true
+    unixIntegration: true,
   },
   {
     id: 'hash-calculator',
@@ -92,7 +56,7 @@ export const calculators: Calculator[] = [
     category: 'programming',
     icon: Code,
     path: '/hash-calculator',
-    unixIntegration: true
+    unixIntegration: true,
   },
   {
     id: 'regex-tester',
@@ -103,7 +67,7 @@ export const calculators: Calculator[] = [
     category: 'programming',
     icon: Code,
     path: '/regex-tester',
-    unixIntegration: true
+    unixIntegration: true,
   },
   {
     id: 'file-size-calculator',
@@ -114,96 +78,10 @@ export const calculators: Calculator[] = [
     category: 'programming',
     icon: Code,
     path: '/file-size-calculator',
-    unixIntegration: true
-  },
-  
-  // Financial (High Value)
-  {
-    id: 'mortgage-calculator',
-    title: 'Mortgage Calculator',
-    description: 'Advanced mortgage math with BC precision',
-    searchVolume: 2400000,
-    difficulty: 'medium',
-    category: 'financial',
-    icon: DollarSign,
-    path: '/mortgage-calculator',
     unixIntegration: true,
-    premium: true
   },
   {
-    id: 'compound-interest',
-    title: 'Compound Interest Calculator',
-    description: 'Advanced interest calculations using BC math',
-    searchVolume: 78000,
-    difficulty: 'medium',
-    category: 'financial',
-    icon: DollarSign,
-    path: '/compound-interest',
-    unixIntegration: true,
-    premium: true
-  },
-  {
-    id: 'loan-calculator',
-    title: 'Loan Calculator',
-    description: 'Loan payments and amortization with Unix tools',
-    searchVolume: 456000,
-    difficulty: 'medium',
-    category: 'financial',
-    icon: DollarSign,
-    path: '/loan-calculator',
-    unixIntegration: true,
-    premium: true
-  },
-  
-  // Scientific 
-  {
-    id: 'derivative-calculator',
-    title: 'Derivative Calculator',
-    description: 'Numerical derivatives using BC calculus',
-    searchVolume: 89000,
-    difficulty: 'hard',
-    category: 'scientific',
-    icon: Zap,
-    path: '/derivative-calculator',
-    unixIntegration: true
-  },
-  {
-    id: 'integral-calculator',
-    title: 'Integral Calculator',
-    description: 'Calculate integrals with BC numerical methods',
-    searchVolume: 67000,
-    difficulty: 'hard',
-    category: 'scientific',
-    icon: Zap,
-    path: '/integral-calculator',
-    unixIntegration: true
-  },
-  {
-    id: 'matrix-calculator',
-    title: 'Matrix Calculator',
-    description: 'Matrix operations with awk and BC arithmetic',
-    searchVolume: 45000,
-    difficulty: 'hard',
-    category: 'scientific',
-    icon: Zap,
-    path: '/matrix-calculator',
-    unixIntegration: true
-  },
-  {
-    id: 'equation-solver',
-    title: 'Equation Solver',
-    description: 'Solve equations using Newton-Raphson and BC',
-    searchVolume: 34000,
-    difficulty: 'hard',
-    category: 'scientific',
-    icon: Zap,
-    path: '/equation-solver',
-    unixIntegration: true
-  },
-  
-  // Utilities
-  {
-    id: 'time-calculator', 
+    id: 'time-calculator',
     title: 'Time Calculator',
     description: 'Time calculations with Unix date commands',
     searchVolume: 327000,
@@ -211,18 +89,7 @@ export const calculators: Calculator[] = [
     category: 'utility',
     icon: RotateCcw,
     path: '/time-calculator',
-    unixIntegration: true
-  },
-  {
-    id: 'cm-to-inches-converter',
-    title: 'CM to Inches Converter',
-    description: 'Convert units with BC precision arithmetic',
-    searchVolume: 234000,
-    difficulty: 'easy',
-    category: 'utility',
-    icon: Calculator,
-    path: '/cm-to-inches',
-    unixIntegration: true
+    unixIntegration: true,
   },
   {
     id: 'temperature-converter',
@@ -233,15 +100,15 @@ export const calculators: Calculator[] = [
     category: 'utility',
     icon: Calculator,
     path: '/temperature-converter',
-    unixIntegration: true
-  }
+    unixIntegration: true,
+  },
 ]
 
 export const categories = [
   { id: 'all', name: 'All Calculators', count: calculators.length },
-  { id: 'essential', name: 'Essential Math', count: calculators.filter(c => c.category === 'essential').length },
-  { id: 'programming', name: 'Programming', count: calculators.filter(c => c.category === 'programming').length },
-  { id: 'financial', name: 'Financial', count: calculators.filter(c => c.category === 'financial').length },
-  { id: 'scientific', name: 'Scientific', count: calculators.filter(c => c.category === 'scientific').length },
-  { id: 'utility', name: 'Utilities', count: calculators.filter(c => c.category === 'utility').length }
+  { id: 'essential', name: 'Essential Math', count: calculators.filter((c) => c.category === 'essential').length },
+  { id: 'programming', name: 'Programming', count: calculators.filter((c) => c.category === 'programming').length },
+  { id: 'financial', name: 'Financial', count: calculators.filter((c) => c.category === 'financial').length },
+  { id: 'scientific', name: 'Scientific', count: calculators.filter((c) => c.category === 'scientific').length },
+  { id: 'utility', name: 'Utilities', count: calculators.filter((c) => c.category === 'utility').length },
 ]

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Solve linear, quadratic, and systems of equations instantly. Shows step-by-step solutions. Free online equation solver.',
   alternates: { canonical: 'https://unixcalculator.com/equation-solver' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {

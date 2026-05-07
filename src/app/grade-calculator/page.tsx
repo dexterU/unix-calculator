@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Calculate weighted grade averages and GPA instantly. Enter scores and weights to get your final grade. Free online grade calculator.',
   alternates: { canonical: 'https://unixcalculator.com/grade-calculator' },
+  robots: { index: false, follow: false },
 }
 
 export default function Page() {
