@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import CronGeneratorClient from './CronGeneratorClient'
 
 export const metadata: Metadata = {
-  title: 'Cron Generator | Unix Calculator',
-  description: 'Cron Generator — Unix Calculator',
+  title: 'Cron Generator — Crontab Expression Builder & Tester',
+  description:
+    'Build and test cron expressions with a visual generator. Supports standard cron, AWS EventBridge, and Quartz scheduler syntax.',
+  alternates: { canonical: 'https://unixcalculator.com/tools/cron-generator' },
 }
 
 export default function Page() {

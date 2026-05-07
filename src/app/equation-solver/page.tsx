@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import EquationSolverClient from './EquationSolverClient'
 
 export const metadata: Metadata = {
-  title: 'Equation Solver | Unix Calculator',
-  description: 'Equation Solver — Unix Calculator',
+  title: 'Equation Solver — Solve Linear & Quadratic Equations',
+  description:
+    'Solve linear, quadratic, and systems of equations instantly. Shows step-by-step solutions. Free online equation solver.',
+  alternates: { canonical: 'https://unixcalculator.com/equation-solver' },
 }
 
 export default function Page() {

@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import LogParserClient from './LogParserClient'
 
 export const metadata: Metadata = {
-  title: 'Log Parser | Unix Calculator',
-  description: 'Log Parser — Unix Calculator',
+  title: 'Log Parser — Extract & Convert Timestamps from Logs',
+  description:
+    'Parse timestamps from nginx, Apache, syslog, and application logs. Auto-detects format and normalizes to UTC. Free log timestamp parser.',
+  alternates: { canonical: 'https://unixcalculator.com/tools/log-parser' },
 }
 
 export default function Page() {

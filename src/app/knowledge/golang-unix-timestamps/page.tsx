@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import GolangUnixTimestampsClient from './GolangUnixTimestampsClient'
 
 export const metadata: Metadata = {
-  title: 'Golang Unix Timestamps | Unix Calculator',
-  description: 'Golang Unix Timestamps — Unix Calculator',
+  title: 'Go Unix Timestamps — time.Time, Unix(), UnixNano Reference',
+  description:
+    'Working with time in Go: Unix seconds, UnixMilli, UnixNano, monotonic clocks, and int64 overflow at extreme dates.',
+  alternates: { canonical: 'https://unixcalculator.com/knowledge/golang-unix-timestamps' },
 }
 
 export default function Page() {

@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { TimestampDebuggerClient } from './TimestampDebuggerClient'
 
 export const metadata: Metadata = {
-  title: 'Unix Timestamp Debugger — Auto-Detect Seconds, MS, µs, NS',
+  title: 'Unix Timestamp Debugger — Auto-Detect Any Timestamp Format',
   description:
-    'Paste any timestamp and instantly know what it means. Auto-detects seconds, milliseconds, microseconds, and nanoseconds. Shows UTC, local time, 5 timezones, and flags Y2038, 1970, and pre-epoch issues.',
+    'Paste any number and instantly know if it is seconds, milliseconds, microseconds, or nanoseconds. Flags Y2038, 1970 errors, and timezone breakdowns.',
   alternates: { canonical: 'https://unixcalculator.com/tools/timestamp-debugger' },
 }
 

@@ -8,9 +8,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .split('-')
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ')
+  const canonical = `https://unixcalculator.com/blog/${params.slug}`
   return {
     title: `${title} | Unix Calculator`,
     description: `${title} — Unix Calculator blog`,
+    alternates: { canonical },
   }
 }
 

@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import MortgageCalculatorClient from './MortgageCalculatorClient'
 
 export const metadata: Metadata = {
-  title: 'Mortgage Calculator | Unix Calculator',
-  description: 'Mortgage Calculator — Unix Calculator',
+  title: 'Mortgage Calculator — Monthly Payment Calculator',
+  description:
+    'Calculate monthly mortgage payments, total interest, and amortization schedule. Includes principal, interest, taxes, and insurance (PITI).',
+  alternates: { canonical: 'https://unixcalculator.com/mortgage-calculator' },
 }
 
 export default function Page() {

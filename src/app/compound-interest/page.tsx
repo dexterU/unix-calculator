@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import CompoundInterestCalculatorClient from './CompoundInterestCalculatorClient'
 
 export const metadata: Metadata = {
-  title: 'Compound Interest | Unix Calculator',
-  description: 'Compound Interest — Unix Calculator',
+  title: 'Compound Interest Calculator — Investment Growth Calculator',
+  description:
+    'Calculate compound interest and investment growth over time. Shows final amount, total interest earned, and year-by-year breakdown.',
+  alternates: { canonical: 'https://unixcalculator.com/compound-interest' },
 }
 
 export default function Page() {

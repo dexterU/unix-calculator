@@ -5,7 +5,7 @@ import { buildFaqPageSchema, buildHowToSchema } from '@/lib/homepage-seo'
 export const metadata: Metadata = {
   title: 'Unix Timestamp Converter — Epoch to Date & Time | UnixCalculator.com',
   description:
-    'Convert Unix timestamps to human-readable dates instantly. Free epoch converter supports seconds, milliseconds, microseconds, and 25+ timezones. Used by 50,000+ developers.',
+    'Convert Unix timestamps to human-readable dates instantly. Free epoch converter with timezone support, BC calculator, cron generator, and 25+ developer tools. Used by 50,000+ developers.',
   alternates: { canonical: 'https://unixcalculator.com' },
   openGraph: {
     title: 'Unix Timestamp Converter — Epoch to Date & Time',
