@@ -19,11 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <nav aria-label="Skip links">
-          <a href="#main-content" className="skip-link">
-            Skip to main content
-          </a>
-        </nav>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Providers>
           <div id="main-content" tabIndex={-1} className="outline-none">
             {children}

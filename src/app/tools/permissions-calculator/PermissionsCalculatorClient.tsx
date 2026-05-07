@@ -207,7 +207,7 @@ export function PermissionsCalculatorClient() {
       <main className="mx-auto max-w-4xl px-4 py-12">
         <div className="mb-10 text-center">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-terminal-border bg-terminal-surface px-3 py-1 font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
-            <Shield className="h-3 w-3 text-terminal-green" />
+            <Shield className="h-3 w-3 text-terminal-green" aria-hidden="true" />
             Visual · instant · no server round-trip
           </div>
           <h1 className="mb-3 font-mono text-3xl font-bold text-foreground">
@@ -221,16 +221,18 @@ export function PermissionsCalculatorClient() {
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <label className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <label htmlFor="chmod-numeric" className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
               chmod value
             </label>
             <input
+              id="chmod-numeric"
               value={numericInput || numeric}
               onChange={(e) => handleNumericInput(e.target.value)}
               placeholder="755"
               className="w-40 rounded-xl border-2 border-terminal-border bg-terminal-surface py-3 text-center font-mono text-3xl text-terminal-green transition-colors focus:border-terminal-green focus:outline-none"
               inputMode="numeric"
               autoComplete="off"
+              aria-label="chmod numeric value (e.g. 755)"
             />
           </div>
 
@@ -244,7 +246,7 @@ export function PermissionsCalculatorClient() {
                   : 'flex items-center gap-2 font-mono text-sm text-muted-foreground'
               }
             >
-              <File className="h-4 w-4" />
+              <File className="h-4 w-4" aria-hidden="true" />
               File
             </button>
             <div className="h-6 w-px bg-terminal-border" />
@@ -257,7 +259,7 @@ export function PermissionsCalculatorClient() {
                   : 'flex items-center gap-2 font-mono text-sm text-muted-foreground'
               }
             >
-              <Folder className="h-4 w-4" />
+              <Folder className="h-4 w-4" aria-hidden="true" />
               Directory
             </button>
           </div>
@@ -394,7 +396,7 @@ export function PermissionsCalculatorClient() {
 
         <div className="mt-6 rounded-xl border border-terminal-border bg-terminal-surface p-5">
           <div className="mb-4 flex items-center gap-2">
-            <Terminal className="h-4 w-4 text-terminal-green" />
+            <Terminal className="h-4 w-4 text-terminal-green" aria-hidden="true" />
             <span className="font-mono text-sm font-bold text-foreground">Terminal Commands</span>
           </div>
 
@@ -407,9 +409,9 @@ export function PermissionsCalculatorClient() {
               aria-label="Copy command"
             >
               {copied === 'numeric' ? (
-                <CheckCircle className="h-4 w-4 text-terminal-green" />
+                <CheckCircle className="h-4 w-4 text-terminal-green" aria-hidden="true" />
               ) : (
-                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" />
+                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -423,9 +425,9 @@ export function PermissionsCalculatorClient() {
               aria-label="Copy symbolic chmod"
             >
               {copied === 'symbolic' ? (
-                <CheckCircle className="h-4 w-4 text-terminal-green" />
+                <CheckCircle className="h-4 w-4 text-terminal-green" aria-hidden="true" />
               ) : (
-                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" />
+                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -439,9 +441,9 @@ export function PermissionsCalculatorClient() {
               aria-label="Copy recursive chmod"
             >
               {copied === 'recursive' ? (
-                <CheckCircle className="h-4 w-4 text-terminal-green" />
+                <CheckCircle className="h-4 w-4 text-terminal-green" aria-hidden="true" />
               ) : (
-                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" />
+                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -455,9 +457,9 @@ export function PermissionsCalculatorClient() {
               aria-label="Copy find chmod"
             >
               {copied === 'find' ? (
-                <CheckCircle className="h-4 w-4 text-terminal-green" />
+                <CheckCircle className="h-4 w-4 text-terminal-green" aria-hidden="true" />
               ) : (
-                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" />
+                <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" aria-hidden="true" />
               )}
             </button>
           </div>

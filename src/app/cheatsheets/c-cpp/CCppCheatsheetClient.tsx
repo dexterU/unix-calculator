@@ -19,17 +19,19 @@ export function CCppCheatsheetClient() {
             <button
               type="button"
               onClick={() => window.print()}
+              aria-label="Print cheatsheet"
               className="flex items-center gap-2 rounded-lg border border-terminal-border bg-terminal-surface px-4 py-2 font-mono text-sm transition-colors hover:border-terminal-green"
             >
-              <Printer className="h-4 w-4" />
+              <Printer className="h-4 w-4" aria-hidden="true" />
               Print
             </button>
             <button
               type="button"
               onClick={() => window.print()}
+              aria-label="Download cheatsheet as PDF"
               className="flex items-center gap-2 rounded-lg bg-terminal-green px-4 py-2 font-mono text-sm font-bold text-terminal-bg transition-opacity hover:opacity-90"
             >
-              <Download className="h-4 w-4" />
+              <Download className="h-4 w-4" aria-hidden="true" />
               Download PDF
             </button>
           </div>

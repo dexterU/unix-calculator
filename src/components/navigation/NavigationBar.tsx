@@ -40,6 +40,7 @@ const COMMUNITY_LINKS = [
 function NavDropdownTrigger({ children }: { children: React.ReactNode }) {
   return (
     <DropdownMenuTrigger
+      aria-haspopup="true"
       className={cn(
         'inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium',
         'text-foreground/90 hover:bg-muted/80 hover:text-foreground',
@@ -47,7 +48,7 @@ function NavDropdownTrigger({ children }: { children: React.ReactNode }) {
       )}
     >
       {children}
-      <ChevronDown className="h-4 w-4 opacity-70" aria-hidden />
+      <ChevronDown className="h-4 w-4 opacity-70" aria-hidden="true" />
     </DropdownMenuTrigger>
   )
 }
@@ -74,12 +75,13 @@ export function NavigationBar({
           <Link
             href="/"
             className="flex items-center gap-2 text-lg font-bold text-foreground hover:text-primary"
+            aria-label="Unix Calculator — Home"
           >
-            <Terminal className="h-6 w-6 text-primary" />
+            <Terminal className="h-6 w-6 text-primary" aria-hidden="true" />
             Unix Calculator
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
             <DropdownMenu>
               <NavDropdownTrigger>Tools</NavDropdownTrigger>
               <DropdownMenuContent align="start" className="max-h-80 w-72 overflow-y-auto">
@@ -211,9 +213,9 @@ export function NavigationBar({
             aria-label="Open navigation menu"
           >
             {mobileOpen ? (
-              <X className="h-5 w-5" aria-hidden />
+              <X className="h-5 w-5" aria-hidden="true" />
             ) : (
-              <Menu className="h-5 w-5" aria-hidden />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             )}
           </button>
         </div>

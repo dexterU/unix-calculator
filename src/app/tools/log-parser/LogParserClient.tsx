@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
 import { RelatedGuides } from '@/components/RelatedGuides'
 import { getRelatedGuides } from '@/lib/related-guides'
 import {
@@ -67,12 +68,19 @@ export default function LogParserClient() {
             highlighted and listed in order of appearance.
           </p>
         </div>
-        <Textarea
-          className="min-h-[220px] font-mono text-xs"
-          placeholder="2025-01-15T12:00:00Z started job…"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+        <div className="space-y-2">
+          <Label htmlFor="log-parser-input" className="text-gray-700">
+            Log lines
+          </Label>
+          <Textarea
+            id="log-parser-input"
+            className="min-h-[220px] font-mono text-xs"
+            placeholder="2025-01-15T12:00:00Z started job…"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            aria-label="Paste log lines to extract timestamps"
+          />
+        </div>
         <div className="rounded-lg border border-gray-200 bg-white">
           <div className="px-3 py-2 border-b border-gray-100 text-sm font-medium text-gray-700">
             Matches ({hits.length})

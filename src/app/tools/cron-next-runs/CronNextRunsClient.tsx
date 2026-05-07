@@ -224,7 +224,7 @@ export function CronNextRunsClient() {
       <main className="mx-auto max-w-4xl px-4 py-12">
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-terminal-border bg-terminal-surface px-4 py-1.5 font-mono text-xs text-terminal-green">
-            <Clock className="h-3 w-3" />
+            <Clock className="h-3 w-3" aria-hidden="true" />
             Free · Unlimited · Timezone-aware
           </div>
           <h1 className="mb-3 font-mono text-3xl font-bold text-foreground">Cron Next 10 Runs</h1>
@@ -236,16 +236,18 @@ export function CronNextRunsClient() {
 
         <div className="mb-6 rounded-xl border border-terminal-border bg-terminal-surface p-6">
           <div className="mb-4">
-            <label className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <label htmlFor="cron-expression" className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
               Cron Expression
             </label>
             <div className="flex gap-2">
               <input
+                id="cron-expression"
                 value={expression}
                 onChange={(e) => setExpression(e.target.value)}
                 placeholder="*/5 * * * *"
                 className="flex-1 rounded-xl border-2 border-terminal-border bg-background px-4 py-3 font-mono text-xl text-terminal-green transition-colors focus:border-terminal-green focus:outline-none"
                 spellCheck={false}
+                aria-label="Cron expression (e.g. */5 * * * *)"
               />
               <button
                 type="button"
@@ -254,9 +256,9 @@ export function CronNextRunsClient() {
                 className="rounded-xl border border-terminal-border bg-background px-4 transition-colors hover:border-terminal-green"
               >
                 {copied === 'expr' ? (
-                  <CheckCircle className="h-4 w-4 text-terminal-green" />
+                  <CheckCircle className="h-4 w-4 text-terminal-green" aria-hidden="true" />
                 ) : (
-                  <Copy className="h-4 w-4 text-muted-foreground" />
+                  <Copy className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 )}
               </button>
             </div>
@@ -272,24 +274,25 @@ export function CronNextRunsClient() {
 
           {!result.error && (
             <div className="flex items-center gap-2 rounded-lg border border-terminal-green/20 bg-terminal-green/10 px-4 py-2">
-              <Play className="h-3 w-3 shrink-0 text-terminal-green" />
+              <Play className="h-3 w-3 shrink-0 text-terminal-green" aria-hidden="true" />
               <p className="font-mono text-sm text-terminal-green">Runs {explainCron(expression)}</p>
             </div>
           )}
 
           {result.error && (
             <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-950/30 px-4 py-2">
-              <AlertTriangle className="h-3 w-3 shrink-0 text-red-400" />
+              <AlertTriangle className="h-3 w-3 shrink-0 text-red-400" aria-hidden="true" />
               <p className="font-mono text-sm text-red-400">{result.error}</p>
             </div>
           )}
 
           <div className="mt-4 flex flex-wrap gap-4">
             <div>
-              <label className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              <label htmlFor="cron-timezone" className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
                 Timezone
               </label>
               <select
+                id="cron-timezone"
                 value={timezone}
                 onChange={(e) => setTimezone(e.target.value)}
                 className="rounded-lg border border-terminal-border bg-background px-3 py-2 font-mono text-sm text-foreground focus:border-terminal-green focus:outline-none"
@@ -303,10 +306,11 @@ export function CronNextRunsClient() {
               </select>
             </div>
             <div>
-              <label className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              <label htmlFor="cron-show-runs" className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
                 Show runs
               </label>
               <select
+                id="cron-show-runs"
                 value={count}
                 onChange={(e) => setCount(parseInt(e.target.value, 10))}
                 className="rounded-lg border border-terminal-border bg-background px-3 py-2 font-mono text-sm text-foreground focus:border-terminal-green focus:outline-none"

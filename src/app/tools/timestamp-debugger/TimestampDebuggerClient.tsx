@@ -320,6 +320,7 @@ export function TimestampDebuggerClient() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             autoFocus
+            aria-label="Paste any Unix timestamp — seconds, milliseconds, microseconds, or nanoseconds"
           />
         </div>
 
@@ -333,6 +334,7 @@ export function TimestampDebuggerClient() {
                   type="button"
                   onClick={() => setInput(ex.value)}
                   className="rounded-full border border-terminal-border bg-terminal-surface px-3 py-1.5 font-mono text-xs transition-colors hover:border-terminal-green hover:text-terminal-green"
+                  aria-label={`Try example timestamp: ${ex.label}`}
                 >
                   {ex.value}
                   <span className="ml-2 text-muted-foreground">// {ex.label}</span>
@@ -422,7 +424,7 @@ export function TimestampDebuggerClient() {
                       '✓ Copied'
                     ) : (
                       <>
-                        <Copy className="h-3 w-3" aria-hidden /> Copy
+                        <Copy className="h-3 w-3" aria-hidden="true" /> Copy
                       </>
                     )}
                   </button>

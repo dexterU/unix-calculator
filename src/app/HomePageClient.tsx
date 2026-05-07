@@ -222,7 +222,7 @@ export default function HomePageClient() {
     <div className="min-h-screen bg-gradient-terminal text-foreground">
       <header className="sticky top-0 z-50 border-b border-terminal-border bg-terminal-surface/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3" aria-label="Unix Calculator — Home">
             <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-terminal-green to-terminal-cyan font-mono text-sm font-bold text-[hsl(var(--terminal-bg))]">
               &gt;_
             </span>
@@ -230,7 +230,7 @@ export default function HomePageClient() {
               Unix Calculator
             </span>
           </Link>
-          <nav className="hidden flex-wrap items-center gap-4 text-sm md:flex">
+          <nav className="hidden flex-wrap items-center gap-4 text-sm md:flex" aria-label="Main navigation">
             <Link
               href="/tools"
               className="text-muted-foreground transition-colors hover:text-terminal-green"
@@ -486,7 +486,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        <section className="border-y border-terminal-border bg-terminal-surface/80">
+        <section className="border-y border-terminal-border bg-terminal-surface/80" aria-label="Site statistics">
           <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ['50K+', 'Monthly developers'],
@@ -605,7 +605,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 pb-16">
+        <section className="mx-auto max-w-6xl px-4 pb-16" aria-label="Frequently asked questions">
           <h2 className="mb-6 text-center text-2xl font-bold text-foreground sm:text-3xl">
             Frequently Asked Questions
           </h2>
@@ -613,18 +613,19 @@ export default function HomePageClient() {
             {HOMEPAGE_FAQ.map((item, i) => (
               <AccordionItem key={item.question} value={`faq-${i}`} className="border-terminal-border">
                 <AccordionTrigger
+                  id={`faq-button-${i}`}
+                  aria-controls={`faq-answer-${i}`}
                   className="text-left font-mono text-sm hover:no-underline sm:text-base"
                   tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      e.currentTarget.click()
-                    }
-                  }}
                 >
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="space-y-3 text-muted-foreground">
+                <AccordionContent
+                  id={`faq-answer-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-button-${i}`}
+                  className="space-y-3 text-muted-foreground"
+                >
                   {item.blocks.map((block, j) =>
                     block.type === 'p' ? (
                       <p key={j} className="text-sm leading-relaxed">
@@ -645,7 +646,7 @@ export default function HomePageClient() {
           </Accordion>
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 pb-16">
+        <section className="mx-auto max-w-6xl px-4 pb-16" aria-label="Developer tools">
           <div className="mb-8 text-center">
             <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
               All 25+ Developer Tools
@@ -701,7 +702,7 @@ export default function HomePageClient() {
                   href={tool.path}
                   className="group rounded-xl border border-terminal-border bg-terminal-surface p-4 transition-colors hover:border-terminal-green/50"
                 >
-                  <Icon className="mb-2 h-6 w-6 text-terminal-green" />
+                  <Icon className="mb-2 h-6 w-6 text-terminal-green" aria-hidden="true" />
                   <h3 className="font-mono text-sm font-semibold text-foreground group-hover:text-terminal-green">
                     {tool.name}
                   </h3>
@@ -737,13 +738,13 @@ export default function HomePageClient() {
                 <h3 className="flex-1 font-semibold text-foreground">{post.title}</h3>
                 <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
-                    <BookOpen className="h-3.5 w-3.5" />
+                    <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
                     {post.readTime}
                   </span>
                   <span>{post.views} views</span>
                 </div>
                 <span className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-terminal-green">
-                  Read <ArrowRight className="h-3 w-3" />
+                  Read <ArrowRight className="h-3 w-3" aria-hidden="true" />
                 </span>
               </Link>
             ))}

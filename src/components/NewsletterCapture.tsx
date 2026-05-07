@@ -44,7 +44,7 @@ export function NewsletterCapture({ source }: NewsletterCaptureProps) {
   if (status === 'success') {
     return (
       <div className="my-10 rounded-xl border border-terminal-green/30 bg-terminal-surface p-6 text-center">
-        <CheckCircle className="mx-auto mb-3 h-8 w-8 text-terminal-green" />
+        <CheckCircle className="mx-auto mb-3 h-8 w-8 text-terminal-green" aria-hidden="true" />
         <p className="mb-1 font-mono text-lg font-bold text-terminal-green">Check your inbox</p>
         <p className="font-mono text-sm text-muted-foreground">Your Unix Timestamp Cheatsheet is on its way.</p>
       </div>
@@ -55,7 +55,7 @@ export function NewsletterCapture({ source }: NewsletterCaptureProps) {
     <div className="my-10 rounded-xl border border-terminal-border bg-terminal-surface p-6">
       <div className="flex items-start gap-4">
         <div className="shrink-0 rounded-lg border border-terminal-green/20 bg-terminal-green/10 p-3">
-          <Download className="h-5 w-5 text-terminal-green" />
+          <Download className="h-5 w-5 text-terminal-green" aria-hidden="true" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="mb-1 font-mono font-bold text-foreground">Get the Unix Timestamp Cheatsheet</p>
@@ -82,11 +82,11 @@ export function NewsletterCapture({ source }: NewsletterCaptureProps) {
             >
               {status === 'loading' ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" /> Sending...
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> Sending...
                 </>
               ) : (
                 <>
-                  <Mail className="h-4 w-4" /> Send me the cheatsheet
+                  <Mail className="h-4 w-4" aria-hidden="true" /> Send me the cheatsheet
                 </>
               )}
             </button>

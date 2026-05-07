@@ -77,6 +77,10 @@
     outline: 2px solid hsl(var(--terminal-green));
     outline-offset: 2px;
   }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 /* Skip link: visible on focus only (Tailwind 3.3 has no focus:not-sr-only) */

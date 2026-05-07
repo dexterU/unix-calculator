@@ -121,6 +121,7 @@ export default function TimezoneConverterClient() {
               className="calc-input w-full"
               value={to}
               onChange={(e) => setTo(e.target.value)}
+              aria-label="Select output timezone"
             >
               {OFFSETS.map((o) => (
                 <option key={o.id} value={o.id}>

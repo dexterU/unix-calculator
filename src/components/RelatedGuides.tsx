@@ -25,7 +25,7 @@ export function RelatedGuides({
   return (
     <section className="mt-12 border-t border-terminal-border pt-10">
       <div className="mb-6 flex items-center gap-3">
-        <BookOpen className="h-5 w-5 text-terminal-green" />
+        <BookOpen className="h-5 w-5 text-terminal-green" aria-hidden="true" />
         <h2 className="font-mono text-lg font-bold text-foreground">{title}</h2>
         <span className="font-mono text-xs text-muted-foreground">
           // developers also read
@@ -43,7 +43,7 @@ export function RelatedGuides({
                 {guide.category}
               </span>
               <div className="flex items-center gap-1 text-muted-foreground">
-                <Clock className="h-3 w-3" />
+                <Clock className="h-3 w-3" aria-hidden="true" />
                 <span className="font-mono text-xs">{guide.readTime}</span>
               </div>
             </div>
@@ -55,7 +55,7 @@ export function RelatedGuides({
             </p>
             <div className="flex items-center gap-1 font-mono text-xs text-terminal-green opacity-0 transition-opacity group-hover:opacity-100">
               Read guide
-              <ArrowRight className="h-3 w-3" />
+              <ArrowRight className="h-3 w-3" aria-hidden="true" />
             </div>
           </Link>
         ))}

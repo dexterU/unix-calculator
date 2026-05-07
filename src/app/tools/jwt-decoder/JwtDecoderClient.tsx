@@ -177,7 +177,7 @@ export function JwtDecoderClient() {
       <main className="mx-auto max-w-5xl px-4 py-12">
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-terminal-border bg-terminal-surface px-4 py-1.5 font-mono text-xs text-terminal-green">
-            <ShieldCheck className="h-3 w-3" />
+            <ShieldCheck className="h-3 w-3" aria-hidden="true" />
             100% client-side — your token never leaves your browser
           </div>
           <h1 className="mb-3 font-mono text-3xl font-bold text-foreground">
@@ -194,6 +194,7 @@ export function JwtDecoderClient() {
           className="h-32 w-full resize-none rounded-xl border-2 border-terminal-border bg-terminal-surface p-4 font-mono text-sm text-terminal-green transition-colors placeholder:text-muted-foreground/40 focus:border-terminal-green focus:outline-none"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          aria-label="Paste your JWT token here"
         />
 
         {partsPreview && (
@@ -222,7 +223,7 @@ export function JwtDecoderClient() {
             <div className="flex flex-wrap items-center gap-3">
               {status === 'valid' && (
                 <>
-                  <ShieldCheck className="h-5 w-5 shrink-0 text-terminal-green" />
+                  <ShieldCheck className="h-5 w-5 shrink-0 text-terminal-green" aria-hidden="true" />
                   <span className="font-mono text-sm font-bold text-foreground">
                     Valid Token
                   </span>
@@ -240,7 +241,7 @@ export function JwtDecoderClient() {
               )}
               {status === 'expired' && (
                 <>
-                  <ShieldAlert className="h-5 w-5 shrink-0 text-red-500" />
+                  <ShieldAlert className="h-5 w-5 shrink-0 text-red-500" aria-hidden="true" />
                   <span className="font-mono text-sm font-bold text-foreground">
                     Token Expired
                   </span>
@@ -253,13 +254,13 @@ export function JwtDecoderClient() {
               )}
               {status === 'nbf' && (
                 <>
-                  <AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" />
+                  <AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" aria-hidden="true" />
                   <span className="font-mono text-sm font-bold text-foreground">
                     Token Not Yet Valid
                   </span>
                   {isUnixTsSeconds(nbfSec) && (
                     <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
-                      <Clock className="h-3 w-3" />
+                      <Clock className="h-3 w-3" aria-hidden="true" />
                       nbf: {formatUtcFromSec(nbfSec)}
                     </span>
                   )}
@@ -273,7 +274,7 @@ export function JwtDecoderClient() {
           <div className="overflow-hidden rounded-xl border border-terminal-border bg-terminal-surface">
             <div className="flex items-center justify-between border-b border-terminal-border px-4 py-3">
               <div className="flex items-center gap-2">
-                <Key className="h-4 w-4 text-terminal-cyan" />
+                <Key className="h-4 w-4 text-terminal-cyan" aria-hidden="true" />
                 <span className="font-mono text-sm font-bold text-terminal-cyan">
                   Header
                 </span>
@@ -286,9 +287,9 @@ export function JwtDecoderClient() {
                 aria-label="Copy header"
               >
                 {copied === 'header' ? (
-                  <CheckCircle className="h-4 w-4 text-terminal-green" />
+                  <CheckCircle className="h-4 w-4 text-terminal-green" aria-hidden="true" />
                 ) : (
-                  <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" />
+                  <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" aria-hidden="true" />
                 )}
               </button>
             </div>
@@ -300,7 +301,7 @@ export function JwtDecoderClient() {
           <div className="overflow-hidden rounded-xl border border-terminal-border bg-terminal-surface">
             <div className="flex items-center justify-between border-b border-terminal-border px-4 py-3">
               <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-terminal-green" />
+                <FileText className="h-4 w-4 text-terminal-green" aria-hidden="true" />
                 <span className="font-mono text-sm font-bold text-terminal-green">
                   Payload
                 </span>
@@ -313,9 +314,9 @@ export function JwtDecoderClient() {
                 aria-label="Copy payload"
               >
                 {copied === 'payload' ? (
-                  <CheckCircle className="h-4 w-4 text-terminal-green" />
+                  <CheckCircle className="h-4 w-4 text-terminal-green" aria-hidden="true" />
                 ) : (
-                  <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" />
+                  <Copy className="h-4 w-4 text-muted-foreground transition-colors hover:text-terminal-green" aria-hidden="true" />
                 )}
               </button>
             </div>
@@ -472,6 +473,7 @@ export function JwtDecoderClient() {
                 type="button"
                 className="rounded-lg border border-terminal-border bg-terminal-surface p-3 text-left text-terminal-green transition-colors hover:border-terminal-green"
                 onClick={() => setInput(EXAMPLE_VALID)}
+                aria-label="Load valid JWT example token"
               >
                 <span className="text-muted-foreground">// valid token</span>
                 <span className="mt-1 block truncate text-[10px] text-muted-foreground">
@@ -482,6 +484,7 @@ export function JwtDecoderClient() {
                 type="button"
                 className="rounded-lg border border-terminal-border bg-terminal-surface p-3 text-left text-terminal-green transition-colors hover:border-terminal-green"
                 onClick={() => setInput(EXAMPLE_EXPIRED)}
+                aria-label="Load expired JWT example token"
               >
                 <span className="text-muted-foreground">// expired token</span>
                 <span className="mt-1 block truncate text-[10px] text-muted-foreground">
@@ -492,6 +495,7 @@ export function JwtDecoderClient() {
                 type="button"
                 className="rounded-lg border border-terminal-border bg-terminal-surface p-3 text-left text-terminal-green transition-colors hover:border-terminal-green"
                 onClick={() => setInput(EXAMPLE_RICH)}
+                aria-label="Load JWT example with rich claims"
               >
                 <span className="text-muted-foreground">// rich claims</span>
                 <span className="mt-1 block truncate text-[10px] text-muted-foreground">

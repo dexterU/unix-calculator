@@ -613,13 +613,16 @@ export default function ChallengesClient() {
           </p>
         </div>
 
-        <div className="mb-6 flex flex-wrap justify-center gap-2">
+        <div className="mb-6 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Challenge difficulty">
           {tabs.map((t) => {
             const active = tab === t.key
             return (
               <button
                 key={String(t.key)}
                 type="button"
+                role="tab"
+                aria-selected={active}
+                tabIndex={active ? 0 : -1}
                 onClick={() => setTab(t.key)}
                 className={cn(
                   'rounded-lg border px-4 py-2 font-mono text-sm transition-colors',
@@ -690,11 +693,11 @@ export default function ChallengesClient() {
             <h2 className="mt-4 text-lg font-semibold leading-snug text-foreground">{challenge.question}</h2>
 
             <div className="mt-4 space-y-2">
-              <label htmlFor="challenge-answer" className="font-mono text-xs text-muted-foreground">
+              <label htmlFor={`challenge-answer-${challenge.id}`} className="font-mono text-xs text-muted-foreground">
                 Your answer
               </label>
               <Input
-                id="challenge-answer"
+                id={`challenge-answer-${challenge.id}`}
                 value={input}
                 disabled={answered && feedback === 'correct'}
                 onChange={(e) => {
@@ -708,6 +711,10 @@ export default function ChallengesClient() {
                 }}
                 className="border-terminal-border bg-background font-mono text-terminal-green"
                 autoComplete="off"
+                aria-label={`Your answer to challenge ${challenge.id}`}
+                aria-describedby={
+                  feedback === 'wrong' ? `challenge-hint-${challenge.id}` : undefined
+                }
               />
             </div>
 
@@ -739,7 +746,7 @@ export default function ChallengesClient() {
             ) : null}
 
             {feedback === 'correct' ? (
-              <div className="mt-4 space-y-3">
+              <div className="mt-4 space-y-3" role="alert">
                 <p className="text-sm font-medium text-terminal-green">✓ {challenge.explanation}</p>
                 <button
                   type="button"
@@ -758,11 +765,17 @@ export default function ChallengesClient() {
 
             {feedback === 'wrong' ? (
               <div className="mt-4 space-y-2">
-                <p className="text-sm text-muted-foreground">
+                <p
+                  className="text-sm text-muted-foreground"
+                  id={`challenge-hint-${challenge.id}`}
+                  role="alert"
+                >
                   Not quite — hint: <span className="text-foreground">{challenge.hint}</span>
                 </p>
                 {showExplanationWrong ? (
-                  <p className="text-sm font-medium text-amber-200">{challenge.explanation}</p>
+                  <p className="text-sm font-medium text-amber-200" role="alert">
+                    {challenge.explanation}
+                  </p>
                 ) : (
                   <p className="text-xs text-muted-foreground">Check again — explanation unlocks after another wrong attempt.</p>
                 )}

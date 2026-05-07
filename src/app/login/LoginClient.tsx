@@ -55,7 +55,9 @@ export default function LoginClient({
           </Link>
         </p>
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="block text-sm font-mono text-muted-foreground mb-1">
+            Email address
+          </Label>
           <Input
             id="email"
             type="email"
@@ -66,7 +68,9 @@ export default function LoginClient({
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password" className="block text-sm font-mono text-muted-foreground mb-1">
+            Password
+          </Label>
           <Input
             id="password"
             type="password"
