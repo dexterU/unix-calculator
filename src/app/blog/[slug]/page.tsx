@@ -8,6 +8,8 @@ import { DEFAULT_GUIDES } from '@/lib/related-guides'
 import { getPostBySlug, getAllPublishedSlugs } from '@/lib/supabase/blog'
 import { Clock, User, Calendar, Tag, ArrowLeft } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 const STATIC_BLOG_SLUGS = [
   'complete-guide-unix-timestamp-precision-2025',
   'session-management-timestamp-expiration',

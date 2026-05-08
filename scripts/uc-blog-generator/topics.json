@@ -1,0 +1,326 @@
+{
+  "site": {
+    "name": "Unix Calculator",
+    "url": "https://unixcalculator.com",
+    "audience": "Software engineers, sysadmins, DevOps engineers, backend developers",
+    "voice": "Senior engineer explaining to a peer — direct, precise, no fluff",
+    "niche": "Unix timestamps, developer tools, time handling in code"
+  },
+  "quality_rules": {
+    "min_word_count": 1200,
+    "min_h2_sections": 4,
+    "min_code_blocks": 3,
+    "requires_quick_answer": true,
+    "requires_faq_section": true,
+    "requires_comparison_table": true,
+    "requires_common_mistakes": true,
+    "requires_key_takeaways": true,
+    "requires_author_attribution": true,
+    "requires_environment_note": true,
+    "requires_external_citation": true,
+    "code_block_style": "copy-friendly",
+    "math_verification": true,
+    "max_keyword_density": 0.02,
+    "min_quality_score": 85
+  },
+  "environment_context": {
+    "javascript": "Node.js 22.x, Chrome 124+, V8 engine",
+    "python": "Python 3.12, Ubuntu 24.04 LTS, macOS Sonoma",
+    "go": "Go 1.22, Ubuntu 24.04 LTS",
+    "bash": "Bash 5.2, Ubuntu 24.04 LTS, macOS Sonoma",
+    "sql": "PostgreSQL 16, MySQL 8.0",
+    "php": "PHP 8.3",
+    "general": "Ubuntu 24.04 LTS, macOS Sonoma 14"
+  },
+  "banned_phrases": [
+    "In this article, we will",
+    "In this tutorial, we will",
+    "In conclusion",
+    "It is important to note",
+    "As mentioned above",
+    "Simply put",
+    "It's worth noting",
+    "At the end of the day",
+    "In today's world",
+    "In the world of"
+  ],
+  "internal_links": {
+    "timestamp_debugger": "/tools/timestamp-debugger",
+    "jwt_decoder": "/tools/jwt-decoder",
+    "permissions_calculator": "/tools/permissions-calculator",
+    "cron_next_runs": "/tools/cron-next-runs",
+    "timestamp_api": "/tools/timestamp-api",
+    "timestamp_converter": "/tools/timestamp-converter",
+    "cron_generator": "/tools/cron-generator",
+    "cheatsheet_js": "/cheatsheets/javascript",
+    "cheatsheet_python": "/cheatsheets/python",
+    "cheatsheet_go": "/cheatsheets/go",
+    "challenges": "/challenges"
+  },
+  "topics": [
+    {
+      "slug": "seconds-vs-milliseconds-timestamp-bug-1970",
+      "title": "Seconds vs Milliseconds: The Timestamp Bug That Sends Dates to 1970",
+      "category": "Deep Dive",
+      "primary_keyword": "unix timestamp seconds milliseconds",
+      "secondary_keywords": ["date shows 1970", "javascript date wrong", "timestamp off by 1000"],
+      "target_languages": ["javascript", "python", "go"],
+      "word_count": 1400,
+      "priority": 1,
+      "unique_angle": "Focus on auto-detection function developers can copy-paste immediately",
+      "perplexity_queries": [
+        "unix timestamp seconds vs milliseconds production bug examples",
+        "javascript new Date 1970 wrong timestamp fix",
+        "how to detect if timestamp is seconds or milliseconds"
+      ],
+      "paa_questions": [
+        "Why does my timestamp show 1970?",
+        "How do I know if a timestamp is in seconds or milliseconds?",
+        "What causes JavaScript Date to show January 1970?",
+        "How to convert Unix timestamp seconds to milliseconds?"
+      ],
+      "internal_links_to_use": ["timestamp_debugger", "timestamp_converter", "cheatsheet_js"],
+      "notes": "The #1 production timestamp bug. Lead with the 10-digit vs 13-digit detection rule."
+    },
+    {
+      "slug": "python-datetime-vs-time-module",
+      "title": "Python datetime vs time.time(): When to Use Each",
+      "category": "Tutorial",
+      "primary_keyword": "python datetime vs time module",
+      "secondary_keywords": ["python unix timestamp", "python datetime utc", "python time.time"],
+      "target_languages": ["python"],
+      "word_count": 1300,
+      "priority": 2,
+      "unique_angle": "Decision flowchart — when to use each module based on use case",
+      "perplexity_queries": [
+        "python datetime vs time module differences 2024",
+        "python datetime timezone aware vs naive pitfalls",
+        "python time.time() precision limitations"
+      ],
+      "paa_questions": [
+        "What is the difference between datetime and time in Python?",
+        "When should I use time.time() vs datetime.now()?",
+        "How do I get UTC timestamp in Python?",
+        "Why is Python datetime timezone naive by default?"
+      ],
+      "internal_links_to_use": ["timestamp_converter", "cheatsheet_python", "timestamp_debugger"],
+      "notes": "Cover the deprecated utcnow() in Python 3.12. Include replace(tzinfo=timezone.utc) pattern."
+    },
+    {
+      "slug": "dst-breaks-timestamp-logic",
+      "title": "How DST Breaks Your Timestamp Logic (And How to Fix It)",
+      "category": "Deep Dive",
+      "primary_keyword": "daylight saving time timestamp bug",
+      "secondary_keywords": ["DST timezone bug", "spring forward timestamp", "fall back duplicate hour"],
+      "target_languages": ["javascript", "python"],
+      "word_count": 1400,
+      "priority": 3,
+      "unique_angle": "Include actual test vectors — specific timestamps that fall in the DST gap and overlap",
+      "perplexity_queries": [
+        "daylight saving time timestamp bugs production examples 2024",
+        "DST fall back duplicate hour unix timestamp",
+        "spring forward gap missing timestamps fix"
+      ],
+      "paa_questions": [
+        "Why does my cron job run twice after daylight saving?",
+        "How does DST affect Unix timestamps?",
+        "What is the DST gap and how does it affect scheduling?",
+        "How to handle daylight saving time in JavaScript?"
+      ],
+      "internal_links_to_use": ["cron_next_runs", "timestamp_converter", "cron_generator"],
+      "notes": "America/New_York DST 2024 exact timestamps. Spring forward gap: 2024-03-10 02:00 EST."
+    },
+    {
+      "slug": "redis-ttl-unix-timestamps",
+      "title": "Redis TTL Patterns: Using Unix Timestamps for Cache Expiration",
+      "category": "Tutorial",
+      "primary_keyword": "redis ttl unix timestamp",
+      "secondary_keywords": ["redis expireat", "redis cache expiration", "redis timestamp pattern"],
+      "target_languages": ["javascript", "python"],
+      "word_count": 1300,
+      "priority": 4,
+      "unique_angle": "EXPIREAT vs EXPIRE trade-offs with clock sync risks in distributed systems",
+      "perplexity_queries": [
+        "redis EXPIREAT vs EXPIRE unix timestamp differences",
+        "redis cache expiration distributed systems clock skew",
+        "redis TTL patterns best practices 2024"
+      ],
+      "paa_questions": [
+        "What is the difference between Redis EXPIRE and EXPIREAT?",
+        "How to set Redis TTL with a Unix timestamp?",
+        "Why does Redis EXPIREAT fail with wrong timezone?",
+        "How to implement sliding expiration in Redis?"
+      ],
+      "internal_links_to_use": ["timestamp_converter", "timestamp_api", "timestamp_debugger"],
+      "notes": "Cover clock skew risk when using EXPIREAT across distributed nodes."
+    },
+    {
+      "slug": "postgresql-vs-mysql-timestamp-storage",
+      "title": "PostgreSQL vs MySQL Timestamp Storage: What No One Tells You",
+      "category": "Deep Dive",
+      "primary_keyword": "postgresql vs mysql timestamp",
+      "secondary_keywords": ["timestamptz vs datetime", "mysql timestamp timezone", "postgres timestamp storage"],
+      "target_languages": ["sql"],
+      "word_count": 1400,
+      "priority": 5,
+      "unique_angle": "ORM coercion bugs — what Sequelize, Prisma, TypeORM silently do wrong",
+      "perplexity_queries": [
+        "postgresql TIMESTAMPTZ vs mysql DATETIME timezone differences",
+        "prisma sequelize timestamp timezone coercion bugs",
+        "mysql TIMESTAMP 2038 problem solution"
+      ],
+      "paa_questions": [
+        "Should I use TIMESTAMP or DATETIME in MySQL?",
+        "What is the difference between TIMESTAMPTZ and TIMESTAMP in PostgreSQL?",
+        "Does MySQL TIMESTAMP support timezone?",
+        "How does Prisma handle timestamp timezones?"
+      ],
+      "internal_links_to_use": ["timestamp_converter", "timestamp_api", "cheatsheet_python"],
+      "notes": "MySQL TIMESTAMP has Y2038 problem. DATETIME does not but is timezone-naive."
+    },
+    {
+      "slug": "cron-job-scheduling-timestamp-drift",
+      "title": "Cron Job Scheduling with Unix Timestamps: Avoiding Drift and Skew",
+      "category": "Tutorial",
+      "primary_keyword": "cron job timestamp drift",
+      "secondary_keywords": ["cron scheduling drift", "cron skew fix", "idempotent cron job"],
+      "target_languages": ["bash", "javascript"],
+      "word_count": 1300,
+      "priority": 6,
+      "unique_angle": "Timestamp window idempotency pattern — how to make cron jobs safe to run twice",
+      "perplexity_queries": [
+        "cron job drift skew unix timestamp prevention",
+        "idempotent cron jobs timestamp windows pattern",
+        "cron scheduling best practices distributed systems 2024"
+      ],
+      "paa_questions": [
+        "What causes cron job drift?",
+        "How to make cron jobs idempotent?",
+        "What is cron skew and how to fix it?",
+        "How to use Unix timestamps in cron jobs?"
+      ],
+      "internal_links_to_use": ["cron_next_runs", "cron_generator", "timestamp_converter"],
+      "notes": "Show the timestamp window pattern: only process records where ts BETWEEN window_start AND window_end."
+    },
+    {
+      "slug": "api-timestamp-validation-stale-requests",
+      "title": "API Timestamp Validation: Rejecting Stale and Future Requests",
+      "category": "Tutorial",
+      "primary_keyword": "api timestamp validation",
+      "secondary_keywords": ["replay attack prevention", "api request timestamp", "webhook timestamp validation"],
+      "target_languages": ["javascript", "python"],
+      "word_count": 1300,
+      "priority": 7,
+      "unique_angle": "Complete Express and FastAPI middleware you can drop in today",
+      "perplexity_queries": [
+        "API timestamp validation replay attack prevention 2024",
+        "webhook timestamp signature validation express fastapi",
+        "5 minute tolerance window API security standard"
+      ],
+      "paa_questions": [
+        "How to prevent API replay attacks with timestamps?",
+        "What is the standard timestamp tolerance for APIs?",
+        "How does Stripe validate webhook timestamps?",
+        "How to validate request timestamps in Express?"
+      ],
+      "internal_links_to_use": ["jwt_decoder", "timestamp_debugger", "timestamp_api"],
+      "notes": "Stripe uses 5-minute tolerance. Include NTP clock sync requirement."
+    },
+    {
+      "slug": "y2038-problem-what-is-vulnerable",
+      "title": "The Y2038 Problem: What It Is, What's Still Vulnerable, and How to Fix It",
+      "category": "Deep Dive",
+      "primary_keyword": "Y2038 problem",
+      "secondary_keywords": ["2038 unix timestamp overflow", "32 bit time_t", "y2038 fix"],
+      "target_languages": ["bash", "javascript", "python"],
+      "word_count": 1400,
+      "priority": 8,
+      "unique_angle": "Current 2026 audit — embedded systems and databases still shipping with Y2038 bugs",
+      "perplexity_queries": [
+        "Y2038 problem still vulnerable systems 2024 2025",
+        "embedded systems Y2038 32-bit time_t affected",
+        "MySQL MariaDB Y2038 fix timeline"
+      ],
+      "paa_questions": [
+        "What is the Y2038 problem?",
+        "What systems are still affected by Y2038?",
+        "How do I fix Y2038 in my database?",
+        "Is my 64-bit system safe from Y2038?"
+      ],
+      "internal_links_to_use": ["timestamp_debugger", "challenges", "timestamp_converter"],
+      "notes": "MariaDB fixed Y2038 in 10.6. MySQL still has it. Raspberry Pi firmware still 32-bit."
+    },
+    {
+      "slug": "falsehoods-developers-believe-about-time",
+      "title": "Falsehoods Developers Believe About Time (2026 Edition)",
+      "category": "Deep Dive",
+      "primary_keyword": "falsehoods programmers believe about time",
+      "secondary_keywords": ["time programming mistakes", "timezone bugs", "leap second bugs"],
+      "target_languages": ["javascript", "python", "general"],
+      "word_count": 1500,
+      "priority": 9,
+      "unique_angle": "Updated for 2026 with code that PROVES each falsehood wrong using real examples",
+      "perplexity_queries": [
+        "falsehoods programmers believe about time updated 2024",
+        "timezone programming assumptions wrong examples",
+        "DST leap seconds developer misconceptions"
+      ],
+      "paa_questions": [
+        "What are common mistakes developers make with time?",
+        "Why is timezone programming so hard?",
+        "What are leap seconds and why do they matter?",
+        "Why does time handling break in production?"
+      ],
+      "internal_links_to_use": ["timestamp_debugger", "challenges", "cron_next_runs"],
+      "notes": "Based on the classic Zach Holman post but updated. Each falsehood needs a failing code example."
+    },
+    {
+      "slug": "docker-container-time-sync",
+      "title": "Docker Container Time Sync: Why Your Timestamps Drift in Production",
+      "category": "Tutorial",
+      "primary_keyword": "docker container time sync",
+      "secondary_keywords": ["docker timestamp drift", "container clock skew", "ntp docker"],
+      "target_languages": ["bash", "javascript"],
+      "word_count": 1300,
+      "priority": 10,
+      "unique_angle": "Reproducing the drift locally — exact Docker commands to see the bug yourself",
+      "perplexity_queries": [
+        "docker container clock drift timestamp issues 2024",
+        "NTP synchronization docker containers best practices",
+        "container time sync kubernetes chrony"
+      ],
+      "paa_questions": [
+        "Why do Docker containers have wrong time?",
+        "How to sync time in Docker containers?",
+        "What causes timestamp drift in containers?",
+        "How to configure NTP in Docker?"
+      ],
+      "internal_links_to_use": ["timestamp_debugger", "timestamp_converter", "cron_next_runs"],
+      "notes": "Docker shares host kernel clock. chrony is the modern NTP replacement."
+    },
+    {
+      "slug": "negative-unix-timestamps-before-1970",
+      "title": "Negative Unix Timestamps: Working With Dates Before 1970",
+      "category": "Reference",
+      "primary_keyword": "negative unix timestamp",
+      "secondary_keywords": ["pre-1970 date unix", "unix timestamp before epoch", "negative epoch"],
+      "target_languages": ["javascript", "python", "go"],
+      "word_count": 1200,
+      "priority": 11,
+      "unique_angle": "Language support matrix — which languages handle negative timestamps correctly",
+      "perplexity_queries": [
+        "negative unix timestamp pre-1970 language support",
+        "unix timestamp before epoch date handling",
+        "javascript python go negative timestamp behavior"
+      ],
+      "paa_questions": [
+        "Can Unix timestamps be negative?",
+        "How to represent dates before 1970 in Unix?",
+        "What is Unix timestamp -1?",
+        "Does JavaScript support negative timestamps?"
+      ],
+      "internal_links_to_use": ["timestamp_debugger", "challenges", "timestamp_converter"],
+      "notes": "JavaScript handles negatives. Python handles them. Go handles them. MySQL does NOT before 1970."
+    }
+  ]
+}

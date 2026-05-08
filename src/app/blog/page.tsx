@@ -5,6 +5,8 @@ import { getAllPublishedPosts } from '@/lib/supabase/blog'
 import type { BlogPost } from '@/lib/supabase/blog'
 import { Clock, ArrowRight, Star } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Unix Timestamp Blog — Developer Guides & Tutorials',
   description:
