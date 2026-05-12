@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 
 const PRESETS = [
@@ -559,6 +560,8 @@ export function CronNextRunsClient() {
 */15 9-17 * * 1-5`}</pre>
           </div>
         </section>
+
+        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
 
         <RelatedGuides guides={getRelatedGuides('cron-next-runs')} />
       </main>

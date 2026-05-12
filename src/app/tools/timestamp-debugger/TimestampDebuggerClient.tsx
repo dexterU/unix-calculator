@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 import {
   AlertTriangle,
@@ -433,6 +434,8 @@ export function TimestampDebuggerClient() {
             </div>
           </>
         )}
+
+        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
 
         <RelatedGuides guides={getRelatedGuides('timestamp-converter')} />
       </main>

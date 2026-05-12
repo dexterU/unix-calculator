@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 
 function base64UrlDecode(str: string): string {
@@ -670,6 +671,8 @@ isExpired := exp < time.Now().Unix()`}</pre>
             </div>
           </div>
         </section>
+
+        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
 
         <RelatedGuides guides={getRelatedGuides('jwt-decoder')} />
       </main>

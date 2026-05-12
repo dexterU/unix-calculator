@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { Label } from '@/components/ui/label'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 import {
   TerminalReferenceSection,
@@ -113,6 +114,8 @@ export default function TimestampConverterPageClient() {
             )}
           </div>
         </section>
+
+        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
 
         <RelatedGuides guides={getRelatedGuides('timestamp-converter')} />
         <TerminalReferenceSection>

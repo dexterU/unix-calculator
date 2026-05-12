@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 
 type PermissionBit = {
@@ -611,6 +612,8 @@ find . -perm /111        # find executable files`}</pre>
             </p>
           </div>
         </section>
+
+        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
 
         <RelatedGuides guides={getRelatedGuides('permissions-calculator')} />
       </main>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { RelatedGuides } from '@/components/RelatedGuides'
 import { NewsletterCapture } from '@/components/NewsletterCapture'
+import { AdUnit } from '@/components/AdUnit'
 import { DEFAULT_GUIDES } from '@/lib/related-guides'
 import { getPostBySlug, getAllPublishedSlugs } from '@/lib/supabase/blog'
 import { Clock, User, Calendar, Tag, ArrowLeft } from 'lucide-react'
@@ -149,6 +150,8 @@ export default async function BlogArticlePage({ params }: Props) {
             </div>
           </div>
         </div>
+
+        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
 
         <NewsletterCapture source={`blog-${post.slug}`} />
 

@@ -12,6 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { AdUnit } from '@/components/AdUnit'
 import { HOMEPAGE_FAQ, HOMEPAGE_HOWTO_STEPS } from '@/lib/homepage-seo'
 import { getHomeToolCards, type HomeBrowseTab } from '@/lib/homepage-tools'
 import { cn } from '@/lib/utils'
@@ -47,42 +48,6 @@ function formatSearchVolume(volume: number) {
   if (volume >= 1000000) return `${(volume / 1000000).toFixed(1)}M`
   if (volume >= 1000) return `${(volume / 1000).toFixed(0)}K`
   return volume.toString()
-}
-
-function AdSenseUnit({
-  slot,
-  format,
-}: {
-  slot: string
-  format: 'rectangle' | 'horizontal'
-}) {
-  useEffect(() => {
-    try {
-      const w = window as Window & { adsbygoogle?: unknown[] }
-      w.adsbygoogle = w.adsbygoogle || []
-      w.adsbygoogle.push({})
-    } catch {
-      /* AdSense optional */
-    }
-  }, [])
-
-  return (
-    <div
-      className="relative rounded-xl border border-dashed border-terminal-border/60 bg-[#040a06] px-3 pb-4 pt-8"
-      style={{ minHeight: '100px' }}
-    >
-      <span className="pointer-events-none absolute left-1/2 top-2 -translate-x-1/2 text-center text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
-        Advertisement
-      </span>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-5643430532021522"
-        data-ad-slot={slot}
-        data-ad-format={format}
-      />
-    </div>
-  )
 }
 
 const BLOG_PREVIEW = [
@@ -438,7 +403,11 @@ export default function HomePageClient() {
                 </div>
 
                 <div className="mt-6">
-                  <AdSenseUnit slot="2151149097" format="rectangle" />
+                  <AdUnit
+                    slot="2151149097"
+                    format="rectangle"
+                    className="rounded-xl border border-dashed border-terminal-border/60 bg-[#040a06] px-3 pb-4 pt-8"
+                  />
                 </div>
 
                 {converted && resultRows.length > 0 && (
@@ -556,7 +525,7 @@ export default function HomePageClient() {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
-          <AdSenseUnit slot="3915656904" format="horizontal" />
+          <AdUnit slot="3915656904" format="horizontal" />
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
@@ -752,7 +721,7 @@ export default function HomePageClient() {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-20">
-          <AdSenseUnit slot="1750948984" format="horizontal" />
+          <AdUnit slot="1750948984" format="horizontal" />
         </section>
 
         <footer className="border-t border-terminal-border bg-terminal-surface/90">
