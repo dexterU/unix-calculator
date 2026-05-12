@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'See the next 10 scheduled run times for any cron expression. Timezone-aware, supports standard 5-field and 6-field cron. Free cron job scheduler tester.',
   alternates: {
-    canonical: 'https://unixcalculator.com/tools/cron-next-runs',
+    canonical: 'https://www.unixcalculator.com/tools/cron-next-runs',
   },
 }
 

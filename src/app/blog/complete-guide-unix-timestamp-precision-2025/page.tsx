@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Seconds vs milliseconds, JavaScript pitfalls, POSIX time, and Y2038 — practical precision guide for APIs.',
   alternates: {
-    canonical: 'https://unixcalculator.com/blog/complete-guide-unix-timestamp-precision-2025',
+    canonical: 'https://www.unixcalculator.com/blog/complete-guide-unix-timestamp-precision-2025',
   },
 }
 

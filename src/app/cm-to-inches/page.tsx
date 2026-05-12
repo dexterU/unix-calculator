@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'CM to Inches Converter — Centimeters to Inches Calculator',
   description:
     'Convert centimeters to inches and inches to centimeters instantly. Includes conversion formula and common conversion reference table.',
-  alternates: { canonical: 'https://unixcalculator.com/cm-to-inches' },
+  alternates: { canonical: 'https://www.unixcalculator.com/cm-to-inches' },
   robots: { index: false, follow: false },
 }
 

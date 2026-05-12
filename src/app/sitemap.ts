@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getAllPublishedSlugs } from '@/lib/supabase/blog'
 
-const BASE = 'https://unixcalculator.com'
+const BASE = 'https://www.unixcalculator.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()

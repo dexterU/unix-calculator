@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'JWT exp, refresh rotation, sliding sessions, and server-side time for secure session policies.',
   alternates: {
-    canonical: 'https://unixcalculator.com/blog/session-management-timestamp-expiration',
+    canonical: 'https://www.unixcalculator.com/blog/session-management-timestamp-expiration',
   },
 }
 

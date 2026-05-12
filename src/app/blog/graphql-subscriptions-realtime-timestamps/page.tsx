@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Scalars, ordering, and clock skew for GraphQL subscriptions and WebSocket payloads using epoch conventions.',
   alternates: {
-    canonical: 'https://unixcalculator.com/blog/graphql-subscriptions-realtime-timestamps',
+    canonical: 'https://www.unixcalculator.com/blog/graphql-subscriptions-realtime-timestamps',
   },
 }
 

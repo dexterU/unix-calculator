@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Unix Timestamp Cheatsheets — Free PDF Downloads',
   description:
     'Free downloadable Unix timestamp cheatsheets for JavaScript, Python, Go, C/C++, PHP, and PostgreSQL. Print or save as PDF.',
-  alternates: { canonical: 'https://unixcalculator.com/cheatsheets' },
+  alternates: { canonical: 'https://www.unixcalculator.com/cheatsheets' },
 }
 
 const SHEETS = [

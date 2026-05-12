@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'TTL, stale-while-revalidate, and using Unix timestamps for cache expiry and invalidation in production systems.',
   alternates: {
-    canonical: 'https://unixcalculator.com/blog/caching-strategies-time-sensitive-data',
+    canonical: 'https://www.unixcalculator.com/blog/caching-strategies-time-sensitive-data',
   },
 }
 

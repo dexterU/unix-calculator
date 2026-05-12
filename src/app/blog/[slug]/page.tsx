@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} | Unix Calculator Blog`,
     description: post.excerpt ?? post.title,
     alternates: {
-      canonical: `https://unixcalculator.com/blog/${post.slug}`,
+      canonical: `https://www.unixcalculator.com/blog/${post.slug}`,
     },
     ...(post.keywords?.length ? { keywords: post.keywords.join(', ') } : {}),
   }

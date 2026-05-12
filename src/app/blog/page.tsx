@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     'In-depth articles on Unix timestamps, timezone handling, JWT, database migrations, and production timestamp bugs. Written by senior engineers.',
   alternates: {
-    canonical: 'https://unixcalculator.com/blog',
+    canonical: 'https://www.unixcalculator.com/blog',
   },
 }
 

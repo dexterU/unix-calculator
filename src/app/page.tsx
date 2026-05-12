@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: 'Unix Timestamp Converter — Epoch to Date & Time | UnixCalculator.com',
   description:
     'Convert Unix timestamps to human-readable dates instantly. Free epoch converter with timezone support, BC calculator, cron generator, and 25+ developer tools. Used by 50,000+ developers.',
-  alternates: { canonical: 'https://unixcalculator.com' },
+  alternates: { canonical: 'https://www.unixcalculator.com' },
   openGraph: {
     title: 'Unix Timestamp Converter — Epoch to Date & Time',
     description:
       'Free epoch converter. Seconds, milliseconds, microseconds. 25+ timezones. No login required.',
-    url: 'https://unixcalculator.com',
+    url: 'https://www.unixcalculator.com',
     type: 'website',
   },
 }
@@ -24,7 +24,7 @@ const softwareApplicationLd = {
   operatingSystem: 'Web Browser',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   description: 'Free Unix timestamp converter. Convert epoch to date instantly.',
-  url: 'https://unixcalculator.com',
+  url: 'https://www.unixcalculator.com',
 }
 
 const breadcrumbListLd = {
@@ -35,19 +35,19 @@ const breadcrumbListLd = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://unixcalculator.com',
+      item: 'https://www.unixcalculator.com',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Tools',
-      item: 'https://unixcalculator.com/tools',
+      item: 'https://www.unixcalculator.com/tools',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Unix Timestamp Converter',
-      item: 'https://unixcalculator.com',
+      item: 'https://www.unixcalculator.com',
     },
   ],
 }

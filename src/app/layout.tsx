@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: '%s | Unix Calculator',
   },
   description: 'Free Unix timestamp converter, BC calculator, cron generator, and 20+ developer tools.',
-  metadataBase: new URL('https://unixcalculator.com'),
+  metadataBase: new URL('https://www.unixcalculator.com'),
 }
 
 export default function RootLayout({
