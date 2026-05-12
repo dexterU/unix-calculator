@@ -435,8 +435,6 @@ export function JwtDecoderClient() {
               </div>
             )}
 
-            <AdUnit slot="2151149097" format="rectangle" className="my-6" />
-
             <div className="mt-4 rounded-xl border border-terminal-border bg-terminal-surface p-4">
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 <Lock className="h-4 w-4 text-terminal-amber" />
@@ -463,6 +461,14 @@ export function JwtDecoderClient() {
                 containing sensitive data into any online tool.
               </p>
             </div>
+
+            {decoded && (
+              <AdUnit
+                slot="2151149097"
+                format="rectangle"
+                className="my-6"
+              />
+            )}
           </>
         )}
 
