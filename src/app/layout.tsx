@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import Providers from '@/components/Providers'
 
@@ -28,6 +29,12 @@ export default function RootLayout({
           </div>
         </Providers>
       </body>
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5643430532021522"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
     </html>
   )
 }
