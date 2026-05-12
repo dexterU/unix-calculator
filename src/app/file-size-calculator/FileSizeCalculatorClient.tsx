@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 const UNITS = ['B', 'KB', 'MB', 'GB', 'TB'] as const
@@ -59,6 +60,10 @@ export default function FileSizeCalculatorClient() {
             <span className="text-gray-500">Enter a non-negative number.</span>
           )}
         </div>
+        {n !== null ? (
+          <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+        ) : null}
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
         <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
     </div>

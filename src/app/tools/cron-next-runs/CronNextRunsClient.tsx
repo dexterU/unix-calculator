@@ -416,6 +416,10 @@ export function CronNextRunsClient() {
           </div>
         )}
 
+        {result.runs.length > 0 && (
+          <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+        )}
+
         <div className="mb-8">
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
             Common Schedules
@@ -561,7 +565,7 @@ export function CronNextRunsClient() {
           </div>
         </section>
 
-        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
 
         <RelatedGuides guides={getRelatedGuides('cron-next-runs')} />
       </main>

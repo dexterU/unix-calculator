@@ -432,10 +432,12 @@ export function TimestampDebuggerClient() {
                 </div>
               ))}
             </div>
+
+            <AdUnit slot="2151149097" format="rectangle" className="my-6" />
           </>
         )}
 
-        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
 
         <RelatedGuides guides={getRelatedGuides('timestamp-converter')} />
       </main>

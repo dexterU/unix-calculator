@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Copy, Terminal, BookOpen } from 'lucide-react'
+import { AdUnit } from '@/components/AdUnit'
 
 export function AgeCalculator() {
   const [birthDate, setBirthDate] = useState('')
@@ -103,6 +104,10 @@ export function AgeCalculator() {
             )}
           </div>
         </div>
+
+        {result ? (
+          <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+        ) : null}
 
         {/* Unix Commands Section */}
         <div className="card">

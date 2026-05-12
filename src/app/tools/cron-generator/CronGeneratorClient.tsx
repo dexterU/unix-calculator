@@ -6,6 +6,7 @@ import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 import {
   TerminalReferenceSection,
@@ -135,6 +136,10 @@ export default function CronGeneratorClient() {
           </p>
           <code className="text-lg font-mono">{expr}</code>
         </div>
+
+        <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
 
         <RelatedGuides guides={getRelatedGuides('cron-generator')} />
         <TerminalReferenceSection>

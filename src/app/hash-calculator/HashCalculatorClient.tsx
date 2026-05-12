@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 
 async function sha256Hex(text: string): Promise<string> {
@@ -50,8 +51,12 @@ export default function HashCalculatorClient() {
           {busy ? 'Hashing…' : 'Compute SHA-256'}
         </Button>
         {hash && (
-          <div className="calc-result font-mono text-xs break-all">{hash}</div>
+          <>
+            <div className="calc-result font-mono text-xs break-all">{hash}</div>
+            <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+          </>
         )}
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
         <RelatedGuides guides={getRelatedGuides('hash-calculator')} />
       </main>
     </div>

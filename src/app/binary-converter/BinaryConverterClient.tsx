@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 
 export default function BinaryConverterClient() {
@@ -55,6 +56,10 @@ export default function BinaryConverterClient() {
             <span className="text-gray-500">Enter a whole number.</span>
           )}
         </div>
+        {parsed !== null ? (
+          <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+        ) : null}
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
         <RelatedGuides guides={getRelatedGuides('binary-converter')} />
       </main>
     </div>

@@ -435,6 +435,8 @@ export function JwtDecoderClient() {
               </div>
             )}
 
+            <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+
             <div className="mt-4 rounded-xl border border-terminal-border bg-terminal-surface p-4">
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 <Lock className="h-4 w-4 text-terminal-amber" />
@@ -672,7 +674,7 @@ isExpired := exp < time.Now().Unix()`}</pre>
           </div>
         </section>
 
-        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
 
         <RelatedGuides guides={getRelatedGuides('jwt-decoder')} />
       </main>

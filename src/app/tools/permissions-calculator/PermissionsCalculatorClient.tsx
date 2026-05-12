@@ -475,6 +475,8 @@ export function PermissionsCalculatorClient() {
           ) : null}
         </div>
 
+        <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+
         <div className="mt-6">
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
             Common Presets
@@ -613,7 +615,7 @@ find . -perm /111        # find executable files`}</pre>
           </div>
         </section>
 
-        <AdUnit slot="3915656904" format="horizontal" className="my-8" />
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
 
         <RelatedGuides guides={getRelatedGuides('permissions-calculator')} />
       </main>

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 
 export default function RegexTesterClient() {
@@ -70,17 +71,21 @@ export default function RegexTesterClient() {
           </p>
         )}
         {!error && matches && (
-          <div className="calc-result">
-            <p className="text-xs font-medium text-gray-500 uppercase mb-2">
-              Matches ({matches.length})
-            </p>
-            <ul className="font-mono text-sm space-y-1">
-              {matches.map((m, i) => (
-                <li key={`${m}-${i}`}>{m}</li>
-              ))}
-            </ul>
-          </div>
+          <>
+            <div className="calc-result">
+              <p className="text-xs font-medium text-gray-500 uppercase mb-2">
+                Matches ({matches.length})
+              </p>
+              <ul className="font-mono text-sm space-y-1">
+                {matches.map((m, i) => (
+                  <li key={`${m}-${i}`}>{m}</li>
+                ))}
+              </ul>
+            </div>
+            <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+          </>
         )}
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
         <RelatedGuides guides={getRelatedGuides('regex-tester')} />
       </main>
     </div>

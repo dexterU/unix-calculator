@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { getRelatedGuides } from '@/lib/related-guides'
 
 export default function TimeCalculatorClient() {
@@ -58,6 +59,8 @@ export default function TimeCalculatorClient() {
             <span className="text-gray-500">Check inputs.</span>
           )}
         </div>
+        {end ? <AdUnit slot="2151149097" format="rectangle" className="my-6" /> : null}
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
         <RelatedGuides guides={getRelatedGuides('time-calculator')} />
       </main>
     </div>

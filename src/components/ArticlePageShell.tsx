@@ -15,7 +15,7 @@ export function ArticlePageShell({
       <Header />
       <main className="container max-w-4xl px-4 py-12">{children}</main>
       <div className="container max-w-4xl px-4 pb-4">
-        <AdUnit slot="1750948984" format="horizontal" className="my-8" />
+        <AdUnit slot="3915656904" format="horizontal" className="my-6" />
       </div>
       <div className="container max-w-4xl px-4 pb-16">
         <RelatedGuides guides={DEFAULT_GUIDES} />

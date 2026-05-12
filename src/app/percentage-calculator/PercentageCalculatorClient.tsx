@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { Header } from '@/components/Header'
 import { RelatedGuides } from '@/components/RelatedGuides'
+import { AdUnit } from '@/components/AdUnit'
 import { DEFAULT_GUIDES } from '@/lib/related-guides'
 
 type CalculationType = 'basic' | 'increase' | 'decrease' | 'of'
@@ -136,8 +137,14 @@ export default function PercentageCalculatorClient() {
               <p className="text-sm text-muted-foreground">{result.explanation}</p>
             </>
           ) : null}
+        </div>
 
-          <div className="mt-6 rounded-lg border border-terminal-border bg-background p-4">
+        {result ? (
+          <AdUnit slot="2151149097" format="rectangle" className="my-6" />
+        ) : null}
+
+        <div className="mt-6 bg-terminal-surface border border-terminal-border rounded-xl p-8 space-y-6">
+          <div className="rounded-lg border border-terminal-border bg-background p-4">
             <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
               BC Command Equivalent
             </p>
@@ -146,6 +153,8 @@ export default function PercentageCalculatorClient() {
             </pre>
           </div>
         </div>
+
+        <AdUnit slot="1750948984" format="horizontal" className="my-6" />
 
         <RelatedGuides guides={DEFAULT_GUIDES} />
       </main>
