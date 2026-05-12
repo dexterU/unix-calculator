@@ -63,6 +63,15 @@ export default async function BlogArticlePage({ params }: Props) {
   const color =
     categoryColors[post.category] ?? 'text-terminal-green border-terminal-green/30 bg-terminal-green/10'
 
+  const cleanContent =
+    post.content === 'existing-static-page'
+      ? '<p>This article has been migrated.</p>'
+      : post.content
+          .replace(/^```html\s*/i, '')
+          .replace(/^```\s*/i, '')
+          .replace(/\s*```$/i, '')
+          .trim()
+
   return (
     <div className="min-h-screen bg-gradient-terminal text-foreground">
       <Header />
@@ -116,7 +125,7 @@ export default async function BlogArticlePage({ params }: Props) {
         <article className="max-w-none">
           <div
             className="article-content font-mono text-sm leading-relaxed text-foreground"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: cleanContent }}
           />
         </article>
 
