@@ -20,14 +20,38 @@ export function AdUnit({
     if (initialized.current) return
     if (!adRef.current) return
 
-    try {
-      const adsbygoogle = (window as unknown as { adsbygoogle?: unknown[] }).adsbygoogle
-      if (adsbygoogle) {
-        adsbygoogle.push({})
+    const initAd = () => {
+      try {
+        const w = window as any
+        w.adsbygoogle = w.adsbygoogle || []
+        w.adsbygoogle.push({})
         initialized.current = true
+      } catch (err) {
+        console.error('AdSense error:', err)
       }
-    } catch (err) {
-      console.error('AdSense error:', err)
+    }
+
+    // If script already loaded, init immediately
+    if ((window as any).adsbygoogle !== undefined) {
+      initAd()
+    } else {
+      // Wait for adsbygoogle.js to load then init
+      const interval = setInterval(() => {
+        if ((window as any).adsbygoogle !== undefined) {
+          clearInterval(interval)
+          initAd()
+        }
+      }, 200)
+
+      // Stop trying after 10 seconds
+      const timeout = setTimeout(() => {
+        clearInterval(interval)
+      }, 10000)
+
+      return () => {
+        clearInterval(interval)
+        clearTimeout(timeout)
+      }
     }
   }, [])
 
