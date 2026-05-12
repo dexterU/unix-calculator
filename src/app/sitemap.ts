@@ -5,6 +5,20 @@ const BASE = 'https://www.unixcalculator.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
+  const popularTimestamps = [
+    '0',
+    '946684800',
+    '2147483647',
+    '1000000000',
+    '1500000000',
+    '1700000000',
+    '1750000000',
+    '1764581115',
+    '1733529600',
+    '1704067200',
+    '1735689600',
+    '1767225600',
+  ]
   const tools = [
     'timestamp-debugger',
     'timestamp-converter',
@@ -70,6 +84,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/privacy-policy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/terms-of-service`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+    ...popularTimestamps.map((ts) => ({
+      url: `${BASE}/convert/${ts}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     ...tools.map((t) => ({
       url: `${BASE}/tools/${t}`,
       lastModified: now,
