@@ -19,6 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta
+          name="impact-site-verification"
+          content="2fe52321-ec63-43cb-b036-bedc66a1fbf1"
+        />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5643430532021522"

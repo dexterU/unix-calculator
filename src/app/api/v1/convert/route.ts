@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 
 const requestCounts = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT = 100
 const RATE_WINDOW = 60 * 60 * 1000
+
+const PLAN_LIMITS: Record<string, number> = {
+  free: 100,
+  developer: 10000,
+  pro: 100000,
+  enterprise: 999999999,
+}
 
 function clientIp(req: NextRequest): string {
   const fwd = req.headers.get('x-forwarded-for')
@@ -52,32 +60,135 @@ function toUnixSeconds(ts: number): number {
   return ts / 1_000_000_000
 }
 
-function rateHeaders(remaining: number, resetAt: number): Record<string, string> {
+function rateHeaders(
+  limit: number,
+  remaining: number,
+  resetAt: number,
+): Record<string, string> {
   return {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'X-RateLimit-Limit': RATE_LIMIT.toString(),
+    'Access-Control-Allow-Headers': 'Content-Type, X-Api-Key',
+    'X-RateLimit-Limit': limit.toString(),
     'X-RateLimit-Remaining': remaining.toString(),
     'X-RateLimit-Reset': Math.floor(resetAt / 1000).toString(),
     'Content-Type': 'application/json',
   }
 }
 
-export async function GET(req: NextRequest) {
-  const ip = clientIp(req)
-  const { allowed, remaining, resetAt } = getRateLimitInfo(ip)
-  const headers = rateHeaders(remaining, resetAt)
+async function checkApiKey(
+  apiKey: string,
+): Promise<
+  | { ok: true; headers: Record<string, string> }
+  | { ok: false; response: NextResponse }
+> {
+  const supabaseClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  )
 
-  if (!allowed) {
-    return NextResponse.json(
-      {
-        error: 'Rate limit exceeded',
-        message: `Max ${RATE_LIMIT} requests per hour. Resets at ${new Date(resetAt).toISOString()}`,
-        docs: 'https://unixcalculator.com/tools/timestamp-api',
-      },
-      { status: 429, headers },
-    )
+  const { data: keyData } = await supabaseClient
+    .from('api_keys')
+    .select('plan, active, requests_today, requests_reset_at')
+    .eq('api_key', apiKey)
+    .eq('active', true)
+    .single()
+
+  if (!keyData) {
+    return {
+      ok: false,
+      response: NextResponse.json(
+        { error: 'Invalid or inactive API key' },
+        {
+          status: 401,
+          headers: rateHeaders(RATE_LIMIT, 0, Date.now() + RATE_WINDOW),
+        },
+      ),
+    }
+  }
+
+  const planLimit = PLAN_LIMITS[keyData.plan] ?? 100
+  const resetAt = new Date(keyData.requests_reset_at).getTime()
+  const now = Date.now()
+
+  if (now > resetAt) {
+    const nextReset = now + 24 * 60 * 60 * 1000
+    await supabaseClient
+      .from('api_keys')
+      .update({
+        requests_today: 1,
+        requests_reset_at: new Date(nextReset).toISOString(),
+      })
+      .eq('api_key', apiKey)
+
+    return {
+      ok: true,
+      headers: rateHeaders(planLimit, planLimit - 1, nextReset),
+    }
+  }
+
+  if (keyData.requests_today >= planLimit) {
+    return {
+      ok: false,
+      response: NextResponse.json(
+        {
+          error: 'Rate limit exceeded for your plan',
+          plan: keyData.plan,
+          limit: planLimit,
+          upgrade: 'https://www.unixcalculator.com/tools/timestamp-api',
+          docs: 'https://www.unixcalculator.com/tools/timestamp-api',
+        },
+        {
+          status: 429,
+          headers: rateHeaders(planLimit, 0, resetAt),
+        },
+      ),
+    }
+  }
+
+  await supabaseClient
+    .from('api_keys')
+    .update({ requests_today: keyData.requests_today + 1 })
+    .eq('api_key', apiKey)
+
+  return {
+    ok: true,
+    headers: rateHeaders(
+      planLimit,
+      planLimit - keyData.requests_today - 1,
+      resetAt,
+    ),
+  }
+}
+
+export async function GET(req: NextRequest) {
+  const apiKeyHeader = req.headers.get('x-api-key')
+  const apiKeyQuery = new URL(req.url).searchParams.get('api_key')
+  const apiKey = apiKeyHeader || apiKeyQuery
+
+  let headers: Record<string, string>
+
+  if (apiKey) {
+    const keyResult = await checkApiKey(apiKey)
+    if (!keyResult.ok) {
+      return keyResult.response
+    }
+    headers = keyResult.headers
+  } else {
+    const ip = clientIp(req)
+    const { allowed, remaining, resetAt } = getRateLimitInfo(ip)
+    headers = rateHeaders(RATE_LIMIT, remaining, resetAt)
+
+    if (!allowed) {
+      return NextResponse.json(
+        {
+          error: 'Rate limit exceeded',
+          message: `Max ${RATE_LIMIT} requests per hour. Resets at ${new Date(resetAt).toISOString()}`,
+          docs: 'https://unixcalculator.com/tools/timestamp-api',
+        },
+        { status: 429, headers },
+      )
+    }
   }
 
   const { searchParams } = new URL(req.url)
@@ -257,7 +368,7 @@ export async function OPTIONS() {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Headers': 'Content-Type, X-Api-Key',
     },
   })
 }

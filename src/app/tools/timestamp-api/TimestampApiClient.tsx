@@ -1,15 +1,66 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   CheckCircle,
   Copy,
   Globe,
+  Key,
+  Loader2,
   Play,
   Shield,
   Zap,
 } from 'lucide-react'
 import { Header } from '@/components/Header'
+
+type PaidPlan = 'developer' | 'pro' | 'enterprise'
+
+const PRICING_TIERS = [
+  {
+    id: 'free' as const,
+    name: 'Free',
+    price: '$0',
+    period: '/month',
+    limit: '100 requests/hour',
+    features: [
+      'No API key required (IP limit)',
+      'Optional API key: 100 req/day',
+      'All conversion formats',
+    ],
+    cta: 'Get Free API Key',
+    highlight: false,
+  },
+  {
+    id: 'developer' as const,
+    name: 'Developer',
+    price: '$9',
+    period: '/month',
+    limit: '10,000 requests/day',
+    features: ['API key authentication', 'Priority response', 'Email support'],
+    cta: 'Subscribe',
+    highlight: false,
+  },
+  {
+    id: 'pro' as const,
+    name: 'Pro',
+    price: '$29',
+    period: '/month',
+    limit: '100,000 requests/day',
+    features: ['API key authentication', 'SLA guarantee', 'Priority support'],
+    cta: 'Subscribe',
+    highlight: true,
+  },
+  {
+    id: 'enterprise' as const,
+    name: 'Enterprise',
+    price: '$99',
+    period: '/month',
+    limit: 'Unlimited requests',
+    features: ['Dedicated support', 'Custom integrations', 'Volume pricing'],
+    cta: 'Contact us',
+    highlight: false,
+  },
+]
 
 const BASE = 'https://unixcalculator.com/api/v1/convert'
 
@@ -73,11 +124,68 @@ export function TimestampApiClient() {
   const [copied, setCopied] = useState<string | null>(null)
   const [customTs, setCustomTs] = useState('1733529600')
   const [customTz, setCustomTz] = useState('UTC')
+  const [email, setEmail] = useState('')
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null)
+  const [apiKey, setApiKey] = useState<string | null>(null)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const [checkoutNotice, setCheckoutNotice] = useState<string | null>(null)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('success') === 'true') {
+      setCheckoutNotice(
+        'Payment successful. Your API key is linked to your subscription — check your email or contact support if you need your key.',
+      )
+    }
+    if (params.get('cancelled') === 'true') {
+      setCheckoutNotice('Checkout cancelled. You can try again anytime.')
+    }
+  }, [])
 
   function copy(text: string, key: string) {
     void navigator.clipboard.writeText(text)
     setCopied(key)
     setTimeout(() => setCopied(null), 1500)
+  }
+
+  async function handleCheckout(plan: 'free' | PaidPlan) {
+    setCheckoutError(null)
+    if (!email.trim()) {
+      setCheckoutError('Enter your email to continue.')
+      return
+    }
+
+    setCheckoutLoading(plan)
+    try {
+      const res = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, email: email.trim() }),
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        setCheckoutError(data.error ?? 'Request failed')
+        return
+      }
+
+      if (plan === 'free' && data.api_key) {
+        setApiKey(data.api_key)
+        setCheckoutNotice('Free API key created. Use header X-Api-Key or ?api_key= on requests.')
+        return
+      }
+
+      if (data.url) {
+        window.location.href = data.url
+        return
+      }
+
+      setCheckoutError('Unexpected response from server')
+    } catch {
+      setCheckoutError('Network error — please try again')
+    } finally {
+      setCheckoutLoading(null)
+    }
   }
 
   async function runLiveTest(pathWithQuery: string) {
@@ -103,14 +211,135 @@ export function TimestampApiClient() {
         <div className="mb-12 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-terminal-border bg-terminal-surface px-4 py-1.5 font-mono text-xs text-terminal-green">
             <Zap className="h-3 w-3" />
-            Free · No API Key · 100 req/hour
+            Free tier · Paid plans from $9/mo
           </div>
           <h1 className="mb-3 font-mono text-3xl font-bold text-foreground">Unix Timestamp API</h1>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            A free REST API for timestamp conversion. Returns JSON with ISO 8601, timezone-aware output,
-            relative time, and production warnings. No authentication required.
+            A REST API for timestamp conversion. Returns JSON with ISO 8601, timezone-aware output,
+            relative time, and production warnings. Use without a key (100 req/hour) or authenticate
+            with an API key for higher limits.
           </p>
         </div>
+
+        <section className="mb-10" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" className="mb-2 text-center font-mono text-xl font-bold text-foreground">
+            API pricing
+          </h2>
+          <p className="mb-6 text-center font-mono text-sm text-muted-foreground">
+            Pass your key via <code className="text-terminal-green">X-Api-Key</code> header or{' '}
+            <code className="text-terminal-green">?api_key=</code> query parameter.
+          </p>
+
+          <div className="mb-6 max-w-md mx-auto">
+            <label htmlFor="api-email" className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              Email
+            </label>
+            <input
+              id="api-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@company.com"
+              className="w-full rounded-lg border border-terminal-border bg-background px-4 py-3 font-mono text-sm text-foreground focus:border-terminal-green focus:outline-none"
+            />
+          </div>
+
+          {checkoutError ? (
+            <p className="mb-4 text-center font-mono text-sm text-red-400" role="alert">
+              {checkoutError}
+            </p>
+          ) : null}
+          {checkoutNotice ? (
+            <p className="mb-4 text-center font-mono text-sm text-terminal-green">{checkoutNotice}</p>
+          ) : null}
+
+          {apiKey ? (
+            <div className="mb-8 rounded-xl border border-terminal-green/40 bg-terminal-green/10 p-5">
+              <div className="mb-2 flex items-center gap-2">
+                <Key className="h-4 w-4 text-terminal-green" aria-hidden="true" />
+                <p className="font-mono text-xs uppercase tracking-widest text-terminal-green">
+                  Your API key
+                </p>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <code className="break-all font-mono text-sm text-terminal-green">{apiKey}</code>
+                <button
+                  type="button"
+                  onClick={() => copy(apiKey, 'apikey')}
+                  className="shrink-0 rounded border border-terminal-border bg-background px-3 py-1.5 font-mono text-xs text-muted-foreground hover:text-terminal-green"
+                >
+                  {copied === 'apikey' ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+              <p className="mt-3 font-mono text-xs text-muted-foreground">
+                Example:{' '}
+                <code className="text-terminal-cyan">
+                  curl -H &quot;X-Api-Key: {apiKey}&quot; &quot;{BASE}?ts=1733529600&quot;
+                </code>
+              </p>
+            </div>
+          ) : null}
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {PRICING_TIERS.map((tier) => (
+              <div
+                key={tier.id}
+                className={`relative flex flex-col rounded-xl border bg-terminal-surface p-5 ${
+                  tier.highlight
+                    ? 'border-terminal-green shadow-[0_0_0_1px_rgba(var(--terminal-green-rgb,0),0.2)]'
+                    : 'border-terminal-border'
+                }`}
+              >
+                {tier.highlight ? (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-terminal-green bg-terminal-green px-3 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-terminal-bg">
+                    Most Popular
+                  </span>
+                ) : null}
+                <h3 className="font-mono text-lg font-bold text-foreground">{tier.name}</h3>
+                <p className="mt-1 font-mono text-2xl font-bold text-terminal-green">
+                  {tier.price}
+                  <span className="text-sm font-normal text-muted-foreground">{tier.period}</span>
+                </p>
+                <p className="mt-2 font-mono text-xs text-terminal-amber">{tier.limit}</p>
+                <ul className="mt-4 flex-1 space-y-2">
+                  {tier.features.map((f) => (
+                    <li key={f} className="font-mono text-xs text-muted-foreground">
+                      · {f}
+                    </li>
+                  ))}
+                </ul>
+                {tier.id === 'enterprise' ? (
+                  <a
+                    href="mailto:hello@unixcalculator.com?subject=Unix%20Timestamp%20API%20Enterprise"
+                    className="mt-5 block w-full rounded-lg border border-terminal-border py-2.5 text-center font-mono text-sm font-bold text-foreground transition-colors hover:border-terminal-green hover:text-terminal-green"
+                  >
+                    {tier.cta}
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={checkoutLoading !== null}
+                    onClick={() => void handleCheckout(tier.id)}
+                    className={`mt-5 w-full rounded-lg py-2.5 font-mono text-sm font-bold transition-opacity disabled:opacity-50 ${
+                      tier.highlight
+                        ? 'bg-terminal-green text-terminal-bg hover:opacity-90'
+                        : 'border border-terminal-border bg-background text-foreground hover:border-terminal-green'
+                    }`}
+                  >
+                    {checkoutLoading === tier.id ? (
+                      <span className="inline-flex items-center justify-center gap-2">
+                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                        Processing…
+                      </span>
+                    ) : (
+                      tier.cta
+                    )}
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
 
         <div className="mb-8 grid gap-3 sm:grid-cols-3">
           <div className="flex items-start gap-2 rounded-xl border border-terminal-border bg-terminal-surface p-4">
@@ -120,9 +349,9 @@ export function TimestampApiClient() {
             </p>
           </div>
           <div className="flex items-start gap-2 rounded-xl border border-terminal-border bg-terminal-surface p-4">
-            <Shield className="mt-0.5 h-4 w-4 shrink-0 text-terminal-green" />
+            <Key className="mt-0.5 h-4 w-4 shrink-0 text-terminal-green" />
             <p className="font-mono text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">No API key</span> required
+              <span className="font-semibold text-foreground">API keys</span> for paid tiers
             </p>
           </div>
           <div className="flex items-start gap-2 rounded-xl border border-terminal-border bg-terminal-surface p-4">
@@ -320,23 +549,27 @@ print(data['utc']['iso_8601'])`}</pre>
 
         <div className="mb-8 rounded-xl border border-amber-500/20 bg-amber-950/20 p-5">
           <h2 className="mb-3 font-mono font-bold text-foreground">Rate limits</h2>
-          <div className="mb-3 grid grid-cols-3 gap-4">
+          <div className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="text-center">
-              <p className="font-mono text-2xl font-bold text-terminal-green">100</p>
-              <p className="font-mono text-xs text-muted-foreground">requests/hour</p>
+              <p className="font-mono text-lg font-bold text-terminal-green">100/hr</p>
+              <p className="font-mono text-xs text-muted-foreground">anonymous (IP)</p>
             </div>
             <div className="text-center">
-              <p className="font-mono text-2xl font-bold text-terminal-amber">429</p>
-              <p className="font-mono text-xs text-muted-foreground">status when exceeded</p>
+              <p className="font-mono text-lg font-bold text-terminal-cyan">10k/day</p>
+              <p className="font-mono text-xs text-muted-foreground">developer</p>
             </div>
             <div className="text-center">
-              <p className="font-mono text-2xl font-bold text-terminal-cyan">Free</p>
-              <p className="font-mono text-xs text-muted-foreground">no API key needed</p>
+              <p className="font-mono text-lg font-bold text-terminal-amber">100k/day</p>
+              <p className="font-mono text-xs text-muted-foreground">pro</p>
+            </div>
+            <div className="text-center">
+              <p className="font-mono text-lg font-bold text-foreground">∞</p>
+              <p className="font-mono text-xs text-muted-foreground">enterprise</p>
             </div>
           </div>
           <p className="font-mono text-xs text-muted-foreground">
-            Rate limit headers on every response: X-RateLimit-Limit, X-RateLimit-Remaining,
-            X-RateLimit-Reset
+            Headers: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset. Status 429 when
+            exceeded.
           </p>
         </div>
 
