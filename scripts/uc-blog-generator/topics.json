@@ -321,6 +321,30 @@
       ],
       "internal_links_to_use": ["timestamp_debugger", "challenges", "timestamp_converter"],
       "notes": "JavaScript handles negatives. Python handles them. Go handles them. MySQL does NOT before 1970."
+    },
+    {
+      "slug": "session-management-timestamp-expiration",
+      "title": "Session Management with Timestamp Expiration",
+      "category": "Tutorial",
+      "primary_keyword": "session management timestamp expiration",
+      "secondary_keywords": ["jwt expiration timestamp", "session timeout unix", "token expiry validation"],
+      "target_languages": ["javascript", "python"],
+      "word_count": 1300,
+      "priority": 12,
+      "unique_angle": "Complete session lifecycle — issue, validate, refresh, and revoke using Unix timestamps with real middleware code",
+      "perplexity_queries": [
+        "session management unix timestamp expiration best practices 2024",
+        "jwt token expiration validation javascript python 2024",
+        "session timeout sliding expiration implementation"
+      ],
+      "paa_questions": [
+        "How do I expire a session using Unix timestamps?",
+        "What is the difference between absolute and sliding session expiration?",
+        "How to validate JWT expiration with Unix timestamps?",
+        "How to implement session refresh tokens securely?"
+      ],
+      "internal_links_to_use": ["jwt_decoder", "timestamp_debugger", "timestamp_api"],
+      "notes": "Cover absolute expiration (exp claim) vs sliding expiration (activity-based reset). Include Redis-backed session store pattern. Reference JWT decoder tool."
     }
   ]
 }

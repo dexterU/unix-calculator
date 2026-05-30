@@ -1,0 +1,54 @@
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&display=swap');
+  body { margin: 0; background: #111318; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 32px; }
+  button { background: #00FF00; color: #111318; border: none; padding: 12px 28px; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; border-radius: 6px; cursor: pointer; }
+  button:hover { background: #00FFFF; }
+</style>
+</head>
+<body>
+  <svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 512" width="450" height="256">
+  <defs>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FF00"/>
+      <stop offset="100%" stop-color="#00FFFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="512" fill="#111318"/>
+  <!-- Badge -->
+  <rect x="60" y="176" width="160" height="160" rx="24" fill="url(#badgeGrad)"/>
+  <text x="88" y="284" font-family="'JetBrains Mono', 'Monaco', 'Menlo', monospace" font-size="72" font-weight="700" fill="#111318">&gt;_</text>
+  <!-- Wordmark -->
+  <text x="248" y="284" font-family="'JetBrains Mono', 'Monaco', 'Menlo', monospace" font-size="64" font-weight="600" fill="#C8E6C8" letter-spacing="-1">Unix Calculator</text>
+</svg>
+
+  <button onclick="exportPNG()">Download 512x512 PNG for Stripe</button>
+
+  <canvas id="canvas" width="900" height="512" style="display:none"></canvas>
+
+  <script>
+    function exportPNG() {
+      const svg = document.getElementById('logo');
+      const clone = svg.cloneNode(true);
+      clone.setAttribute('width', '512');
+      clone.setAttribute('height', '512');
+      const blob = new Blob([clone.outerHTML], {type: 'image/svg+xml'});
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, 512, 512);
+        ctx.drawImage(img, 0, 0, 900, 512);
+        const a = document.createElement('a');
+        a.download = 'unix-logo-stripe.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    }
+  </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 import os
+import re
 import anthropic
 from typing import Optional
 
@@ -277,6 +278,11 @@ Start with <blockquote. End with </p> author note.""",
 
     block = message.content[0]
     content = block.text if hasattr(block, "text") else str(block)
+
+    # Strip markdown code fences that wrap HTML content
+    content = re.sub(r'^```html\n?', '', content, flags=re.MULTILINE)
+    content = re.sub(r'\n?```$', '', content, flags=re.MULTILINE)
+    content = content.strip()
 
     if verbose:
         word_count = len(content.split())

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" width="220" height="60">
+  <defs>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FF00"/>
+      <stop offset="100%" stop-color="#00FFFF"/>
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Badge -->
+  <rect x="0" y="10" width="40" height="40" rx="6" fill="url(#badgeGrad)"/>
+  <text x="8" y="36" font-family="'JetBrains Mono', 'Monaco', 'Menlo', monospace" font-size="14" font-weight="700" fill="#111318">&gt;_</text>
+
+  <!-- Wordmark -->
+  <text x="52" y="36" font-family="'JetBrains Mono', 'Monaco', 'Menlo', monospace" font-size="16" font-weight="600" fill="#C8E6C8" letter-spacing="-0.3">Unix Calculator</text>
+</svg>
